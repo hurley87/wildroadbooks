@@ -38,7 +38,7 @@ export default function Contact() {
               about Wild Road Books? We'd love to hear from you.
             </p>
           </div>
-          <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:mt-10 lg:max-w-none lg:grid-cols-2">
+          <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:mt-10">
             <div className="flex flex-col">
               <h3 className="text-2xl font-bold tracking-tight">Get in Touch</h3>
               <p className="mt-6 text-lg leading-8 text-muted-foreground">
@@ -131,39 +131,6 @@ export default function Contact() {
                   </button>
                 </div>
               </form>
-            </div>
-            <div className="flex flex-col">
-              <h3 className="text-2xl font-bold tracking-tight">
-                Other Ways to Connect
-              </h3>
-              <div className="mt-8 space-y-6">
-                <div>
-                  <h4 className="text-lg font-semibold">Email</h4>
-                  <p className="mt-2 text-muted-foreground">
-                    <a
-                      href="mailto:contact@wildroadbooks.com"
-                      className="text-primary hover:text-primary/80"
-                    >
-                      contact@wildroadbooks.com
-                    </a>
-                  </p>
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold">Mailing Address</h4>
-                  <p className="mt-2 text-muted-foreground">
-                    Wild Road Books<br />
-                    123 Book Street<br />
-                    Kingston, ON K7L 3N6<br />
-                    Canada
-                  </p>
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold">Business Hours</h4>
-                  <p className="mt-2 text-muted-foreground">
-                    Monday - Friday: 9:00 AM - 5:00 PM EST
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </div>

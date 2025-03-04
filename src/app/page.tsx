@@ -13,16 +13,16 @@ export default function Home() {
           <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
             <div className="mt-24 sm:mt-32 lg:mt-16">
               <a href="/submissions" className="inline-flex space-x-6">
-                <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold leading-6 text-primary ring-1 ring-inset ring-primary/20">
+                <span className="rounded-full bg-primary/5 px-3 py-1 text-sm font-medium leading-6 text-primary ring-1 ring-inset ring-primary/10">
                   Now accepting submissions
                 </span>
                 <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-muted-foreground">
                   <span>Learn more</span>
-                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </a>
             </div>
-            <h1 className="mt-10 text-4xl font-bold tracking-tight sm:text-6xl">
+            <h1 className="mt-10 text-4xl font-serif tracking-tight sm:text-6xl">
               Books that swim against conventional currents
             </h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
@@ -31,7 +31,7 @@ export default function Home() {
               and publish their ideas.
             </p>
             <div className="mt-10 flex items-center gap-x-6">
-              <Button size="lg">
+              <Button size="lg" className="bg-primary hover:bg-primary/90">
                 Browse Our Books
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -39,9 +39,9 @@ export default function Home() {
           </div>
           <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
             <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-              <div className="relative aspect-[2/3] w-[37rem] rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 p-8 shadow-2xl ring-1 ring-primary/10">
+              <div className="relative aspect-[2/3] w-[37rem] rounded-none bg-gradient-to-br from-primary/5 to-transparent p-8 shadow-2xl ring-1 ring-primary/5">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <BookOpen className="h-32 w-32 text-primary/40" />
+                  <BookOpen className="h-32 w-32 text-primary/20" />
                 </div>
               </div>
             </div>
@@ -52,10 +52,10 @@ export default function Home() {
       {/* Features section */}
       <section className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
         <div className="mx-auto max-w-2xl lg:text-center">
-          <h2 className="text-base font-semibold leading-7 text-primary">
+          <h2 className="text-base font-medium leading-7 text-primary">
             Why Choose Wild Road Books
           </h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+          <p className="mt-2 text-3xl font-serif tracking-tight sm:text-4xl">
             A publishing experience like no other
           </p>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
@@ -66,7 +66,7 @@ export default function Home() {
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
           <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
             <div className="flex flex-col">
-              <dt className="flex items-center gap-x-3 text-base font-semibold leading-7">
+              <dt className="flex items-center gap-x-3 text-base font-medium leading-7">
                 <PenTool className="h-5 w-5 flex-none text-primary" aria-hidden="true" />
                 Expert Editorial Support
               </dt>
@@ -78,7 +78,7 @@ export default function Home() {
               </dd>
             </div>
             <div className="flex flex-col">
-              <dt className="flex items-center gap-x-3 text-base font-semibold leading-7">
+              <dt className="flex items-center gap-x-3 text-base font-medium leading-7">
                 <BookOpen className="h-5 w-5 flex-none text-primary" aria-hidden="true" />
                 Quality Production
               </dt>
@@ -90,7 +90,7 @@ export default function Home() {
               </dd>
             </div>
             <div className="flex flex-col">
-              <dt className="flex items-center gap-x-3 text-base font-semibold leading-7">
+              <dt className="flex items-center gap-x-3 text-base font-medium leading-7">
                 <Users className="h-5 w-5 flex-none text-primary" aria-hidden="true" />
                 Author Community
               </dt>
@@ -108,10 +108,10 @@ export default function Home() {
       {/* Featured Books section */}
       <section className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
         <div className="mx-auto max-w-2xl lg:text-center">
-          <h2 className="text-base font-semibold leading-7 text-primary">
+          <h2 className="text-base font-medium leading-7 text-primary">
             Featured Books
           </h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+          <p className="mt-2 text-3xl font-serif tracking-tight sm:text-4xl">
             Discover our latest publications
           </p>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
@@ -123,9 +123,9 @@ export default function Home() {
           {/* Placeholder for featured books */}
           <article className="flex flex-col items-start">
             <div className="relative w-full">
-              <div className="aspect-[2/3] w-full rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 p-8 shadow-2xl ring-1 ring-primary/10">
+              <div className="aspect-[2/3] w-full rounded-none bg-gradient-to-br from-primary/5 to-transparent p-8 shadow-2xl ring-1 ring-primary/5">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <BookOpen className="h-32 w-32 text-primary/40" />
+                  <BookOpen className="h-32 w-32 text-primary/20" />
                 </div>
               </div>
             </div>
@@ -136,7 +136,7 @@ export default function Home() {
                 </time>
               </div>
               <div className="group relative">
-                <h3 className="mt-3 text-lg font-semibold leading-6">
+                <h3 className="mt-3 text-lg font-serif leading-6">
                   <span className="absolute inset-0" />
                   The Art of Unconventional Thinking
                 </h3>
