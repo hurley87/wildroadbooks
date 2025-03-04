@@ -1,101 +1,155 @@
-import Image from "next/image";
+import { Navigation } from "@/components/navigation";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, BookOpen, PenTool, Users } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main className="flex min-h-screen flex-col">
+      <Navigation />
+      
+      {/* Hero section */}
+      <section className="relative isolate overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
+          <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
+            <div className="mt-24 sm:mt-32 lg:mt-16">
+              <a href="/submissions" className="inline-flex space-x-6">
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold leading-6 text-primary ring-1 ring-inset ring-primary/20">
+                  Now accepting submissions
+                </span>
+                <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-muted-foreground">
+                  <span>Learn more</span>
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                </span>
+              </a>
+            </div>
+            <h1 className="mt-10 text-4xl font-bold tracking-tight sm:text-6xl">
+              Books that swim against conventional currents
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+              We publish thought-provoking works that challenge the status quo,
+              offering authors an editorial experience that enables them to refine
+              and publish their ideas.
+            </p>
+            <div className="mt-10 flex items-center gap-x-6">
+              <Button size="lg">
+                Browse Our Books
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+          <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
+            <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
+              <div className="relative aspect-[2/3] w-[37rem] rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 p-8 shadow-2xl ring-1 ring-primary/10">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <BookOpen className="h-32 w-32 text-primary/40" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      {/* Features section */}
+      <section className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
+        <div className="mx-auto max-w-2xl lg:text-center">
+          <h2 className="text-base font-semibold leading-7 text-primary">
+            Why Choose Wild Road Books
+          </h2>
+          <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+            A publishing experience like no other
+          </p>
+          <p className="mt-6 text-lg leading-8 text-muted-foreground">
+            We believe in the power of unconventional ideas and provide authors with
+            the support they need to bring their vision to life.
+          </p>
+        </div>
+        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+            <div className="flex flex-col">
+              <dt className="flex items-center gap-x-3 text-base font-semibold leading-7">
+                <PenTool className="h-5 w-5 flex-none text-primary" aria-hidden="true" />
+                Expert Editorial Support
+              </dt>
+              <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground">
+                <p className="flex-auto">
+                  Our experienced editors work closely with authors to refine their
+                  manuscripts while preserving their unique voice and vision.
+                </p>
+              </dd>
+            </div>
+            <div className="flex flex-col">
+              <dt className="flex items-center gap-x-3 text-base font-semibold leading-7">
+                <BookOpen className="h-5 w-5 flex-none text-primary" aria-hidden="true" />
+                Quality Production
+              </dt>
+              <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground">
+                <p className="flex-auto">
+                  From cover design to typesetting, we ensure every book meets the
+                  highest standards of quality and craftsmanship.
+                </p>
+              </dd>
+            </div>
+            <div className="flex flex-col">
+              <dt className="flex items-center gap-x-3 text-base font-semibold leading-7">
+                <Users className="h-5 w-5 flex-none text-primary" aria-hidden="true" />
+                Author Community
+              </dt>
+              <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground">
+                <p className="flex-auto">
+                  Join a community of like-minded authors who share your passion for
+                  pushing boundaries and exploring new ideas.
+                </p>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      {/* Featured Books section */}
+      <section className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
+        <div className="mx-auto max-w-2xl lg:text-center">
+          <h2 className="text-base font-semibold leading-7 text-primary">
+            Featured Books
+          </h2>
+          <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+            Discover our latest publications
+          </p>
+          <p className="mt-6 text-lg leading-8 text-muted-foreground">
+            Explore our collection of thought-provoking books that challenge
+            conventional thinking.
+          </p>
+        </div>
+        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          {/* Placeholder for featured books */}
+          <article className="flex flex-col items-start">
+            <div className="relative w-full">
+              <div className="aspect-[2/3] w-full rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 p-8 shadow-2xl ring-1 ring-primary/10">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <BookOpen className="h-32 w-32 text-primary/40" />
+                </div>
+              </div>
+            </div>
+            <div className="max-w-xl">
+              <div className="mt-6 flex items-center gap-x-4 text-xs">
+                <time dateTime="2024" className="text-muted-foreground">
+                  Coming Soon
+                </time>
+              </div>
+              <div className="group relative">
+                <h3 className="mt-3 text-lg font-semibold leading-6">
+                  <span className="absolute inset-0" />
+                  The Art of Unconventional Thinking
+                </h3>
+                <p className="mt-5 line-clamp-3 text-sm leading-6 text-muted-foreground">
+                  A groundbreaking exploration of how to break free from conventional
+                  thought patterns and embrace innovative ideas.
+                </p>
+              </div>
+            </div>
+          </article>
+          {/* Add more featured books here */}
+        </div>
+      </section>
+    </main>
   );
 }
