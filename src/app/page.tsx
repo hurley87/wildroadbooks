@@ -12,17 +12,6 @@ export default function Home() {
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50%_50%_at_50%_0%,_rgba(120,119,198,0.12)_0%,_rgba(255,255,255,0)_60%)]" />
         <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
           <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
-            <div className="mt-24 sm:mt-32 lg:mt-16">
-              <a href="/submissions" className="inline-flex space-x-6">
-                <span className="rounded-full bg-primary/5 px-3 py-1 text-sm font-medium leading-6 text-primary ring-1 ring-inset ring-primary/10">
-                  Now accepting submissions
-                </span>
-                <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-muted-foreground">
-                  <span>Learn more</span>
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </a>
-            </div>
             <h1 className="mt-10 text-4xl font-serif tracking-tight sm:text-6xl">
               Books that swim against conventional currents
             </h1>
