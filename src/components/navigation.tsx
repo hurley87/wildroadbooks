@@ -3,12 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ModeToggle } from "./mode-toggle";
 
 const navigation = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
-  { name: "Submissions", href: "/submissions" },
   { name: "Contact", href: "/contact" },
 ];
 

@@ -14,7 +14,6 @@ export function Footer() {
         </div>
         <nav className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
           <Link href="/about" className="hover:text-foreground">About</Link>
-          <Link href="/submissions" className="hover:text-foreground">Submissions</Link>
           <Link href="/contact" className="hover:text-foreground">Contact</Link>
           <Link href="/catching-unicorns" className="text-foreground font-medium">Catching Unicorns</Link>
         </nav>
