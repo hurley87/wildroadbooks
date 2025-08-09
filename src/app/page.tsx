@@ -26,7 +26,7 @@ export default function Home() {
               Books that swim against conventional currents
             </h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              We publish thought-provoking works that challenge the status quo,
+              We publish works that challenge the status quo,
               offering authors an editorial experience that enables them to refine
               and publish their ideas.
             </p>
