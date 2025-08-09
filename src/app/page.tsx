@@ -140,7 +140,7 @@ export default function Home() {
                   <Link href="/catching-unicorns" className="absolute inset-0" />
                   Catching Unicorns
                 </h3>
-                <p className="mt-5 line-clamp-3 text-sm leading-6 text-muted-foreground">
+                <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">
                   Our debut publication exploring unconventional paths to elusive outcomes.
                 </p>
               </div>
