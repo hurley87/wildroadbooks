@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Navigation } from "@/components/navigation";
 
 export const metadata: Metadata = {
   title: "Catching Unicorns — Wild Road Books",
@@ -12,8 +11,6 @@ export const metadata: Metadata = {
 export default function CatchingUnicornsPage() {
   return (
     <main className="flex min-h-screen flex-col">
-      <Navigation />
-
       <section className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-start">
           <div className="mx-auto w-full max-w-md lg:mx-0">

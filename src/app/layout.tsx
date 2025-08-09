@@ -3,6 +3,8 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Playfair_Display } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/footer";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -26,7 +28,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-gradient-to-b from-background via-background to-muted/30 font-sans antialiased",
           GeistSans.variable,
           GeistMono.variable,
           playfair.variable
@@ -38,7 +40,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Navigation />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

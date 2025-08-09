@@ -1,16 +1,15 @@
-import { Navigation } from "@/components/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, BookOpen, PenTool, Users } from "lucide-react";
+import { ArrowRight, PenTool, Users, BookOpen } from "lucide-react";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col">
-      <Navigation />
       
       {/* Hero section */}
       <section className="relative isolate overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50%_50%_at_50%_0%,_rgba(120,119,198,0.12)_0%,_rgba(255,255,255,0)_60%)]" />
         <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
           <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
             <div className="mt-24 sm:mt-32 lg:mt-16">
@@ -43,10 +42,15 @@ export default function Home() {
           </div>
           <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
             <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-              <div className="relative aspect-[2/3] w-[37rem] rounded-none bg-gradient-to-br from-primary/5 to-transparent p-8 shadow-2xl ring-1 ring-primary/5">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <BookOpen className="h-32 w-32 text-primary/20" />
-                </div>
+              <div className="relative aspect-[2/3] w-[37rem] overflow-hidden shadow-2xl ring-1 ring-primary/10">
+                <Image
+                  src="/1740152260.jpg"
+                  alt="Catching Unicorns cover"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 90vw, 592px"
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>

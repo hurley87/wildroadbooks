@@ -1,13 +1,10 @@
-import { Navigation } from "@/components/navigation";
-
 export default function About() {
   return (
-    <main className="min-h-screen bg-white">
-      <Navigation />
-      <div className="mx-auto max-w-7xl px-6 py-32 lg:px-8">
+    <main className="min-h-screen">
+      <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
         {/* Hero Section */}
-        <div className="mx-auto max-w-3xl text-center mb-24">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-8">
+        <div className="mx-auto mb-16 max-w-3xl text-center">
+          <h1 className="mb-6 text-4xl font-serif tracking-tight sm:text-5xl">
             About Wild Road Books
           </h1>
           <p className="text-lg leading-8 text-muted-foreground">
@@ -20,12 +17,12 @@ export default function About() {
         </div>
 
         {/* Team Section */}
-        <div className="mx-auto max-w-xl">
+        <div className="mx-auto max-w-2xl">
           <div className="space-y-12">
-            <h2 className="text-3xl font-bold tracking-tight">Our Team</h2>
+            <h2 className="text-3xl font-serif tracking-tight">Our Team</h2>
             <div className="space-y-12">
               <div className="space-y-4">
-                <h3 className="text-2xl font-semibold">David Hurley</h3>
+                <h3 className="text-2xl font-medium">David Hurley</h3>
                 <p className="text-muted-foreground">Publisher</p>
                 <p className="text-muted-foreground leading-relaxed">
                   David is an entrepreneur who loves to read. He has always been
@@ -35,7 +32,7 @@ export default function About() {
                 </p>
               </div>
               <div className="space-y-4">
-                <h3 className="text-2xl font-semibold">Bill Hurley</h3>
+                <h3 className="text-2xl font-medium">Bill Hurley</h3>
                 <p className="text-muted-foreground">Chief Acquisition Editor</p>
                 <p className="text-muted-foreground leading-relaxed">
                   Bill has been a Professor of Operations Research and Analytics
