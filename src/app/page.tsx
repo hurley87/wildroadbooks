@@ -10,7 +10,7 @@ export default function Home() {
       {/* Hero section */}
       <section className="relative isolate overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50%_50%_at_50%_0%,_rgba(120,119,198,0.12)_0%,_rgba(255,255,255,0)_60%)]" />
-        <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
+        <div className="mx-auto max-w-7xl px-6 pb-16 pt-8 sm:pb-24 lg:flex lg:px-8 lg:py-40">
           <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
             <h1 className="mt-10 text-4xl font-serif tracking-tight sm:text-6xl">
               Books that swim against conventional currents
@@ -20,7 +20,7 @@ export default function Home() {
               offering authors an editorial experience that enables them to refine
               and publish their ideas.
             </p>
-            <div className="mt-10 flex items-center gap-x-6">
+            <div className="mt-8 flex items-center gap-x-4 sm:mt-10 sm:gap-x-6">
               <Button size="lg" className="bg-primary hover:bg-primary/90" asChild>
                 <Link href="/catching-unicorns">
                   Read Catching Unicorns
@@ -29,15 +29,15 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
-            <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-              <div className="relative aspect-[2/3] w-[37rem] overflow-hidden shadow-2xl ring-1 ring-primary/10">
+          <div className="mx-auto mt-10 flex w-full max-w-2xl sm:mt-16 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
+            <div className="w-full max-w-3xl flex-none sm:max-w-5xl lg:max-w-none lg:w-[37rem] lg:shrink-0">
+              <div className="relative aspect-[2/3] w-full overflow-hidden shadow-2xl ring-1 ring-primary/10">
                 <Image
                   src="/1740152260.jpg"
                   alt="Catching Unicorns cover"
                   fill
                   priority
-                  sizes="(max-width: 1024px) 90vw, 592px"
+                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 592px"
                   className="object-cover"
                 />
               </div>
@@ -47,7 +47,7 @@ export default function Home() {
       </section>
 
       {/* Features section */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8 lg:py-32">
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base font-medium leading-7 text-primary">
             Why Choose Wild Road Books
@@ -61,7 +61,7 @@ export default function Home() {
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-12 sm:gap-y-16 lg:max-w-none lg:grid-cols-3">
             <div className="flex flex-col">
               <dt className="flex items-center gap-x-3 text-base font-medium leading-7">
                 <PenTool className="h-5 w-5 flex-none text-primary" aria-hidden="true" />
@@ -103,7 +103,7 @@ export default function Home() {
       </section>
 
       {/* Featured Books section */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8 lg:py-32">
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base font-medium leading-7 text-primary">
             Featured Books
@@ -116,7 +116,7 @@ export default function Home() {
             conventional thinking.
           </p>
         </div>
-        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none">
+        <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 sm:mt-16 sm:gap-y-20 lg:mx-0 lg:max-w-none">
           <article className="flex flex-col items-start">
             <Link href="/catching-unicorns" className="relative w-full">
               <div className="relative aspect-[2/3] w-full shadow-2xl ring-1 ring-primary/5">
