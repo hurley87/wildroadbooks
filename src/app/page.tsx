@@ -1,5 +1,7 @@
 import { Navigation } from "@/components/navigation";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, BookOpen, PenTool, Users } from "lucide-react";
 
 export default function Home() {
@@ -31,9 +33,11 @@ export default function Home() {
               and publish their ideas.
             </p>
             <div className="mt-10 flex items-center gap-x-6">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
-                Browse Our Books
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button size="lg" className="bg-primary hover:bg-primary/90" asChild>
+                <Link href="/catching-unicorns">
+                  Read Catching Unicorns
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
             </div>
           </div>
@@ -119,35 +123,36 @@ export default function Home() {
             conventional thinking.
           </p>
         </div>
-        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {/* Placeholder for featured books */}
+        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none">
           <article className="flex flex-col items-start">
-            <div className="relative w-full">
-              <div className="aspect-[2/3] w-full rounded-none bg-gradient-to-br from-primary/5 to-transparent p-8 shadow-2xl ring-1 ring-primary/5">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <BookOpen className="h-32 w-32 text-primary/20" />
-                </div>
+            <Link href="/catching-unicorns" className="relative w-full">
+              <div className="relative aspect-[2/3] w-full shadow-2xl ring-1 ring-primary/5">
+                <Image
+                  src="/1740152260.jpg"
+                  alt="Catching Unicorns cover"
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 420px"
+                  className="object-cover"
+                />
               </div>
-            </div>
+            </Link>
             <div className="max-w-xl">
               <div className="mt-6 flex items-center gap-x-4 text-xs">
                 <time dateTime="2024" className="text-muted-foreground">
-                  Coming Soon
+                  2024
                 </time>
               </div>
               <div className="group relative">
                 <h3 className="mt-3 text-lg font-serif leading-6">
-                  <span className="absolute inset-0" />
-                  The Art of Unconventional Thinking
+                  <Link href="/catching-unicorns" className="absolute inset-0" />
+                  Catching Unicorns
                 </h3>
                 <p className="mt-5 line-clamp-3 text-sm leading-6 text-muted-foreground">
-                  A groundbreaking exploration of how to break free from conventional
-                  thought patterns and embrace innovative ideas.
+                  Our debut publication exploring unconventional paths to elusive outcomes.
                 </p>
               </div>
             </div>
           </article>
-          {/* Add more featured books here */}
         </div>
       </section>
     </main>
