@@ -112,23 +112,12 @@ export default function Home() {
             Discover our latest publications
           </p>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            Explore our collection of thought-provoking books that challenge
+            Explore our collection of books that challenge
             conventional thinking.
           </p>
         </div>
         <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 sm:mt-16 sm:gap-y-20 lg:mx-0 lg:max-w-none">
           <article className="flex flex-col items-start">
-            <Link href="/catching-unicorns" className="relative w-full">
-              <div className="relative aspect-[2/3] w-full shadow-2xl ring-1 ring-primary/5">
-                <Image
-                  src="/1740152260.jpg"
-                  alt="Catching Unicorns cover"
-                  fill
-                  sizes="(max-width: 1024px) 90vw, 420px"
-                  className="object-cover"
-                />
-              </div>
-            </Link>
             <div className="max-w-xl">
               <div className="mt-6 flex items-center gap-x-4 text-xs">
                 <time dateTime="2024" className="text-muted-foreground">
