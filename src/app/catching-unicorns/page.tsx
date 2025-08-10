@@ -16,7 +16,7 @@ export default function CatchingUnicornsPage() {
           <div className="mx-auto w-full max-w-md lg:mx-0">
             <div className="relative aspect-[2/3] w-full shadow-2xl ring-1 ring-primary/5">
               <Image
-                src="/1740152260.jpg"
+                src="/catching-unicorns.png"
                 alt="Catching Unicorns cover art"
                 fill
                 priority

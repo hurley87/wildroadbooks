@@ -33,7 +33,7 @@ export default function Home() {
             <div className="w-full max-w-3xl flex-none sm:max-w-5xl lg:max-w-none lg:w-[37rem] lg:shrink-0">
               <div className="relative aspect-[2/3] w-full overflow-hidden shadow-2xl ring-1 ring-primary/10">
                 <Image
-                  src="/1740152260.jpg"
+                  src="/catching-unicorns.png"
                   alt="Catching Unicorns cover"
                   fill
                   priority

@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Mini Games • Three-Lane Dodge</title>
+  <style>
+    :root { --bg:#0b0f1a; --fg:#e5e7eb; --muted:#9ca3af; --accent:#7c3aed; }
+    html,body{height:100%;margin:0;background:radial-gradient(1200px 800px at 70% -20%, #172036, #0b0f1a);} 
+    canvas{display:block; position:fixed; inset:0; touch-action:none;}
+    .hud{position:fixed; left:0; right:0; top:0; display:flex; justify-content:space-between; padding:12px 16px; font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial; color:var(--fg); pointer-events:none; user-select:none;}
+    .hud .pill{background:rgba(255,255,255,0.06); backdrop-filter: blur(8px); border:1px solid rgba(255,255,255,0.08); padding:8px 12px; border-radius:999px; font-weight:600; letter-spacing:.3px;}
+    .center{position:fixed; inset:0; display:grid; place-items:center; font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial; color:var(--fg);}
+    .card{background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:20px 18px; max-width:520px; text-align:center; box-shadow:0 10px 40px rgba(0,0,0,.35);}
+    h1{margin:6px 0 10px; font-size:24px; letter-spacing:.3px}
+    p{margin:8px 0; color:var(--muted);}
+    .btns{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:14px}
+    button{background:linear-gradient(135deg, #8b5cf6, #22d3ee); color:white; border:none; border-radius:14px; padding:12px 16px; font-weight:700; cursor:pointer; box-shadow:0 6px 20px rgba(139,92,246,.25);}
+    button.secondary{background:rgba(255,255,255,0.08); box-shadow:none;}
+    a { color:#a78bfa; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <canvas id="game"></canvas>
+  <div class="hud" id="hud" hidden>
+    <div class="pill" id="score">Score: 0</div>
+    <div class="pill" id="best">Best: 0</div>
+  </div>
+  <div class="center" id="overlay">
+    <div class="card" id="menu">
+      <h1>Three‑Lane Dodge</h1>
+      <p>Tap/Click the <strong>left, middle, or right</strong> third of the screen to switch lanes. 
+      Dodge hazards, grab crystals, and survive as speed ramps up. 60‑second sprint.</p>
+      <div class="btns">
+        <button id="playBtn">Play</button>
+        <button class="secondary" id="howBtn">How to Play</button>
+      </div>
+      <p style="margin-top:10px; font-size:12px">Keyboard: A / ← (left), S / ↓ (center), D / → (right). Space to restart.</p>
+    </div>
+    <div class="card" id="how" hidden>
+      <h1>How to Play</h1>
+      <p>• The orb auto‑runs; obstacles fall from the top.<br/>• Tapping a screen third snaps you into that lane.<br/>• Crystals = +5 pts. Survive = +1 / second. 
+      Collide with a hazard and it's game over.</p>
+      <div class="btns">
+        <button id="backBtn" class="secondary">Back</button>
+        <button id="playBtn2">Start</button>
+      </div>
+    </div>
+    <div class="card" id="gameover" hidden>
+      <h1>Game Over</h1>
+      <p id="finalStats">You scored 0</p>
+      <div class="btns">
+        <button id="retryBtn">Play Again</button>
+        <button id="menuBtn" class="secondary">Main Menu</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const hud = document.getElementById('hud');
+  const scoreEl = document.getElementById('score');
+  const bestEl = document.getElementById('best');
+  const overlay = document.getElementById('overlay');
+  const menu = document.getElementById('menu');
+  const how = document.getElementById('how');
+  const gameover = document.getElementById('gameover');
+  const finalStats = document.getElementById('finalStats');
+
+  const playBtn = document.getElementById('playBtn');
+  const playBtn2 = document.getElementById('playBtn2');
+  const howBtn = document.getElementById('howBtn');
+  const backBtn = document.getElementById('backBtn');
+  const retryBtn = document.getElementById('retryBtn');
+  const menuBtn = document.getElementById('menuBtn');
+
+  const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+  let W = 0, H = 0; // in CSS pixels
+  let w = 0, h = 0; // in backing store pixels
+  function resize(){
+    W = window.innerWidth; H = window.innerHeight; 
+    w = Math.floor(W * DPR); h = Math.floor(H * DPR);
+    canvas.width = w; canvas.height = h; canvas.style.width = W+'px'; canvas.style.height = H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0); // draw in CSS pixel coordinates
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const rand = (a,b)=>a+Math.random()*(b-a);
+  const choice = arr => arr[(arr.length*Math.random())|0];
+
+  const STATE = { MENU:0, PLAYING:1, OVER:2 };
+  let state = STATE.MENU;
+
+  // Lanes set to 3 columns
+  let lanes = [0.2, 0.5, 0.8]; // relative x (multipliers of width)
+  let laneX = i => Math.floor(lanes[i] * W);
+
+  // Player
+  const player = { lane:1, y:0, r:16, alive:true, trail:[] };
+
+  // Entities
+  const hazards = []; // {lane, y, size, speed}
+  const crystals = []; // collectibles {lane, y, size}
+
+  // Game params
+  let speed = 240; // px/sec base
+  let t = 0; // seconds
+  let score = 0; 
+  let best = +localStorage.getItem('mg_best') || 0;
+  bestEl.textContent = `Best: ${best}`;
+
+  let spawnTimer = 0, spawnInterval = 0.9; // seconds
+  let crystalTimer = 0, crystalInterval = 2.2;
+  let lastMs = 0; 
+
+  function reset(){
+    player.lane = 1; player.y = H - 120; player.alive = true; player.trail.length = 0;
+    hazards.length = 0; crystals.length = 0;
+    speed = 240; t = 0; score = 0; 
+    spawnTimer = 0; spawnInterval = 0.9; crystalTimer = 0; crystalInterval = 2.2;
+  }
+
+  function start(){
+    state = STATE.PLAYING;
+    hud.hidden = false; overlay.hidden = true; menu.hidden = true; how.hidden = true; gameover.hidden = true;
+    reset();
+  }
+
+  function end(){
+    state = STATE.OVER;
+    hud.hidden = true; overlay.hidden = false;
+    menu.hidden = true; how.hidden = true; gameover.hidden = false;
+    if(score > best){ best = score; localStorage.setItem('mg_best', best); }
+    finalStats.textContent = `You scored ${score}. Best: ${best}.`;
+  }
+
+  function setLaneByX(x){
+    const third = W/3;
+    const idx = Math.min(2, Math.max(0, Math.floor(x / third)));
+    player.lane = idx;
+  }
+
+  // Input
+  canvas.addEventListener('pointerdown', e => {
+    if(state === STATE.PLAYING){
+      const x = e.clientX; setLaneByX(x);
+    }
+  });
+  window.addEventListener('keydown', e => {
+    if(state === STATE.MENU && (e.key === ' ' || e.key === 'Enter')) start();
+    else if(state === STATE.OVER && (e.key === ' ' || e.key === 'Enter')) start();
+    else if(state === STATE.PLAYING){
+      if(e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') player.lane = Math.max(0, player.lane-1);
+      if(e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') player.lane = Math.min(2, player.lane+1);
+      if(e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') player.lane = 1;
+    }
+  });
+
+  function spawnHazard(){
+    const size = rand(22, 42);
+    hazards.push({ lane: (Math.random()*3)|0, y: -size, size, speed: speed * rand(0.95, 1.2) });
+  }
+  function spawnCrystal(){
+    const size = 14;
+    crystals.push({ lane: (Math.random()*3)|0, y: -size, size });
+  }
+
+  function step(dt){
+    // dt seconds
+    t += dt; score = Math.floor(t) + score; // add whole seconds survived to score progressively
+    // Ramp difficulty
+    speed += dt * 8; 
+    spawnInterval = Math.max(0.45, spawnInterval - dt * 0.01);
+    crystalInterval = Math.max(1.1, crystalInterval - dt * 0.005);
+
+    spawnTimer += dt; if(spawnTimer >= spawnInterval){ spawnTimer = 0; spawnHazard(); }
+    crystalTimer += dt; if(crystalTimer >= crystalInterval){ crystalTimer = 0; spawnCrystal(); }
+
+    // Move hazards
+    for(let i=hazards.length-1;i>=0;i--){
+      const h = hazards[i]; h.y += h.speed * dt;
+      if(h.y - h.size > H) hazards.splice(i,1);
+    }
+    // Move crystals
+    for(let i=crystals.length-1;i>=0;i--){
+      const c = crystals[i]; c.y += speed * 0.9 * dt;
+      if(c.y - c.size > H) crystals.splice(i,1);
+    }
+
+    // Player trail
+    player.trail.push({x: laneX(player.lane), y: player.y});
+    if(player.trail.length>10) player.trail.shift();
+
+    // Collisions
+    const px = laneX(player.lane), py = player.y, pr = player.r;
+    // hazards
+    for(const h of hazards){
+      if(h.lane === player.lane){
+        const dy = Math.abs(py - h.y);
+        if(dy < pr + h.size*0.6){ end(); return; }
+      }
+    }
+    // crystals
+    for(let i=crystals.length-1;i>=0;i--){
+      const c = crystals[i];
+      if(c.lane === player.lane && Math.abs(py - c.y) < pr + c.size){
+        crystals.splice(i,1); score += 5; // bonus
+      }
+    }
+
+    scoreEl.textContent = `Score: ${score}`;
+  }
+
+  function draw(){
+    // Background grid / lanes
+    ctx.clearRect(0,0,W,H);
+
+    // subtle stars
+    const rows = 20, cols = 10;
+    for(let i=0;i<rows;i++){
+      for(let j=0;j<cols;j++){
+        const x = j/cols * W + ((i%2)?2:0);
+        const y = i/rows * H + (t*10 % (H/rows));
+        ctx.globalAlpha = 0.06; ctx.fillStyle = '#ffffff';
+        ctx.fillRect(x,y,2,2);
+      }
+    }
+    ctx.globalAlpha = 1;
+
+    // lane separators
+    ctx.strokeStyle = 'rgba(255,255,255,.08)';
+    ctx.lineWidth = 2;
+    for(let i=1;i<3;i++){
+      const x = i*(W/3);
+      ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+    }
+
+    // Crystals
+    for(const c of crystals){
+      const x = laneX(c.lane), y = c.y; const s = c.size;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate((t*4 + y*0.01) % (Math.PI*2));
+      const g = ctx.createLinearGradient(-s,-s,s,s); g.addColorStop(0,'#22d3ee'); g.addColorStop(1,'#8b5cf6');
+      ctx.fillStyle = g; ctx.beginPath();
+      ctx.moveTo(0,-s); ctx.lineTo(s,0); ctx.lineTo(0,s); ctx.lineTo(-s,0); ctx.closePath(); ctx.fill();
+      ctx.restore();
+    }
+
+    // Hazards
+    for(const h of hazards){
+      const x = laneX(h.lane), y = h.y, s = h.size;
+      ctx.save();
+      ctx.translate(x,y);
+      ctx.fillStyle = 'rgba(255,80,100,.9)';
+      ctx.beginPath(); ctx.arc(0,0,s,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.restore();
+    }
+
+    // Player trail
+    for(let i=0;i<player.trail.length;i++){
+      const p = player.trail[i];
+      const alpha = i / player.trail.length;
+      ctx.beginPath(); ctx.arc(p.x, p.y, player.r*(0.6+alpha*0.4), 0, Math.PI*2);
+      ctx.fillStyle = `rgba(167,139,250,${alpha*0.25})`; ctx.fill();
+    }
+
+    // Player
+    ctx.save();
+    const px = laneX(player.lane), py = player.y;
+    const glow = ctx.createRadialGradient(px,py,4, px,py,28);
+    glow.addColorStop(0,'rgba(124,58,237,0.9)'); glow.addColorStop(1,'rgba(124,58,237,0.0)');
+    ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(px, py, 28, 0, Math.PI*2); ctx.fill();
+
+    const g = ctx.createLinearGradient(px-16,py-16,px+16,py+16);
+    g.addColorStop(0,'#a78bfa'); g.addColorStop(1,'#22d3ee');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, player.r, 0, Math.PI*2); ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(255,255,255,.6)'; ctx.stroke();
+    ctx.restore();
+
+    // Timer ring (60s target)
+    const maxT = 60;
+    ctx.save();
+    ctx.translate(W-56, 56);
+    ctx.strokeStyle = 'rgba(255,255,255,.15)'; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(0,0,26,0,Math.PI*2); ctx.stroke();
+    ctx.strokeStyle = '#22d3ee';
+    ctx.beginPath(); ctx.arc(0,0,26, -Math.PI/2, -Math.PI/2 + Math.min(1, t/maxT)*Math.PI*2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function loop(ms){
+    if(!lastMs) lastMs = ms;
+    const dt = Math.min(1/30, (ms - lastMs)/1000); // clamp big jumps
+    lastMs = ms;
+
+    if(state === STATE.PLAYING){ step(dt); draw(); if(t >= 60) end(); }
+    else { draw(); }
+
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  // UI wiring
+  howBtn.onclick = () => { menu.hidden = true; how.hidden = false; };
+  backBtn.onclick = () => { how.hidden = true; menu.hidden = false; };
+  playBtn.onclick = start; playBtn2.onclick = start; retryBtn.onclick = start; menuBtn.onclick = () => {
+    state = STATE.MENU; hud.hidden = true; overlay.hidden = false; menu.hidden = false; how.hidden = true; gameover.hidden = true;
+  };
+})();
+</script>
+</body>
+</html>
