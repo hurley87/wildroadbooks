@@ -20,10 +20,10 @@ export default function Contact() {
               </p>
               <p className="mt-5">
                 <a
-                  href="mailto:wildroadbooks@gmail.com"
+                  href="mailto:admin@wildroadbooks.com"
                   className="text-primary hover:text-primary/80"
                 >
-                  wildroadbooks@gmail.com
+                  admin@wildroadbooks.com
                 </a>
               </p>
             </div>
@@ -41,10 +41,10 @@ export default function Contact() {
               </ul>
               <p className="mt-5">
                 <a
-                  href="mailto:wildroadbooks@gmail.com"
+                  href="mailto:admin@wildroadbooks.com"
                   className="text-primary hover:text-primary/80"
                 >
-                  wildroadbooks@gmail.com
+                  admin@wildroadbooks.com
                 </a>
               </p>
             </div>
