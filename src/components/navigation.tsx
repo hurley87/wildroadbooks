@@ -24,11 +24,11 @@ export function Navigation() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
       <nav className="container flex h-16 items-center justify-between sm:h-20">
         <div className="flex items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-lg font-serif tracking-tight sm:text-xl">
+          <Link href="/" className="flex items-center space-x-2 group transition-all duration-300">
+            <span className="text-lg font-serif tracking-tight sm:text-xl bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text group-hover:from-primary group-hover:to-primary/70 transition-all duration-300">
               Wild Road Books
             </span>
           </Link>
@@ -41,13 +41,19 @@ export function Navigation() {
               key={item.href}
               href={item.href}
               className={cn(
-                "text-sm font-medium tracking-wide transition-colors hover:text-primary",
+                "relative text-sm font-medium tracking-wide transition-all duration-300 hover:text-primary group",
                 pathname === item.href
                   ? "text-foreground"
                   : "text-muted-foreground"
               )}
             >
               {item.name}
+              <span className={cn(
+                "absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-primary/50 transition-all duration-300",
+                pathname === item.href
+                  ? "w-full"
+                  : "w-0 group-hover:w-full"
+              )} />
             </Link>
           ))}
         </div>
