@@ -32,15 +32,31 @@ export default function CatchingUnicornsPage() {
               Catching Unicorns
             </h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              Our debut publication. This early release is available while we
-              prepare the print edition.
+              <strong>Catching Unicorns: The Exographic Revolution and the Rise of Techno-Literate Culture</strong> by Bill Hurley and David Hurley.
             </p>
 
-            <div className="mt-10 space-y-4 text-muted-foreground">
-              <p>Catching Unicorns is a concise, practical read intended to be shared freely.</p>
-              <p>
-                For inquiries, permissions, or press, please reach out via our
-                <Link href="/contact" className="text-primary hover:text-primary/80"> contact page</Link>.
+            <div className="mt-10 space-y-4">
+              <p className="text-muted-foreground">
+                The book first explains how writing enables us to discover ideas that would otherwise be impossible. 
+                It then explores how these ideas have given rise to the massively-urban techno-literate cultures we inhabit today.
+              </p>
+              
+              <div className="rounded-2xl border bg-muted/30 p-6">
+                <p className="text-sm font-medium text-foreground mb-4">Available now</p>
+                <a 
+                  href="https://www.amazon.ca/Catching-Unicorns-Exographic-Revolution-Techno-Literate/dp/1069059315"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium"
+                >
+                  Purchase on Amazon.ca
+                  <span className="text-xs">↗</span>
+                </a>
+              </div>
+
+              <p className="text-sm text-muted-foreground">
+                For inquiries, permissions, or press, please reach out via our{" "}
+                <Link href="/contact" className="text-primary hover:text-primary/80">contact page</Link>.
               </p>
             </div>
           </div>
