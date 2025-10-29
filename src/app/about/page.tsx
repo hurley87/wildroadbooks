@@ -43,25 +43,37 @@ export default function About() {
           </p>
         </div>
 
-        {/* Maiden Lane Press Section */}
+        {/* Aegis Line Section */}
         <div className="mx-auto mb-16 max-w-3xl">
           <div className="flex items-center gap-6 mb-4">
             <div className="relative w-16 h-16 flex-shrink-0">
               <Image
                 src="/madusa.png"
-                alt="Maiden Lane Press logo"
+                alt="Aegis Line logo"
                 fill
                 sizes="64px"
                 className="object-contain"
               />
             </div>
-            <h2 className="text-2xl font-serif tracking-tight">Maiden Lane Press</h2>
+            <h2 className="text-2xl font-serif tracking-tight">Aegis Line</h2>
           </div>
+          <p className="text-base leading-7 text-muted-foreground">
+            Aegis Line is our imprint dedicated to Security and Defence scholarship. 
+            Named after the shield of protection in Greek mythology, Aegis Line publishes 
+            rigorous analysis, strategic thinking, and policy scholarship on contemporary 
+            security challenges—from cybersecurity and intelligence to military strategy 
+            and international relations.
+          </p>
+        </div>
+
+        {/* Maiden Lane Press Section */}
+        <div className="mx-auto mb-16 max-w-3xl">
+          <h2 className="mb-4 text-2xl font-serif tracking-tight">Maiden Lane Press</h2>
           <p className="text-base leading-7 text-muted-foreground">
             Maiden Lane Press, our literary imprint, extends this model to creative and 
             cross-genre writing—from fiction and poetry to cultural essays and hybrid works. 
-            Together, Wild Road Books and Maiden Lane Press publish writing that thinks deeply, 
-            reads clearly, and travels widely.
+            Together, Wild Road Books, Aegis Line, and Maiden Lane Press publish writing that 
+            thinks deeply, reads clearly, and travels widely.
           </p>
         </div>
 

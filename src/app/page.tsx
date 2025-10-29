@@ -141,14 +141,14 @@ export default function Home() {
             Our Publications
           </h2>
           <p className="mt-2 text-3xl font-serif tracking-tight sm:text-4xl">
-            Wild Road Books & Maiden Lane Press
+            Wild Road Books & Our Imprints
           </p>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
             Explore our catalogue featuring original and engaging scholarship from all disciplines, 
-            and visit our imprint Maiden Lane Press for creative and cross-genre work.
+            along with specialized imprints for creative work and security studies.
           </p>
         </div>
-        <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 sm:mt-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+        <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 sm:mt-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           <article className="group flex flex-col items-start relative p-6 rounded-xl hover:bg-accent/30 transition-all duration-300">
             <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="max-w-xl relative z-10">
@@ -195,11 +195,33 @@ export default function Home() {
                 <div className="relative w-12 h-12 flex-shrink-0 rounded-lg bg-accent/50 p-2 group-hover:scale-110 transition-transform duration-300">
                   <Image
                     src="/madusa.png"
-                    alt="Maiden Lane Press logo"
+                    alt="Aegis Line logo"
                     fill
                     sizes="48px"
                     className="object-contain"
                   />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-primary">Our Imprint</p>
+                  <h3 className="mt-1 text-lg font-serif leading-6">
+                    <Link href="/aegis-line" className="hover:text-primary transition-colors duration-300">
+                      Aegis Line
+                    </Link>
+                  </h3>
+                </div>
+              </div>
+              <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                Our imprint dedicated to Security and Defence—publishing rigorous analysis, 
+                strategic thinking, and policy scholarship on contemporary security challenges.
+              </p>
+            </div>
+          </article>
+          <article className="group flex flex-col items-start relative p-6 rounded-xl hover:bg-accent/30 transition-all duration-300">
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="max-w-xl relative z-10">
+              <div className="flex items-center gap-4 mt-2">
+                <div className="relative w-12 h-12 flex-shrink-0 rounded-lg bg-accent/50 p-2 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center text-primary">
+                  <BookOpen className="h-6 w-6" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-primary">Our Imprint</p>
