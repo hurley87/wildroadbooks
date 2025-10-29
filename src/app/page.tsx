@@ -38,11 +38,6 @@ export default function Home() {
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto hover:bg-accent/50 transition-all duration-300" asChild>
-                <Link href="/submissions">
-                  Submit Your Work
-                </Link>
-              </Button>
             </div>
           </div>
           <div className="mx-auto mt-10 flex w-full max-w-2xl sm:mt-16 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32 animate-in fade-in slide-in-from-right-8 duration-1000">
