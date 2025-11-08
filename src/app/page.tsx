@@ -44,14 +44,13 @@ export default function Home() {
           </div>
           <div className="mx-auto mt-10 flex w-full max-w-2xl sm:mt-16 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32 animate-in fade-in slide-in-from-right-8 duration-1000">
             <div className="w-full max-w-3xl flex-none sm:max-w-5xl lg:max-w-none lg:w-[37rem] lg:shrink-0">
-              {/* Gradient mask overlay for blurred edge effect */}
-              <div className="relative aspect-[2/3] w-full overflow-hidden rounded-2xl shadow-2xl ring-1 ring-primary/20 hover:ring-primary/40 transition-all duration-500 group">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-background/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                {/* Soft edge blending mask - creates smooth fade on all edges */}
+              {/* Soft blending effect - Vermeer-like ethereal fade */}
+              <div className="relative aspect-[2/3] w-full overflow-hidden transition-all duration-500 group">
+                {/* Soft edge blending mask - creates smooth fade on all edges, no sharp delineations */}
                 <div 
-                  className="absolute inset-0 pointer-events-none z-10"
+                  className="absolute inset-0 pointer-events-none z-10 rounded-md"
                   style={{ 
-                    background: `radial-gradient(ellipse 75% 85% at 50% 50%, transparent 0%, transparent 55%, hsl(var(--background) / 0.2) 75%, hsl(var(--background) / 0.5) 90%, hsl(var(--background) / 0.85) 100%)`,
+                    background: `radial-gradient(ellipse 70% 80% at 50% 50%, transparent 0%, transparent 50%, hsl(var(--background) / 0.15) 70%, hsl(var(--background) / 0.4) 85%, hsl(var(--background) / 0.7) 95%, hsl(var(--background)) 100%)`,
                   }}
                 />
                 <Image
@@ -60,7 +59,7 @@ export default function Home() {
                   fill
                   priority
                   sizes="(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 592px"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02] rounded-md"
                 />
               </div>
             </div>
