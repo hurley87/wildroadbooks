@@ -19,31 +19,43 @@ export default function Home() {
         
         <div className="mx-auto max-w-7xl px-6 pb-16 pt-12 sm:pb-24 lg:flex lg:px-8 lg:py-40">
           <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-sm font-medium text-primary/80 border border-primary/20 rounded-full bg-primary/5 backdrop-blur-sm">
-              <Sparkles className="h-4 w-4" />
-              Independent Academic Publishing
-            </div>
             <h1 className="mt-4 text-4xl font-serif tracking-tight sm:text-6xl bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text">
-              Welcome to Wild Road Books
+              <span className="block">Welcome to</span>
+              <span className="block font-normal" style={{ fontVariant: 'small-caps' }}>Wild Road Books</span>
             </h1>
+            <p className="mt-4 text-base leading-7 text-muted-foreground italic">
+              Committed to supporting thoughtful scholarship and clear, engaging writing.
+            </p>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              We are an independent academic publisher committed to supporting thoughtful 
-              scholarship and clear, engaging writing. We believe publishing should be a 
-              partnership—not a transaction. We do things differently.
+              We are a new academic publisher with a different approach. We partner with our authors. We ask them to work with our third-party independent editors and typesetters (using their research funding) to produce a high-quality draft. Upon submission of the draft to Wild Road, our in-house editors and typesetters will help authors prepare the final files for submission to Kindle Direct Publishing. With KDP, our authors get the global reach of Amazon, generous royalties, and the freedom to set the book's price. Working with our typesetters, the author develops the capability to make changes immediately and continuously as the final manuscript is prepared.
+            </p>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+              Our pledge to our authors is that we will work hard to make sure that your book looks and reads like a book. Have a look at our first publication, <Link href="/catching-unicorns" className="text-primary hover:text-primary/80 underline underline-offset-4 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">Catching Unicorns</Link>, to see what we mean.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:items-center sm:gap-x-6">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 w-full sm:w-auto group transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105" asChild>
+              {/* Catalog button hidden until more titles */}
+              {/* <Button size="lg" className="bg-primary hover:bg-primary/90 w-full sm:w-auto group transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105" asChild>
                 <Link href="/books">
                   Browse Catalogue
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
-              </Button>
+              </Button> */}
             </div>
           </div>
           <div className="mx-auto mt-10 flex w-full max-w-2xl sm:mt-16 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32 animate-in fade-in slide-in-from-right-8 duration-1000">
             <div className="w-full max-w-3xl flex-none sm:max-w-5xl lg:max-w-none lg:w-[37rem] lg:shrink-0">
+              {/* Gradient mask overlay for blurred edge effect */}
               <div className="relative aspect-[2/3] w-full overflow-hidden rounded-2xl shadow-2xl ring-1 ring-primary/20 hover:ring-primary/40 transition-all duration-500 group">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-background/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Blurred edge gradient mask - subtle fade where hero meets text on desktop */}
+                <div 
+                  className="absolute inset-0 pointer-events-none z-10 hidden lg:block lg:left-0 lg:w-24 lg:h-full"
+                  style={{ 
+                    background: 'linear-gradient(to right, hsl(var(--background)) 0%, hsl(var(--background) / 0.6) 40%, transparent 100%)',
+                    backdropFilter: 'blur(1px)',
+                    WebkitBackdropFilter: 'blur(1px)',
+                  }}
+                />
                 <Image
                   src="/catching-unicorns.png"
                   alt="Catching Unicorns cover"

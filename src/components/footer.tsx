@@ -11,7 +11,7 @@ export function Footer() {
             Wild Road Books
           </Link>
           <p className="text-sm text-muted-foreground">
-            Publishing books that swim against conventional currents.
+            Committed to supporting thoughtful scholarship and clear, engaging writing.
           </p>
         </div>
         <nav className="flex flex-wrap items-center gap-x-6 gap-y-3">
