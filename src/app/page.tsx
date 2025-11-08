@@ -47,17 +47,15 @@ export default function Home() {
               {/* Gradient mask overlay for blurred edge effect */}
               <div className="relative aspect-[2/3] w-full overflow-hidden rounded-2xl shadow-2xl ring-1 ring-primary/20 hover:ring-primary/40 transition-all duration-500 group">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-background/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                {/* Blurred edge gradient mask - subtle fade where hero meets text on desktop */}
+                {/* Soft edge blending mask - creates smooth fade on all edges */}
                 <div 
-                  className="absolute inset-0 pointer-events-none z-10 hidden lg:block lg:left-0 lg:w-24 lg:h-full"
+                  className="absolute inset-0 pointer-events-none z-10"
                   style={{ 
-                    background: 'linear-gradient(to right, hsl(var(--background)) 0%, hsl(var(--background) / 0.6) 40%, transparent 100%)',
-                    backdropFilter: 'blur(1px)',
-                    WebkitBackdropFilter: 'blur(1px)',
+                    background: `radial-gradient(ellipse 75% 85% at 50% 50%, transparent 0%, transparent 55%, hsl(var(--background) / 0.2) 75%, hsl(var(--background) / 0.5) 90%, hsl(var(--background) / 0.85) 100%)`,
                   }}
                 />
                 <Image
-                  src="/catching-unicorns.png"
+                  src="/cover.png"
                   alt="Catching Unicorns cover"
                   fill
                   priority
