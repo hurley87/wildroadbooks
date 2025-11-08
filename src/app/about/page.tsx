@@ -6,9 +6,20 @@ export default function About() {
       <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
         {/* Hero Section */}
         <div className="mx-auto mb-16 max-w-3xl">
-          <h1 className="mb-6 text-4xl font-serif tracking-tight sm:text-5xl">
-            About Wild Road Books
-          </h1>
+          <div className="flex items-center gap-4 mb-6">
+            <div className="relative w-16 h-16 flex-shrink-0 rounded-full bg-accent/50 p-0.5 overflow-hidden">
+              <Image
+                src="/WildRoadColophon.png"
+                alt="Wild Road Books colophon"
+                fill
+                sizes="64px"
+                className="object-cover rounded-full"
+              />
+            </div>
+            <h1 className="text-4xl font-serif tracking-tight sm:text-5xl">
+              About Wild Road Books
+            </h1>
+          </div>
           <p className="text-lg leading-8 text-muted-foreground">
             Wild Road Books is an independent academic press dedicated to publishing serious 
             ideas in accessible form. We combine the standards of traditional scholarship with 

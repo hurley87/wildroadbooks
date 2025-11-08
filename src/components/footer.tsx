@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export function Footer() {
@@ -7,9 +8,20 @@ export function Footer() {
       <div className="absolute inset-0 bg-grid-pattern opacity-5" />
       <div className="container relative mx-auto flex flex-col gap-8 px-6 py-12 md:flex-row md:items-center md:justify-between">
         <div className="space-y-2">
-          <Link href="/" className="block text-lg font-serif tracking-tight hover:text-primary transition-colors duration-300">
-            Wild Road Books
-          </Link>
+          <div className="flex items-center gap-3">
+            <div className="relative w-10 h-10 flex-shrink-0 rounded-full bg-accent/50 p-0.5 overflow-hidden">
+              <Image
+                src="/WildRoadColophon.png"
+                alt="Wild Road Books colophon"
+                fill
+                sizes="40px"
+                className="object-cover rounded-full"
+              />
+            </div>
+            <Link href="/" className="block text-lg font-serif tracking-tight hover:text-primary transition-colors duration-300">
+              Wild Road Books
+            </Link>
+          </div>
           <p className="text-sm text-muted-foreground">
             Committed to supporting thoughtful scholarship and clear, engaging writing.
           </p>

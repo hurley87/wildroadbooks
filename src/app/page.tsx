@@ -19,10 +19,21 @@ export default function Home() {
         
         <div className="mx-auto max-w-7xl px-6 pb-16 pt-12 sm:pb-24 lg:flex lg:px-8 lg:py-40">
           <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <h1 className="mt-4 text-4xl font-serif tracking-tight sm:text-6xl bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text">
-              <span className="block">Welcome to</span>
-              <span className="block font-normal" style={{ fontVariant: 'small-caps' }}>Wild Road Books</span>
-            </h1>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="relative w-16 h-16 flex-shrink-0 rounded-full bg-accent/50 p-0.5 overflow-hidden">
+                <Image
+                  src="/WildRoadColophon.png"
+                  alt="Wild Road Books colophon"
+                  fill
+                  sizes="64px"
+                  className="object-cover rounded-full"
+                />
+              </div>
+              <h1 className="text-4xl font-serif tracking-tight sm:text-6xl bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text">
+                <span className="block">Welcome to</span>
+                <span className="block font-normal" style={{ fontVariant: 'small-caps' }}>Wild Road Books</span>
+              </h1>
+            </div>
             <p className="mt-4 text-base leading-7 text-muted-foreground italic">
               Committed to supporting thoughtful scholarship and clear, engaging writing.
             </p>
@@ -229,8 +240,14 @@ export default function Home() {
             <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="max-w-xl relative z-10">
               <div className="flex items-center gap-4 mt-2">
-                <div className="relative w-12 h-12 flex-shrink-0 rounded-lg bg-accent/50 p-2 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center text-primary">
-                  <BookOpen className="h-6 w-6" />
+                <div className="relative w-12 h-12 flex-shrink-0 rounded-full bg-accent/50 p-0.5 group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                  <Image
+                    src="/MaidenLane.png"
+                    alt="Maiden Lane Press colophon"
+                    fill
+                    sizes="48px"
+                    className="object-cover rounded-full"
+                  />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-primary">Our Imprint</p>
