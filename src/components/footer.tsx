@@ -17,6 +17,7 @@ export function Footer() {
         <nav className="flex flex-wrap items-center gap-x-6 gap-y-3">
           {[
             { href: "/about", label: "About" },
+            { href: "/faq", label: "FAQ" },
             { href: "/contact", label: "Contact" },
             { href: "/catching-unicorns", label: "Catching Unicorns" },
           ].map((link) => (

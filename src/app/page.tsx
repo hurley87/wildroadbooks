@@ -33,13 +33,18 @@ export default function Home() {
               Our pledge to our authors is that we will work hard to make sure that your book looks and reads like a book. Have a look at our first publication, <Link href="/catching-unicorns" className="text-primary hover:text-primary/80 underline underline-offset-4 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">Catching Unicorns</Link>, to see what we mean.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:items-center sm:gap-x-6">
-              {/* Catalog button hidden until more titles */}
-              {/* <Button size="lg" className="bg-primary hover:bg-primary/90 w-full sm:w-auto group transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105" asChild>
-                <Link href="/books">
-                  Browse Catalogue
+              <Button size="lg" className="bg-primary hover:bg-primary/90 w-full sm:w-auto group transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105" asChild>
+                <Link href="/submissions">
+                  Submit Your Manuscript
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
-              </Button> */}
+              </Button>
+              <Button size="lg" variant="outline" className="w-full sm:w-auto group transition-all duration-300" asChild>
+                <Link href="/books">
+                  Browse Our Books
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
             </div>
           </div>
           <div className="mx-auto mt-10 flex w-full max-w-2xl sm:mt-16 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32 animate-in fade-in slide-in-from-right-8 duration-1000">

@@ -13,7 +13,56 @@ export default function Submissions() {
             </p>
           </div>
 
-          <div className="mx-auto mt-16 max-w-3xl">
+          <div className="mx-auto mt-16 max-w-3xl flex flex-col space-y-12">
+            {/* Why Submit Section */}
+            <div className="rounded-2xl border border-primary/20 bg-primary/5 p-8">
+              <h3 className="text-2xl font-serif tracking-tight mb-4">Why Submit to Wild Road Books?</h3>
+              <div className="mt-6 space-y-4">
+                <div className="flex gap-x-3">
+                  <span className="text-primary font-medium text-lg">•</span>
+                  <div>
+                    <strong className="text-foreground">No Author Fees. Ever.</strong>
+                    <p className="mt-1 text-muted-foreground">We never charge authors to publish. We only make money when you do, through shared royalties.</p>
+                  </div>
+                </div>
+                <div className="flex gap-x-3">
+                  <span className="text-primary font-medium text-lg">•</span>
+                  <div>
+                    <strong className="text-foreground">Higher Royalties</strong>
+                    <p className="mt-1 text-muted-foreground">Traditional publishers typically offer 10-15% royalties. With KDP and our transparent model, you keep a much larger share.</p>
+                  </div>
+                </div>
+                <div className="flex gap-x-3">
+                  <span className="text-primary font-medium text-lg">•</span>
+                  <div>
+                    <strong className="text-foreground">Faster Time-to-Market</strong>
+                    <p className="mt-1 text-muted-foreground">No long waiting periods. Our streamlined process gets your book to readers faster.</p>
+                  </div>
+                </div>
+                <div className="flex gap-x-3">
+                  <span className="text-primary font-medium text-lg">•</span>
+                  <div>
+                    <strong className="text-foreground">Creative Control</strong>
+                    <p className="mt-1 text-muted-foreground">You retain full creative control over your work. Your vision, your book.</p>
+                  </div>
+                </div>
+                <div className="flex gap-x-3">
+                  <span className="text-primary font-medium text-lg">•</span>
+                  <div>
+                    <strong className="text-foreground">Global Distribution</strong>
+                    <p className="mt-1 text-muted-foreground">Through Kindle Direct Publishing, your book reaches readers worldwide via Amazon's extensive network.</p>
+                  </div>
+                </div>
+                <div className="flex gap-x-3">
+                  <span className="text-primary font-medium text-lg">•</span>
+                  <div>
+                    <strong className="text-foreground">Professional Quality</strong>
+                    <p className="mt-1 text-muted-foreground">We work with experienced editors and use professional typesetting to ensure your book looks and reads like a book.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="rounded-2xl border bg-muted/30 p-8">
               <h3 className="text-xl font-medium">Submission Requirements</h3>
               <div className="mt-6 space-y-6">
@@ -41,14 +90,18 @@ export default function Submissions() {
               </div>
             </div>
 
-            <div className="mt-12 space-y-6">
+            <div className="space-y-6">
               <div>
                 <h3 className="text-xl font-medium">What Happens Next</h3>
                 <p className="mt-4 text-base leading-7 text-muted-foreground">
                   Based on your proposal, we may ask you to meet with us via Zoom to answer any 
-                  questions you may have and for us to get a better idea about your book. We will 
-                  give you our decision within a week of your initial submission or the Zoom meeting.
+                  questions you may have and for us to get a better idea about your book. 
                 </p>
+                <div className="mt-4 p-4 rounded-lg bg-primary/5 border border-primary/20">
+                  <p className="text-base leading-7 text-foreground">
+                    <strong>Response Time:</strong> We will give you our decision within <strong>one week</strong> of your initial submission or the Zoom meeting.
+                  </p>
+                </div>
               </div>
 
               <div className="rounded-2xl border border-dashed p-6">
