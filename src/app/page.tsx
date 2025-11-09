@@ -20,15 +20,6 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 pb-16 pt-12 sm:pb-24 lg:flex lg:px-8 lg:py-40">
           <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
             <div className="flex items-center gap-4 mb-4">
-              <div className="relative w-16 h-16 flex-shrink-0 rounded-full bg-accent/50 p-0.5 overflow-hidden">
-                <Image
-                  src="/WildRoadColophon.png"
-                  alt="Wild Road Books colophon"
-                  fill
-                  sizes="64px"
-                  className="object-cover rounded-full"
-                />
-              </div>
               <h1 className="text-4xl font-serif tracking-tight sm:text-6xl bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text">
                 <span className="block">Welcome to</span>
                 <span className="block font-normal" style={{ fontVariant: 'small-caps' }}>Wild Road Books</span>
