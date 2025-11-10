@@ -19,17 +19,16 @@ export default function Home() {
         
         <div className="mx-auto max-w-7xl px-6 pb-16 pt-12 sm:pb-24 lg:flex lg:px-8 lg:py-40">
           <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <div className="flex items-center gap-4 mb-4">
+            <div className="mb-4">
+              <p className="text-lg leading-8 text-muted-foreground mb-2">
+                Welcome to
+              </p>
               <h1 className="text-4xl font-serif tracking-tight sm:text-6xl bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text">
-                <span className="block">Welcome to</span>
                 <span className="block font-normal" style={{ fontVariant: 'small-caps' }}>Wild Road Books</span>
               </h1>
             </div>
-            <p className="mt-4 text-base leading-7 text-muted-foreground italic">
-              Committed to supporting thoughtful scholarship and clear, engaging writing.
-            </p>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              We are a new academic publisher with a different approach. We partner with our authors. We ask them to work with our third-party independent editors and typesetters (using their research funding) to produce a high-quality draft. Upon submission of the draft to Wild Road, our in-house editors and typesetters will help authors prepare the final files for submission to Kindle Direct Publishing. With KDP, our authors get the global reach of Amazon, generous royalties, and the freedom to set the book's price. Working with our typesetters, the author develops the capability to make changes immediately and continuously as the final manuscript is prepared.
+              <span style={{ fontVariant: 'small-caps' }}>WILD ROAD BOOKS</span> is an indie academic press with a different approach. We partner with our authors. We ask them to work with our third-party independent editors and typesetters (using their research funding) to produce a high-quality draft. Upon submission of the draft to <span style={{ fontVariant: 'small-caps' }}>WILD ROAD</span>, our in-house editors and typesetters will help authors prepare the final files for submission to Kindle Direct Publishing. With KDP, our authors get the global reach of Amazon, generous royalties, and the freedom to set the book's price. Working with our typesetters, the author develops the capability to make changes immediately and continuously as the final manuscript is prepared.
             </p>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
               Our pledge to our authors is that we will work hard to make sure that your book looks and reads like a book. Have a look at our first publication, <Link href="/catching-unicorns" className="text-primary hover:text-primary/80 underline underline-offset-4 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">Catching Unicorns</Link>, to see what we mean.
@@ -85,7 +84,7 @@ export default function Home() {
           </p>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
             We see publishing as a collaboration built on fairness and trust. 
-            Wild Road Books earns only when our authors do.
+            <span style={{ fontVariant: 'small-caps' }}> WILD ROAD BOOKS</span> earns only when our authors do.
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
@@ -101,7 +100,7 @@ export default function Home() {
                 </dt>
                 <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground">
                   <p className="flex-auto">
-                    Wild Road does not charge authors to publish. We share in royalties—we only 
+                    <span style={{ fontVariant: 'small-caps' }}>WILD ROAD</span> does not charge authors to publish. We share in royalties—we only 
                     make money when you do.
                   </p>
                 </dd>
@@ -152,7 +151,7 @@ export default function Home() {
             Our Publications
           </h2>
           <p className="mt-2 text-3xl font-serif tracking-tight sm:text-4xl">
-            Wild Road Books & Our Imprints
+            <span style={{ fontVariant: 'small-caps' }}>WILD ROAD BOOKS</span> & Our Imprints
           </p>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
             Explore our catalogue featuring original and engaging scholarship from all disciplines, 
