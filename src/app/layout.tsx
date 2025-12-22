@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Playfair_Display } from "next/font/google";
+import { Cormorant_Garamond, Source_Serif_4 } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const serif = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-serif",
+  weight: ["400", "500", "600", "700"],
+});
+
+const body = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -28,10 +34,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen overflow-x-hidden bg-gradient-to-b from-background via-background to-muted/30 font-sans antialiased",
-          GeistSans.variable,
-          GeistMono.variable,
-          playfair.variable
+          "min-h-screen overflow-x-hidden bg-gradient-to-b from-background via-background to-muted/30 font-body antialiased",
+          serif.variable,
+          body.variable,
+          GeistMono.variable
         )}
       >
         <ThemeProvider
