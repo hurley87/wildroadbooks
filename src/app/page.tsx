@@ -27,9 +27,8 @@ export default function Home() {
           <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
             {/* Typographic lockup with staggered animation */}
             <div className="mb-8 animate-fade-up stagger-1">
-              <h1 className="text-5xl font-serif tracking-tight sm:text-6xl lg:text-7xl leading-[0.95]">
-                <span className="block font-medium">Wild Road</span>
-                <span className="block italic text-4xl sm:text-5xl lg:text-6xl mt-1">Books</span>
+              <h1 className="text-5xl font-serif tracking-tight sm:text-6xl lg:text-7xl leading-[0.95] font-medium">
+               Wild Road Books
               </h1>
             </div>
             
