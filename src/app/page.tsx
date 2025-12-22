@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, PenTool, Users, BookOpen, Sparkles } from "lucide-react";
+import { ArrowRight, PenTool, Users, BookOpen } from "lucide-react";
 
 export default function Home() {
   return (
