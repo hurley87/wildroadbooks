@@ -36,20 +36,25 @@ function buildSystemPrompt(contextChunks: Array<{ content: string; metadata: Rec
   
   // Add retrieved context
   if (contextChunks.length > 0) {
-    prompt += `Use the following relevant passages from the book to answer the user's question. If the answer cannot be found in these passages, say so.\n\n`;
+    prompt += `Use the following excerpts from the book to answer the user's question. If the answer cannot be found in these excerpts, say so.\n\n`;
     
     contextChunks.forEach((chunk, idx) => {
       const chapter = chunk.metadata.chapter as string | undefined;
       const pageRange = chunk.metadata.page_range as string | undefined;
       
-      prompt += `[Passage ${idx + 1}`;
-      if (chapter) prompt += ` - ${chapter}`;
-      if (pageRange) prompt += `, p. ${pageRange}`;
-      prompt += `]\n${chunk.content}\n\n`;
+      // Always include a header - use chapter name if available, fallback to passage number
+      if (chapter) {
+        prompt += `[Chapter: ${chapter}`;
+        if (pageRange) prompt += `, p. ${pageRange}`;
+        prompt += `]\n`;
+      } else {
+        prompt += `[Excerpt ${idx + 1}]\n`;
+      }
+      prompt += `${chunk.content}\n\n`;
     });
   }
   
-  prompt += `Answer the user's question based on the information provided above. Be concise, accurate, and cite specific passages when relevant.`;
+  prompt += `Answer the user's question based on the information provided above. Be concise and accurate. Only if your answer uses information from the excerpts, include a single "Sources:" line at the end listing the unique chapter names you drew from (e.g., "Sources: Introduction, Chapter 3"). If the information is not found in the excerpts, simply say so without listing sources.`;
   
   return prompt;
 }
@@ -73,9 +78,12 @@ export async function POST(req: Request) {
     }
     
     // Extract text content from user message (handle UIMessage structure)
+    // AI SDK uses 'parts' array, but older versions may use 'content'
     const userMessageText = typeof lastUserMessage.content === 'string' 
       ? lastUserMessage.content 
-      : lastUserMessage.content?.find((part: any) => part.type === 'text')?.text || '';
+      : (lastUserMessage.content?.find((part: any) => part.type === 'text')?.text 
+         || (lastUserMessage as any).parts?.find((part: any) => part.type === 'text')?.text 
+         || '');
     
     // Retrieve relevant context chunks
     const contextChunks = await retrieveContext(userMessageText, 5);
