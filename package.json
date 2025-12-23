@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "extract": "tsx content/extract.ts",
+    "convert": "tsx content/convert-to-markdown.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
@@ -22,7 +24,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^3.0.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "pdf-parse": "^1.1.1",
+    "@langchain/textsplitters": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",
@@ -33,6 +37,8 @@
     "eslint-config-next": "14.1.0",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "@types/pdf-parse": "^1.1.4",
+    "tsx": "^4.7.0"
   }
 }
