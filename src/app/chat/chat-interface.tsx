@@ -127,14 +127,17 @@ export function ChatInterface() {
               <ChatMessage key={message.id} message={message} />
             ))}
             {isLoading && (
-              <div className="flex items-center gap-4 py-4 px-6 bg-muted/30 animate-fade-in">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border border-primary/30 relative overflow-hidden">
-                  <Sparkles className="h-5 w-5 text-primary" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span className="text-sm">The Guide is thinking...</span>
+              <div className="group flex w-full gap-4 py-4 px-6 bg-muted/30 animate-fade-in relative">
+                <div className="pointer-events-none absolute inset-0 paper-texture" />
+                <div className="flex w-full max-w-3xl mx-auto gap-4 items-center">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border border-primary/30 relative overflow-hidden">
+                    <Sparkles className="h-5 w-5 text-primary" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+                  </div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="text-sm">The Guide is thinking...</span>
+                  </div>
                 </div>
               </div>
             )}
