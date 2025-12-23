@@ -34,7 +34,7 @@ export default function Home() {
             
             {/* Crisp value prop */}
             <p className="text-xl sm:text-2xl font-medium text-foreground mb-8 animate-fade-up stagger-2">
-              An indie academic press that partners with authors.
+              An academic press that partners with authors.
             </p>
             
             {/* Scannable bullets */}
@@ -122,7 +122,7 @@ export default function Home() {
           {/* Detailed explanation moved from hero */}
           <div className="mt-8 text-base leading-7 text-muted-foreground space-y-4 text-left lg:text-center">
             <p>
-              Wild Road Books is an indie academic press with a different approach. We partner with our authors. We ask them to work with our third-party independent editors and typesetters (using their research funding) to produce a high-quality draft. Upon submission of the draft to Wild Road, our in-house editors and typesetters will help authors prepare the final files for submission to Kindle Direct Publishing.
+              Wild Road Books is an academic press with a different approach. We partner with our authors. We ask them to work with our third-party independent editors and typesetters (using their research funding) to produce a high-quality draft. Upon submission of the draft to Wild Road, our in-house editors and typesetters will help authors prepare the final files for submission to Kindle Direct Publishing.
             </p>
             <p>
               With KDP, our authors get the global reach of Amazon, generous royalties, and the freedom to set the book's price. Working with our typesetters, the author develops the capability to make changes immediately and continuously as the final manuscript is prepared.
