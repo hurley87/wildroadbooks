@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Send } from 'lucide-react';
 import { useRef, useEffect } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ChatInputProps {
   input: string;
@@ -28,30 +29,42 @@ export function ChatInput({
   }, [input]);
   
   return (
-    <form onSubmit={handleSubmit} className="border-t border-border bg-background">
-      <div className="flex w-full max-w-3xl mx-auto gap-4 p-4">
-        <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={handleInputChange}
-          placeholder="Ask a question about Catching Unicorns..."
-          disabled={isLoading}
-          rows={1}
-          className="flex-1 min-h-[44px] max-h-[200px] resize-none rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              if (!isLoading && input.trim()) {
-                handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+    <form onSubmit={handleSubmit} className="border-t border-border bg-background/95 backdrop-blur-sm">
+      <div className="flex w-full gap-3 p-4 sm:p-5">
+        <div className="flex-1 relative">
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={handleInputChange}
+            placeholder="Ask a question about Catching Unicorns..."
+            disabled={isLoading}
+            rows={1}
+            className={cn(
+              "flex-1 w-full min-h-[44px] max-h-[200px] resize-none rounded-md border border-input bg-background px-4 py-3 text-sm",
+              "ring-offset-background placeholder:text-muted-foreground",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+              "disabled:cursor-not-allowed disabled:opacity-50",
+              "transition-all duration-300",
+              "focus-visible:border-primary/50 focus-visible:shadow-lg focus-visible:shadow-primary/10",
+              // Gilt-edge effect on focus
+              "focus-visible:gilt-edge"
+            )}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                if (!isLoading && input.trim()) {
+                  handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+                }
               }
-            }
-          }}
-        />
+            }}
+          />
+        </div>
         <Button
           type="submit"
           disabled={isLoading || !input.trim()}
           size="icon"
-          className="flex-shrink-0"
+          className="flex-shrink-0 h-11 w-11 transition-all duration-300 hover:scale-105 disabled:hover:scale-100"
+          aria-label="Send message"
         >
           <Send className="h-4 w-4" />
           <span className="sr-only">Send message</span>
