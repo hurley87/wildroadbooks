@@ -13,6 +13,7 @@ import { CORE_DEFINITIONS } from './system-prompt';
 const TARGET_CHUNK_CHARS = 2000; // ~400 words - tighter chunks for better retrieval precision
 const CHUNK_OVERLAP = 300; // ~60 words - better context preservation for dense arguments
 const MIN_CHUNK_CHARS = 200; // ~40 words - filter out tiny remnants
+const MIN_STANDALONE_WORDS = 100; // Chunks smaller than this get merged with previous
 
 /**
  * Chapter definition with line numbers
@@ -176,6 +177,30 @@ const estimatePageFromLine = (lineNumber: number): number => {
 };
 
 /**
+ * Merge small trailing chunks with the previous chunk
+ * Prevents orphan chunks that break mid-sentence
+ */
+const mergeSmallChunks = (chunks: string[]): string[] => {
+  if (chunks.length <= 1) return chunks;
+  
+  const merged: string[] = [];
+  
+  for (let i = 0; i < chunks.length; i++) {
+    const chunk = chunks[i];
+    const wordCount = countWords(chunk);
+    
+    // If this chunk is too small and there's a previous chunk, merge with it
+    if (wordCount < MIN_STANDALONE_WORDS && merged.length > 0) {
+      merged[merged.length - 1] = merged[merged.length - 1] + ' ' + chunk;
+    } else {
+      merged.push(chunk);
+    }
+  }
+  
+  return merged;
+};
+
+/**
  * Level 2: Semantic chunking within a chapter using LangChain
  */
 const semanticChunk = async (
@@ -200,7 +225,10 @@ const semanticChunk = async (
   const splits = await splitter.splitText(content);
   
   // Clean each split and filter out tiny chunks
-  return splits.map(split => cleanParagraph(split)).filter(s => s.length > MIN_CHUNK_CHARS);
+  const cleaned = splits.map(split => cleanParagraph(split)).filter(s => s.length > MIN_CHUNK_CHARS);
+  
+  // Merge small chunks with previous to avoid mid-sentence breaks
+  return mergeSmallChunks(cleaned);
 };
 
 /**
