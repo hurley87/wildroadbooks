@@ -10,6 +10,7 @@ interface ChatInputProps {
   handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   isLoading: boolean;
+  placeholder?: string;
 }
 
 export function ChatInput({
@@ -17,6 +18,7 @@ export function ChatInput({
   handleInputChange,
   handleSubmit,
   isLoading,
+  placeholder = 'Ask a question about Catching Unicorns...',
 }: ChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   
@@ -41,7 +43,7 @@ export function ChatInput({
             ref={textareaRef}
             value={input}
             onChange={handleInputChange}
-            placeholder="Ask a question about Catching Unicorns..."
+            placeholder={placeholder}
             disabled={isLoading}
             rows={1}
             className={cn(
