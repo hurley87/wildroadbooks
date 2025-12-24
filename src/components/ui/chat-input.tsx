@@ -30,7 +30,12 @@ export function ChatInput({
   
   return (
     <form onSubmit={handleSubmit} className="border-t border-border bg-background/95 backdrop-blur-sm">
-      <div className="flex w-full gap-3 p-4 sm:p-5">
+      <div 
+        className="flex w-full items-end gap-3 p-4 sm:p-5"
+        style={{
+          background: 'linear-gradient(180deg, rgba(251, 250, 249, 1) 0%, rgba(251, 250, 249, 1) 50%, rgba(242, 240, 237, 0.3) 100%)'
+        }}
+      >
         <div className="flex-1 relative">
           <textarea
             ref={textareaRef}
@@ -40,7 +45,7 @@ export function ChatInput({
             disabled={isLoading}
             rows={1}
             className={cn(
-              "flex-1 w-full min-h-[44px] max-h-[200px] resize-none rounded-md border border-input bg-background px-4 py-3 text-sm",
+              "flex-1 w-full min-h-[48px] max-h-[200px] resize-none rounded-md border border-input bg-background px-4 py-3 text-sm",
               "ring-offset-background placeholder:text-muted-foreground",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
               "disabled:cursor-not-allowed disabled:opacity-50",
@@ -63,7 +68,7 @@ export function ChatInput({
           type="submit"
           disabled={isLoading || !input.trim()}
           size="icon"
-          className="flex-shrink-0 h-11 w-11 transition-all duration-300 hover:scale-105 disabled:hover:scale-100"
+          className="flex-shrink-0 h-12 w-12 transition-all duration-300 hover:scale-105 disabled:hover:scale-100"
           aria-label="Send message"
         >
           <Send className="h-4 w-4" />
