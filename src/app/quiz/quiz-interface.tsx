@@ -265,9 +265,9 @@ export function QuizInterface() {
             <div className="bg-background border border-border rounded-2xl p-8 shadow-xl gilt-edge animate-fade-up">
               {/* Score ring */}
               <div className="flex justify-center mb-8">
-                <div className="relative">
+                <div className="relative w-32 h-32">
                   {/* Outer ring */}
-                  <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 120 120">
+                  <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
                     {/* Background circle */}
                     <circle
                       cx="60"
@@ -288,14 +288,17 @@ export function QuizInterface() {
                       strokeWidth="8"
                       strokeLinecap="round"
                       strokeDasharray={`${(score / 10) * 339.292} 339.292`}
+                      strokeDashoffset="0"
                       className="transition-all duration-1000 ease-out"
-                      style={{ filter: 'drop-shadow(0 0 6px currentColor)' }}
+                      style={{ 
+                        filter: `drop-shadow(0 0 6px ${score >= 8 ? 'hsl(160, 40%, 35%)' : score >= 6 ? 'hsl(45, 80%, 45%)' : 'hsl(25, 85%, 50%)'})`
+                      }}
                     />
                   </svg>
                   {/* Score text in center */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-4xl font-bold text-foreground">{score}</span>
-                    <span className="text-sm text-muted-foreground font-medium">out of 10</span>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <span className="text-4xl font-bold text-foreground leading-none">{score}</span>
+                    <span className="text-sm text-muted-foreground font-medium mt-1">out of 10</span>
                   </div>
                 </div>
               </div>
