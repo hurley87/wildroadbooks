@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, PenTool, Users, BookOpen } from "lucide-react";
+import { ArrowRightIcon } from "@/components/ui/arrow-right";
+import { PenToolIcon } from "@/components/ui/pen-tool";
+import { UsersIcon } from "@/components/ui/users";
+import { BookTextIcon } from "@/components/ui/book-text";
 
 export default function Home() {
   return (
@@ -67,13 +70,13 @@ export default function Home() {
               <Button size="lg" className="bg-primary hover:bg-primary/90 w-full sm:w-auto group transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105" asChild>
                 <Link href="/submissions">
                   Submit Your Manuscript
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRightIcon size={16} className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="w-full sm:w-auto group transition-all duration-300" asChild>
                 <Link href="/books">
                   Browse Our Books
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRightIcon size={16} className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
             </div>
@@ -139,7 +142,7 @@ export default function Home() {
               <div className="relative">
                 <dt className="flex items-center gap-x-3 text-base font-medium leading-7">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/90">
-                    <PenTool className="h-6 w-6" aria-hidden="true" />
+                    <PenToolIcon size={24} aria-hidden="true" />
                   </div>
                   Partnership Model
                 </dt>
@@ -156,7 +159,7 @@ export default function Home() {
               <div className="relative">
                 <dt className="flex items-center gap-x-3 text-base font-medium leading-7">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/90">
-                    <BookOpen className="h-6 w-6" aria-hidden="true" />
+                    <BookTextIcon size={24} aria-hidden="true" />
                   </div>
                   Global Distribution
                 </dt>
@@ -173,7 +176,7 @@ export default function Home() {
               <div className="relative">
                 <dt className="flex items-center gap-x-3 text-base font-medium leading-7">
                   <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/90">
-                    <Users className="h-6 w-6" aria-hidden="true" />
+                    <UsersIcon size={24} aria-hidden="true" />
                   </div>
                   Creative Control
                 </dt>

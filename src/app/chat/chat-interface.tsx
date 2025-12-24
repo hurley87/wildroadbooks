@@ -3,7 +3,10 @@
 import { useChat } from '@ai-sdk/react';
 import { ChatMessage } from '@/components/ui/chat-message';
 import { ChatInput } from '@/components/ui/chat-input';
-import { Loader2, Sparkles, RotateCcw, Square } from 'lucide-react';
+import { SparklesIcon } from '@/components/ui/sparkles';
+import { RotateCCWIcon } from '@/components/ui/rotate-ccw';
+import { LoaderPinwheelIcon } from '@/components/ui/loader-pinwheel';
+import { Square } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -56,7 +59,7 @@ export function ChatInterface() {
       {messages.length > 0 && (
         <div className="flex items-center justify-between px-6 py-3 border-b border-border bg-muted/20">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-primary" />
+            <SparklesIcon size={16} className="text-primary" />
             <span className="text-sm font-medium text-foreground">The Guide</span>
           </div>
           <Button
@@ -65,7 +68,7 @@ export function ChatInterface() {
             onClick={handleNewChat}
             className="text-xs"
           >
-            <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
+            <RotateCCWIcon size={14} className="mr-1.5" />
             New Chat
           </Button>
         </div>
@@ -82,7 +85,7 @@ export function ChatInterface() {
               {/* Avatar */}
               <div className="mb-6 flex justify-center">
                 <div className="w-16 h-16 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border-2 border-primary/30 relative overflow-hidden shadow-lg">
-                  <Sparkles className="h-8 w-8 text-primary" />
+                  <SparklesIcon size={32} className="text-primary" />
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent animate-pulse-slow" />
                 </div>
               </div>
@@ -127,11 +130,11 @@ export function ChatInterface() {
                 <div className="flex w-full max-w-3xl mx-auto gap-4 items-center justify-between">
                   <div className="flex items-center gap-4 flex-1">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border border-primary/30 relative overflow-hidden">
-                      <Sparkles className="h-5 w-5 text-primary" />
+                      <SparklesIcon size={20} className="text-primary" />
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
                     </div>
                     <div className="flex items-center gap-2 text-muted-foreground">
-                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <LoaderPinwheelIcon size={16} />
                       <span className="text-sm">The Guide is thinking...</span>
                     </div>
                   </div>

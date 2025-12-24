@@ -4,7 +4,11 @@ import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { ChatMessage } from '@/components/ui/chat-message';
 import { ChatInput } from '@/components/ui/chat-input';
-import { Loader2, Sparkles, RotateCcw, Square, BookOpen, Trophy } from 'lucide-react';
+import { SparklesIcon } from '@/components/ui/sparkles';
+import { RotateCCWIcon } from '@/components/ui/rotate-ccw';
+import { LoaderPinwheelIcon } from '@/components/ui/loader-pinwheel';
+import { BookTextIcon } from '@/components/ui/book-text';
+import { Square, Trophy } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -116,7 +120,7 @@ export function QuizInterface() {
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-muted/20">
             <div className="flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-primary" />
+              <BookTextIcon size={20} className="text-primary" />
               <span className="text-sm font-medium text-foreground">Preface</span>
             </div>
           </div>
@@ -135,7 +139,7 @@ export function QuizInterface() {
               className="w-full"
               size="lg"
             >
-              <Sparkles className="h-4 w-4 mr-2" />
+              <SparklesIcon size={16} className="mr-2" />
               Start Quiz
             </Button>
           </div>
@@ -148,7 +152,7 @@ export function QuizInterface() {
           {/* Header with progress and New Chat button */}
           <div className="flex items-center justify-between px-6 py-3 border-b border-border bg-muted/20">
             <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-primary" />
+              <SparklesIcon size={16} className="text-primary" />
               <span className="text-sm font-medium text-foreground">
                 Quiz Interviewer
                 {questionCount > 0 && (
@@ -168,7 +172,7 @@ export function QuizInterface() {
               }}
               className="text-xs"
             >
-              <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
+              <RotateCCWIcon size={14} className="mr-1.5" />
               Reset
             </Button>
           </div>
@@ -182,7 +186,7 @@ export function QuizInterface() {
                 <div className="relative z-10 text-center max-w-2xl animate-fade-up">
                   <div className="mb-6 flex justify-center">
                     <div className="w-16 h-16 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border-2 border-primary/30 relative overflow-hidden shadow-lg">
-                      <Sparkles className="h-8 w-8 text-primary" />
+                      <SparklesIcon size={32} className="text-primary" />
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent animate-pulse-slow" />
                     </div>
                   </div>
@@ -207,11 +211,11 @@ export function QuizInterface() {
                     <div className="flex w-full max-w-3xl mx-auto gap-4 items-center justify-between">
                       <div className="flex items-center gap-4 flex-1">
                         <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border border-primary/30 relative overflow-hidden">
-                          <Sparkles className="h-5 w-5 text-primary" />
+                          <SparklesIcon size={20} className="text-primary" />
                           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
                         </div>
                         <div className="flex items-center gap-2 text-muted-foreground">
-                          <Loader2 className="h-4 w-4 animate-spin" />
+                          <LoaderPinwheelIcon size={16} />
                           <span className="text-sm">Thinking...</span>
                         </div>
                       </div>
@@ -341,7 +345,7 @@ export function QuizInterface() {
                   size="lg"
                   className="w-full"
                 >
-                  <RotateCcw className="h-4 w-4 mr-2" />
+                  <RotateCCWIcon size={16} className="mr-2" />
                   Take Quiz Again
                 </Button>
                 <Button
@@ -350,7 +354,7 @@ export function QuizInterface() {
                   onClick={() => setPhase('reading')}
                   className="w-full"
                 >
-                  <BookOpen className="h-4 w-4 mr-2" />
+                  <BookTextIcon size={16} className="mr-2" />
                   Review Preface
                 </Button>
               </div>

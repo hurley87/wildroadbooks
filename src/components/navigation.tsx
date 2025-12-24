@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { MenuIcon } from "@/components/ui/menu";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -64,7 +64,7 @@ export function Navigation() {
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" aria-label="Open menu">
-                <Menu className="h-5 w-5" />
+                <MenuIcon size={20} className="h-5 w-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-80 sm:max-w-sm">
