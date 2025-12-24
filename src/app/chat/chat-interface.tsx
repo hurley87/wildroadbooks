@@ -1,10 +1,9 @@
 'use client';
 
 import { useChat } from '@ai-sdk/react';
-import { DefaultChatTransport } from 'ai';
 import { ChatMessage } from '@/components/ui/chat-message';
 import { ChatInput } from '@/components/ui/chat-input';
-import { Loader2, Sparkles, RotateCcw } from 'lucide-react';
+import { Loader2, Sparkles, RotateCcw, Square } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -19,11 +18,7 @@ export function ChatInterface() {
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  const { messages, sendMessage, status, error, setMessages } = useChat({
-    transport: new DefaultChatTransport({
-      api: '/api/chat',
-    }),
-  });
+  const { messages, sendMessage, status, error, setMessages, stop } = useChat();
   
   const isLoading = status === 'submitted' || status === 'streaming';
   
@@ -129,15 +124,27 @@ export function ChatInterface() {
             {isLoading && (
               <div className="group flex w-full gap-4 py-4 px-6 bg-muted/30 animate-fade-in relative">
                 <div className="pointer-events-none absolute inset-0 paper-texture" />
-                <div className="flex w-full max-w-3xl mx-auto gap-4 items-center">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border border-primary/30 relative overflow-hidden">
-                    <Sparkles className="h-5 w-5 text-primary" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+                <div className="flex w-full max-w-3xl mx-auto gap-4 items-center justify-between">
+                  <div className="flex items-center gap-4 flex-1">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border border-primary/30 relative overflow-hidden">
+                      <Sparkles className="h-5 w-5 text-primary" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+                    </div>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span className="text-sm">The Guide is thinking...</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    <span className="text-sm">The Guide is thinking...</span>
-                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={stop}
+                    className="flex-shrink-0 text-xs"
+                    aria-label="Stop generation"
+                  >
+                    <Square className="h-3.5 w-3.5 mr-1.5" />
+                    Stop
+                  </Button>
                 </div>
               </div>
             )}

@@ -3,6 +3,7 @@ import { streamText, convertToModelMessages, type UIMessage } from 'ai';
 import { retrieveContext } from '@/lib/retrieval';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { z } from 'zod';
 
 interface ChunksData {
   meta: {
@@ -18,6 +19,32 @@ function loadChunksData(): ChunksData {
   const filePath = join(process.cwd(), 'content', 'chunks.json');
   const fileContents = readFileSync(filePath, 'utf-8');
   return JSON.parse(fileContents) as ChunksData;
+}
+
+/**
+ * Extract text content from a UIMessage using SDK v6 parts pattern
+ */
+function extractTextFromMessage(message: UIMessage): string {
+  return message.parts
+    ?.filter(part => part.type === 'text')
+    ?.map(part => part.text)
+    ?.join(' ') ?? '';
+}
+
+/**
+ * Build conversation-aware query from recent messages
+ */
+function buildConversationQuery(messages: UIMessage[]): string {
+  // Get last 4 messages (2 user + 2 assistant typically)
+  const recentMessages = messages.slice(-4);
+  
+  // Filter to user messages and extract text
+  const userMessages = recentMessages
+    .filter(m => m.role === 'user')
+    .map(m => extractTextFromMessage(m));
+  
+  // Join with spaces for context
+  return userMessages.join(' ');
 }
 
 /**
@@ -59,42 +86,59 @@ function buildSystemPrompt(contextChunks: Array<{ content: string; metadata: Rec
   return prompt;
 }
 
+// Zod schema for request validation
+// AI SDK v6 uses various part types (text, step-start, tool-call, etc.)
+const messagePartSchema = z.object({
+  type: z.string(),
+}).passthrough(); // Allow additional properties like 'text', 'state', etc.
+
+const requestSchema = z.object({
+  messages: z.array(z.object({
+    role: z.enum(['user', 'assistant', 'system']),
+    parts: z.array(messagePartSchema),
+    id: z.string().optional(),
+  }).passthrough()), // Allow additional properties for SDK compatibility
+});
+
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
     
-    if (!messages || !Array.isArray(messages)) {
-      return new Response('Invalid request: messages array required', { status: 400 });
+    // Validate request with Zod
+    const validationResult = requestSchema.safeParse(body);
+    if (!validationResult.success) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid request format', details: validationResult.error.errors }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
     }
     
-    // Find the latest user message for retrieval
+    const { messages } = validationResult.data;
+    
+    // Find the latest user message
     const lastUserMessage = messages
       .slice()
       .reverse()
-      .find((m: UIMessage) => m.role === 'user');
+      .find((m) => m.role === 'user');
     
     if (!lastUserMessage) {
       return new Response('No user message found', { status: 400 });
     }
     
-    // Extract text content from user message (handle UIMessage structure)
-    // AI SDK uses 'parts' array, but older versions may use 'content'
-    const userMessageText = typeof lastUserMessage.content === 'string' 
-      ? lastUserMessage.content 
-      : (lastUserMessage.content?.find((part: any) => part.type === 'text')?.text 
-         || (lastUserMessage as any).parts?.find((part: any) => part.type === 'text')?.text 
-         || '');
+    // Build conversation-aware query for retrieval
+    const conversationQuery = buildConversationQuery(messages as UIMessage[]);
     
-    // Retrieve relevant context chunks
-    const contextChunks = await retrieveContext(userMessageText, 5);
+    // Retrieve relevant context chunks using conversation context
+    const contextChunks = await retrieveContext(conversationQuery, 5);
     
     // Build system prompt with context
     const systemPrompt = buildSystemPrompt(contextChunks);
     
     // Convert UI messages to model messages
+    // Cast to UIMessage[] since our flexible Zod schema validates the structure
     const modelMessages = await convertToModelMessages(
-      messages.map((msg: UIMessage) => {
-        const { id, ...rest } = msg;
+      (messages as UIMessage[]).map((msg) => {
+        const { id: _id, ...rest } = msg;
         return rest;
       })
     );
