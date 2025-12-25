@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 type QuizPhase = 'reading' | 'quiz' | 'results';
+type PromptStyle = 'challenge' | 'classic';
 
 // Preface content from chunks.json
 const PREFACE_CONTENT = `Over most of this project, our intent was to title this book "Why Writing Matters." We felt that writing was an important technology that was not receiving the recognition it deserved. Some scholars have taken an entirely different view, seeing it as unimportant. Others have viewed it as an instrument of colonial oppression. Given these stark differences, we decided to explore what precisely writing does for us, particularly when it comes to the discovery of ideas, such things as smartphones, mRNA vaccines, and Large Language Models. Is writing simply a way to record our thinking as we come to it, or does it do something more?
@@ -41,77 +42,261 @@ From there, we'll look at the societal impacts of the exographics technology. We
 Bill Hurley, Kingston, Ontario
 David Hurley, Stouville, Ontario`;
 
-export function QuizInterface() {
-  const [phase, setPhase] = useState<QuizPhase>('reading');
-  const [score, setScore] = useState<number | null>(null);
+function PromptStyleToggle({
+  promptStyle,
+  onChange,
+  isDisabled,
+}: {
+  promptStyle: PromptStyle;
+  onChange: (next: PromptStyle) => void;
+  isDisabled?: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      <Button
+        type="button"
+        size="sm"
+        variant={promptStyle === 'classic' ? 'default' : 'outline'}
+        onClick={() => onChange('classic')}
+        disabled={isDisabled}
+        className="text-xs"
+      >
+        Classic
+      </Button>
+      <Button
+        type="button"
+        size="sm"
+        variant={promptStyle === 'challenge' ? 'default' : 'outline'}
+        onClick={() => onChange('challenge')}
+        disabled={isDisabled}
+        className="text-xs"
+      >
+        Challenging
+      </Button>
+    </div>
+  );
+}
+
+function QuizChat({
+  promptStyle,
+  onResetToReading,
+  onFinished,
+  onChangePromptStyle,
+}: {
+  promptStyle: PromptStyle;
+  onResetToReading: () => void;
+  onFinished: (score: number) => void;
+  onChangePromptStyle: (next: PromptStyle) => void;
+}) {
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  
+  const hasStartedRef = useRef(false);
+
+  const api =
+    promptStyle === 'classic'
+      ? '/api/quiz?style=classic'
+      : '/api/quiz?style=challenge';
+
   const { messages, sendMessage, status, error, setMessages, stop } = useChat({
     transport: new DefaultChatTransport({
-      api: '/api/quiz',
+      api,
     }),
   });
-  
+
   const isLoading = status === 'submitted' || status === 'streaming';
-  
+
+  // Start the quiz immediately when mounted (matches previous "Start Quiz" behavior)
+  // Uses ref guard to prevent double-send in React Strict Mode
+  useEffect(() => {
+    if (hasStartedRef.current) return;
+    hasStartedRef.current = true;
+    sendMessage({ text: "I'm ready to start the quiz." });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
-  
+
   // Parse score from messages
   useEffect(() => {
-    if (phase === 'quiz' && messages.length > 0) {
-      const lastMessage = messages[messages.length - 1];
-      if (lastMessage.role === 'assistant') {
-        const textParts = lastMessage.parts.filter((part) => part.type === 'text');
-        const textContent = textParts.map((part) => part.text).join('');
-        
-        // Look for score pattern [SCORE:X/10]
-        const scoreMatch = textContent.match(/\[SCORE:(\d+)\/10\]/);
-        if (scoreMatch) {
-          const parsedScore = parseInt(scoreMatch[1], 10);
-          setScore(parsedScore);
-          setPhase('results');
-        }
-      }
-    }
-  }, [messages, phase]);
-  
+    if (messages.length === 0) return;
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage.role !== 'assistant') return;
+
+    const textParts = lastMessage.parts.filter((part) => part.type === 'text');
+    const textContent = textParts.map((part) => part.text).join('');
+
+    // Look for score pattern [SCORE:X/10]
+    const scoreMatch = textContent.match(/\[SCORE:(\d+)\/10\]/);
+    if (!scoreMatch) return;
+
+    const parsedScore = parseInt(scoreMatch[1], 10);
+    if (!Number.isFinite(parsedScore)) return;
+
+    onFinished(parsedScore);
+  }, [messages, onFinished]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
-    
+
     sendMessage({ text: input });
     setInput('');
   };
-  
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(e.target.value);
-  };
-  
+
+  // Count questions asked (assistant messages that aren't the final score)
+  const questionCount = messages.filter(
+    (msg) =>
+      msg.role === 'assistant' &&
+      !msg.parts.some(
+        (part) => part.type === 'text' && part.text.includes('[SCORE:')
+      )
+  ).length;
+
+  return (
+    <>
+      {/* Header with progress + style toggle + reset */}
+      <div className="flex items-center justify-between px-6 py-3 border-b border-border bg-muted/20">
+        <div className="flex items-center gap-2">
+          <SparklesIcon size={16} className="text-primary" />
+          <span className="text-sm font-medium text-foreground">
+            Quiz Interviewer
+            {questionCount > 0 && (
+              <span className="ml-2 text-muted-foreground">
+                • Question {questionCount} of 5
+              </span>
+            )}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <PromptStyleToggle
+            promptStyle={promptStyle}
+            isDisabled={isLoading}
+            onChange={(next) => {
+              // Avoid mixing prompt styles mid-thread; reset back to reading on change.
+              onChangePromptStyle(next);
+              setMessages([]);
+              setInput('');
+              onResetToReading();
+            }}
+          />
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setMessages([]);
+              setInput('');
+              onResetToReading();
+            }}
+            className="text-xs"
+          >
+            <RotateCCWIcon size={14} className="mr-1.5" />
+            Reset
+          </Button>
+        </div>
+      </div>
+
+      {/* Messages area */}
+      <div className="flex-1 overflow-y-auto">
+        {messages.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full px-6 py-12 relative">
+            <div className="pointer-events-none absolute inset-0 paper-texture opacity-30" />
+
+            <div className="relative z-10 text-center max-w-2xl animate-fade-up">
+              <div className="mb-6 flex justify-center">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border-2 border-primary/30 relative overflow-hidden shadow-lg">
+                  <SparklesIcon size={32} className="text-primary" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent animate-pulse-slow" />
+                </div>
+              </div>
+
+              <h2 className="text-2xl font-serif mb-3 text-foreground">
+                Ready for Your Quiz
+              </h2>
+              <p className="text-muted-foreground mb-8 text-base leading-relaxed">
+                I'll ask you 5 questions about the Preface to test your
+                understanding. Answer each question thoughtfully, and I'll
+                evaluate your responses.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="divide-y divide-border">
+            {messages.map((message) => (
+              <ChatMessage key={message.id} message={message} />
+            ))}
+            {isLoading && (
+              <div className="group flex w-full gap-4 py-4 px-6 bg-muted/30 animate-fade-in relative">
+                <div className="pointer-events-none absolute inset-0 paper-texture" />
+                <div className="flex w-full max-w-3xl mx-auto gap-4 items-center justify-between">
+                  <div className="flex items-center gap-4 flex-1">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border border-primary/30 relative overflow-hidden">
+                      <SparklesIcon size={20} className="text-primary" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+                    </div>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <LoaderPinwheelIcon size={16} />
+                      <span className="text-sm">Thinking...</span>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={stop}
+                    className="flex-shrink-0 text-xs"
+                    aria-label="Stop generation"
+                  >
+                    <Square className="h-3.5 w-3.5 mr-1.5" />
+                    Stop
+                  </Button>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+        )}
+
+        {error && (
+          <div className="p-4 bg-destructive/10 text-destructive text-sm border-t border-border animate-fade-in">
+            <strong>Error:</strong>{' '}
+            {error.message || 'An error occurred while processing your request.'}
+          </div>
+        )}
+      </div>
+
+      {/* Input area */}
+      <ChatInput
+        input={input}
+        handleInputChange={(e) => setInput(e.target.value)}
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
+        placeholder="Type your answer here..."
+      />
+    </>
+  );
+}
+
+export function QuizInterface() {
+  const [phase, setPhase] = useState<QuizPhase>('reading');
+  const [score, setScore] = useState<number | null>(null);
+  const [promptStyle, setPromptStyle] = useState<PromptStyle>('challenge');
+  const [quizRunKey, setQuizRunKey] = useState(0);
+
   const handleStartQuiz = () => {
     setPhase('quiz');
-    setMessages([]);
     setScore(null);
-    // Send initial message to start the quiz
-    sendMessage({ text: 'I\'m ready to start the quiz.' });
+    setQuizRunKey((k) => k + 1);
   };
   
   const handleRetry = () => {
     setPhase('reading');
-    setMessages([]);
     setScore(null);
-    setInput('');
+    setQuizRunKey((k) => k + 1);
   };
-  
-  // Count questions asked (assistant messages that aren't the final score)
-  const questionCount = messages.filter(
-    (msg) => msg.role === 'assistant' && !msg.parts.some((part) => 
-      part.type === 'text' && part.text.includes('[SCORE:')
-    )
-  ).length;
   
   return (
     <div className="flex flex-col h-[calc(100vh-200px)] max-h-[800px] border border-border rounded-lg overflow-hidden bg-background shadow-lg gilt-edge">
@@ -123,6 +308,14 @@ export function QuizInterface() {
               <BookTextIcon size={20} className="text-primary" />
               <span className="text-sm font-medium text-foreground">Preface</span>
             </div>
+            <PromptStyleToggle
+              promptStyle={promptStyle}
+              onChange={(next) => {
+                setPromptStyle(next);
+                setScore(null);
+                setQuizRunKey((k) => k + 1);
+              }}
+            />
           </div>
           
           <div className="flex-1 overflow-y-auto px-6 py-8">
@@ -148,110 +341,20 @@ export function QuizInterface() {
       
       {/* Quiz Phase */}
       {phase === 'quiz' && (
-        <>
-          {/* Header with progress and New Chat button */}
-          <div className="flex items-center justify-between px-6 py-3 border-b border-border bg-muted/20">
-            <div className="flex items-center gap-2">
-              <SparklesIcon size={16} className="text-primary" />
-              <span className="text-sm font-medium text-foreground">
-                Quiz Interviewer
-                {questionCount > 0 && (
-                  <span className="ml-2 text-muted-foreground">
-                    • Question {questionCount} of 5
-                  </span>
-                )}
-              </span>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                setPhase('reading');
-                setMessages([]);
-                setInput('');
-              }}
-              className="text-xs"
-            >
-              <RotateCCWIcon size={14} className="mr-1.5" />
-              Reset
-            </Button>
-          </div>
-          
-          {/* Messages area */}
-          <div className="flex-1 overflow-y-auto">
-            {messages.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full px-6 py-12 relative">
-                <div className="pointer-events-none absolute inset-0 paper-texture opacity-30" />
-                
-                <div className="relative z-10 text-center max-w-2xl animate-fade-up">
-                  <div className="mb-6 flex justify-center">
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border-2 border-primary/30 relative overflow-hidden shadow-lg">
-                      <SparklesIcon size={32} className="text-primary" />
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent animate-pulse-slow" />
-                    </div>
-                  </div>
-                  
-                  <h2 className="text-2xl font-serif mb-3 text-foreground">
-                    Ready for Your Quiz
-                  </h2>
-                  <p className="text-muted-foreground mb-8 text-base leading-relaxed">
-                    I'll ask you 5 questions about the Preface to test your understanding. 
-                    Answer each question thoughtfully, and I'll evaluate your responses.
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="divide-y divide-border">
-                {messages.map((message) => (
-                  <ChatMessage key={message.id} message={message} />
-                ))}
-                {isLoading && (
-                  <div className="group flex w-full gap-4 py-4 px-6 bg-muted/30 animate-fade-in relative">
-                    <div className="pointer-events-none absolute inset-0 paper-texture" />
-                    <div className="flex w-full max-w-3xl mx-auto gap-4 items-center justify-between">
-                      <div className="flex items-center gap-4 flex-1">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 text-primary border border-primary/30 relative overflow-hidden">
-                          <SparklesIcon size={20} className="text-primary" />
-                          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
-                        </div>
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                          <LoaderPinwheelIcon size={16} />
-                          <span className="text-sm">Thinking...</span>
-                        </div>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={stop}
-                        className="flex-shrink-0 text-xs"
-                        aria-label="Stop generation"
-                      >
-                        <Square className="h-3.5 w-3.5 mr-1.5" />
-                        Stop
-                      </Button>
-                    </div>
-                  </div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
-            )}
-            
-            {error && (
-              <div className="p-4 bg-destructive/10 text-destructive text-sm border-t border-border animate-fade-in">
-                <strong>Error:</strong> {error.message || 'An error occurred while processing your request.'}
-              </div>
-            )}
-          </div>
-          
-          {/* Input area */}
-          <ChatInput
-            input={input}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
-            isLoading={isLoading}
-            placeholder="Type your answer here..."
-          />
-        </>
+        <QuizChat
+          key={`${promptStyle}-${quizRunKey}`}
+          promptStyle={promptStyle}
+          onChangePromptStyle={(next) => setPromptStyle(next)}
+          onResetToReading={() => {
+            setPhase('reading');
+            setScore(null);
+            setQuizRunKey((k) => k + 1);
+          }}
+          onFinished={(parsedScore) => {
+            setScore(parsedScore);
+            setPhase('results');
+          }}
+        />
       )}
       
       {/* Results Phase */}

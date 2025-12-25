@@ -54,3 +54,4 @@ Chunks are optimized to:
 
 The output JSON is ready for insertion into a Supabase table. See the plan document for the recommended schema.
 
+
