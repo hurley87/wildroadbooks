@@ -36,12 +36,12 @@ export function ChatInput({
   return (
     <form onSubmit={handleSubmit} className="border-t border-border bg-background/95 backdrop-blur-sm">
       <div 
-        className="flex w-full items-center gap-3 p-4 sm:p-5"
+        className="flex w-full items-end gap-3 p-4 sm:p-5"
         style={{
           background: 'linear-gradient(180deg, rgba(251, 250, 249, 1) 0%, rgba(251, 250, 249, 1) 50%, rgba(242, 240, 237, 0.3) 100%)'
         }}
       >
-        <div className="flex-1">
+        <div className="flex-1 flex items-end">
           <textarea
             ref={textareaRef}
             value={input}
