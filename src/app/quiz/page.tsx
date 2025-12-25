@@ -2,8 +2,8 @@ import { QuizInterface } from './quiz-interface';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Preface Quiz - Catching Unicorns | Wild Road Books',
-  description: 'Test your understanding of the Preface from Catching Unicorns. Read the preface and answer questions about exographics, e-Class, and techno-literate culture.',
+  title: 'Chapter 1 Quiz - Catching Unicorns | Wild Road Books',
+  description: 'Test your understanding of Chapter 1 and the Introduction from Catching Unicorns. Read the chapter and answer questions about engrams, exograms, exographics, techno-literate culture, and abstract objects.',
 };
 
 export default function QuizPage() {
@@ -13,10 +13,10 @@ export default function QuizPage() {
         <div className="mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-3xl font-serif tracking-tight sm:text-4xl mb-2">
-              Preface Knowledge Quiz
+              Chapter 1 Knowledge Quiz
             </h1>
             <p className="text-muted-foreground">
-              Read the Preface from <em>Catching Unicorns</em> and test your understanding of key concepts like exographics, e-Class, and techno-literate culture.
+              Read Chapter 1 and the Introduction from <em>Catching Unicorns</em> and test your understanding of key concepts like engrams, exograms, exographics, techno-literate culture, and abstract objects.
             </p>
           </div>
           
@@ -26,5 +26,6 @@ export default function QuizPage() {
     </main>
   );
 }
+
 
 

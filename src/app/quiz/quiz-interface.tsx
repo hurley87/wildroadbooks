@@ -16,31 +16,74 @@ import { cn } from '@/lib/utils';
 type QuizPhase = 'reading' | 'quiz' | 'results';
 type PromptStyle = 'challenge' | 'classic';
 
-// Preface content from chunks.json
-const PREFACE_CONTENT = `Over most of this project, our intent was to title this book "Why Writing Matters." We felt that writing was an important technology that was not receiving the recognition it deserved. Some scholars have taken an entirely different view, seeing it as unimportant. Others have viewed it as an instrument of colonial oppression. Given these stark differences, we decided to explore what precisely writing does for us, particularly when it comes to the discovery of ideas, such things as smartphones, mRNA vaccines, and Large Language Models. Is writing simply a way to record our thinking as we come to it, or does it do something more?
+// Introduction and Chapter 1 content
+const CHAPTER_1_CONTENT = `# Introduction
 
-Our point of departure is the work of the cognitive neuroscientist Merlin Donald. Donald coined the term exographics, which he defined to be writing in its broadest sense, writing that not only included the representation of speech but also the symbolic systems of mathematics, music, science, engineering, and other areas of inquiry. He argued that exographics allows us to discover ideas we otherwise couldn't.
+One of the defining traits of our species is the capacity to generate ideas, ideas as diverse as microchips, baseball, and quantum theory. The main contribution of this book is to argue that writing — this skill we have to make persistent visual marks on a medium—has been extraordinarily valuable to us in the discovery of ideas. We'll first explain why and then look at its role in the advance of techno-literate culture, these modern cultures we inhabit that have emerged in only the last 10,000 years, a few minutes of evolutionary time.
 
-Here is an example. Imagine trying to get this sum: 84 + 1, 045 + 693 + 719. Think of this problem as a simple example of trying to discover an idea. Furthermore, you are not allowed to use paper and a pen to get an answer because we're interested in what you can do without recourse to writing. You simply have to sit with your hands neatly folded and work it out in your unaided mind.
+Evolutionary biologists tell us that some 7 million years ago our ancestors were sitting in trees with those of chimpanzees. Approximately 3 million years ago, they were bipedal and beginning a period of significant encephalization. Homo sapiens came into existence in Africa about 300,000 years ago and nearly went extinct 70,000 years ago. About 60,000 years ago, we began a migration to Eurasia, eventually settling the globe. Throughout most of this history, we lived a hunter-gatherer existence with small groups moving to where food was more plentiful.
 
-Your authors would struggle to remember the numbers, never mind get a correct sum. But if we had a pencil and some paper, we could write down the numbers and then get an answer. Admittedly, this is a simple example, but it clarifies the existence of certain ideas that are only discoverable with exographics.
+At the dawn of the Agricultural Revolution about 10,000-12,000 years ago, things started to change again in a significant way. In the Fertile Crescent, we began to live in fixed settlements to farm, domesticating various kinds of grains and animals. Eventually the Sumerians built walled cities within significant catchment areas, the first city-states. Importantly, they began to do some clever cultural things, such as making pottery on a large scale; building irrigation systems, constructing large temples and palaces; and inventing the plow, wheel, and lunar calendar. Many scholars mark Sumerian culture as the beginning of civilization.
 
-A more serious example comes from Einstein's work to discover special relativity. He was famous for his thought experiments. The one that led to special relativity had a one-car train with a passenger in the middle of the car traveling at high speed towards a station with an observer on the station's platform. At the point where the passenger is opposite the observer, the observer sees lightening strike the train at the front and back of the car simultaneously. Einstein wondered whether the passenger would see the same thing as the observer. It's at this point that he had to fall back to the mathematics of the experiment which he was able to work through with pen and paper. He freely admitted that his mathematics skills were poor, so there was no way that he could just sit and think the mathematics through in his mind and the complexity of the resulting mathematics bears this out. Einstein required exographics to discover special relativity.
+But as it turns out, there was a revolution within the revolution.
 
-The importance of writing to certain kinds of thinking was a revelation to us. We had thought that all thinking was done in our minds and that exographics was just a way to record the results of that thinking. But, as the arithmetic and Einstein examples illustrate, that's not the case. Furthermore, we were never taught this because our teachers were unaware of it. In fact, it was only discovered in the early 1990s by Donald and other psychologists. The result is still not widely understood, and this is one of our reasons for writing this book.
+About 5,000 years ago, to manage these fledgling city-states, Sumerian administrators began to make meaningful notations on wet clay tablets. For reasons we will explain, we refer to these notations as exographics. In effect, these tablets appear to have served as the equivalent of a modern shopping list, reminding administrators of who owed what in the settlement of palace and temple accounts. Unbeknownst to the Sumerians, this turned out to be a momentous discovery because we began to use this technology to discover important ideas that could not be discovered otherwise. In fact, we'll argue that these ideas constituted a whole new class of idea, one that would eventually give rise to the made world and lifeways of our modern techno-literate cultures.
 
-Once we establish the important role of exographics in the discovery of ideas, our next step will be to explain why the discovery of some ideas requires exographics but others don't. For example, the American R&B percussionists who invented the backbeat didn't need exographics to do so. Neither did Edmond Albius, the boy who, in 1841, discovered a method to hand–pollinate vanilla orchids, which allowed the cultivation of vanilla outside its native habitat and expanded the production of the spice considerably.
+Merlin Donald has rightly termed this discovery of non-biological memory a revolution—the Exographic Revolution—primarily because it allowed us to think in a very different way. With this technology, discovering Pirsig's "ghosts" was within our grasp.
 
-So why is exographics required for some ideas but not others?
+So, over the last 10,000 years—a few minutes of evolutionary time—we've gone from small hunter-gatherer societies to the large techno-literate cultures we inhabit today. Back then, we lived in 30-50 person extended family groups. Now, most of us live in very large cities. Tokyo has a population of 37 million. What really sets us apart is our knack for culture. Relative to all other species, our cultural inventiveness has been astonishing. After all, cows don't barbecue or build smartphones, pigs can't make computer chips or do open-heart surgery, and whales can't play the guitar or make ice cream. The thesis of the book is that the phenomenon of the rise of techno-literate culture is explained by our relentlessly curious, networked imaginations enabled by exographics.
 
-Our preferred sensory mode for discovering ideas is our visual field. Some 2.5 million years ago, our ancient ancestors were cracking stones together to produce a sharp edge, which would have been helpful in a variety of uses including the butchering of a carcass and the shaping of a wood blank into a spear. For these ancient craftsmen, all of the materials they used were in their visual fields, and the production process could be observed from start to finish. That is not true of the arithmetic problem above. There is no such thing as an "84" in the real world. Nor is there a "+" sign. These are abstract concepts we've invented. To use them to develop an argument, we had to get their representations into our visual fields, and we did this with exographics, symbols written on a physical medium like clay tablets or paper. In this way, these "unicorns" of our minds become as real as stone and wood. It's at this point that we can begin to combine them into ideas, ideas like 84 + 1, 045 + 693 + 719 = 2, 541 and special relativity.
+Let's unpack this statement.
 
-To summarize, when it comes to discovering ideas, we use exographics for two important purposes. First, it enables us to bring representations of abstract concepts into our visual fields (we term this the reification purpose). And second, it enables us to construct longer threads of reasoning involving these representations of abstract concepts (the memory extension purpose). With exographics, Einstein was able to catch the unicorns his mind produced.
+Exographics is the term we use to describe our inscription of meaningful symbols on a visual medium. The key concept in this definition is the symbolic nature of exographics. By symbolic we mean the use of culturally-agreed symbols to represent the ideas and concepts our heads produce. For example, writing—the visual representations of the words we speak—is symbolic. If we write the word "apple" on a page, there is nothing about this symbol that connects it to the juicy red fruit. In fact, "apple" was spoken long before it was written, and back then our ancestors could just as easily have called it an "elppa."
 
-From there, we'll look at the societal impacts of the exographics technology. We'll show that it's led to an astonishingly large class of ideas that we could not have discovered otherwise. We term this collection the e-Class and we'll argue that it's been increasing at an exponential rate for centuries. In fact, it's these e-Class ideas that have enabled the rise of techno-literate cultures. Our strong conclusion is that exographics is the most important technology we've created. It's enabled us to go from the hunter-gatherer existence our ancestors lived 10,000 years ago to today's advanced techno-literate cultures.
+By the same reasoning, speech is also symbolic.
 
-Bill Hurley, Kingston, Ontario
-David Hurley, Stouville, Ontario`;
+Most importantly for our work, symbols can be used to represent abstract concepts. Take, for example, unicorns. We can write the word "unicorn," we can say it, and we can draw a picture of one. As we will see, this use of exographics to represent abstract concepts is the key to discovering a large class of ideas that we otherwise couldn't.
+
+We label our modern culture a techno-literate culture and conceptualize it with four characteristics. First, most of the population has some minimal level of literacy including an ability to read, write, and do arithmetic. Second, it includes a relatively small set of individuals who are able to discover ideas that push our culture forward. Third, we've evolved socioeconomic structures and behavioral characteristics that enable large populations of strangers to coexist in relative harmony. These structures include cities, governments, laws, regulations, markets, media, prisons, corporations, and religions. And fourth, there is a substantial education system in place that teaches basic literacy and, for some, the advanced knowledge required to arrive at new ideas. Techno-literate culture is a tectonic shift from our lifeways as hunter-gatherers.
+
+What is not obvious is the cognitive glue that enables this collaboration, but Sarah Hrdy offers some insight with this thought experiment. She first describes the typical things that happen when a group boards an airplane. As she explains, it's an orderly process where strangers go out of their way to cooperate and get along. She then wonders what would happen if it were chimps rather than humans getting on the plane with her:
+
+I cannot keep from wondering what would happen if my fellow human passengers suddenly morphed into another species of ape. What if I were traveling with a planeload of chimpanzees? Any one of us would be lucky to disembark with all ten fingers and toes still attached... Bloody earlobes and other appendages would litter the aisles. Compressing so many highly impulsive strangers into a tight space would be a recipe for mayhem.
+
+One of the benefits of domestication is that it's easier for us to collaborate, live in large anonymous groups, form complex social structures, and, most importantly for this work, solve important problems that require a collective effort. Evolutionary psychologists suggest that humans have undergone an evolutionary process similar to that of domesticated animals, in which traits promoting cooperation and reduced aggression were selected. In effect, they're suggesting we've self-domesticated.
+
+Perhaps the most contentious part of our statement of purpose is the phrase "imaginations enabled by exographics." Exographics is an important cultural skill but does it really play a significant role in our cultural advance? Aren't exographics just a way of recording our thoughts once our imaginations come to them? The implicit premise of this line of reasoning is that we can discover any idea without exographics.
+
+To see that this argument is false, consider the arithmetic problem 8,497 × 8,672. You likely don't know the answer so you can think of this as an artificial exercise to discover an idea. But there is a catch. You're not allowed to use your hands. You simply have to sit with them neatly folded and do the required calculations in your head.
+
+With this constraint, we're trying to understand what our minds are capable of without exographics. Virtually all of us would find this "no-hands" problem impossible. That is, without exographics, it's impossible to discover the idea 8,497 × 8,672 = 73,685,984. But with exographics, it's easy. In fact, it's so easy that children learn to do it in grade school.
+
+To take a more serious idea, consider Einstein's work to discover special relativity. He was famous for his thought experiments. For the one that led to special relativity, he imagined a one-car train with a passenger in the middle of the car traveling at high speed towards a station with an observer on the station's platform. At the point where the passenger is opposite the observer, the observer sees lightning strike the train at the front and back of the car simultaneously. Einstein wondered whether the passenger would see the same thing as the observer. It's at this point that he had to fall back to the mathematics of the experiment which he was able to work through with pen and paper. He freely admitted that his mathematics skills were poor, so there was no way that he could just sit and think through the mathematics in his mind and the complexity of the resulting mathematics bears this out. Einstein required exographics to discover special relativity.
+
+We'll first argue that we do our best work in our visual field. We've been evolving this skill for at least 3 million years, dating to the time when our ancestors were chipping rocks to make tools. All of the material was before them, and they worked away until eventually a tool was produced. But there are some concepts we can imagine that do not have a real-world referent. An example is the number 23. Numbers exist only in our minds, but wood and hammers and nails are things we can reach out and touch. To make 23 real, we can use exographics to inscribe a representation of it on a visual medium, and in that way it comes into our visual field and is as real as a hammer. Once these products of our imaginations are reified on a visual medium, we can begin to use them to fashion new ideas just as our ancient ancestors chipped stone to make tools. As we see it, this is the crucial value of exographics that has been overlooked. Effectively, we're using exographics to make abstract objects real by bringing their exographic representations into our visual fields.
+
+# Chapter 1: The Role of Exographics in the Discovery of Ideas
+
+To avoid confusion, we've decided to term both types of writing exographics and define it to be the inscription of persistent symbols on a visible medium. Basically it's our ability to write symbols on a page (or any other medium). Merlin Donald was the first to use the term in the context of cognitive science.
+
+We'll now get into a detailed explanation for how exographics enables us to discover ideas we otherwise couldn't.
+
+We'll begin by considering our ability to remember symbolic information. Imagine someone speaking the sequence "k 9 L z t 10 b 23 t R" and you are required to remember the symbols in the order given. We'd find this difficult, and our guess is that most readers would also. It's because our memories are not designed to remember unrelated symbols easily. It would be much easier to remember the gist of a joke ten times longer.
+
+Psychologists have proposed models of the way we remember and process information. One useful for our purposes is the Modal Model. It suggests that human memory comprises two main components: Working Memory (WM) and Long-Term Memory (LTM). LTM is a large store of method, knowledge, and experience. WM has the property of having low storage capacity. You can use it to recall a low volume of unrelated information (e.g. "k 9 L") but sequences like "k 9 L z t 10 b 23 t R" are simply too large. Unfortunately LTM is not much help because it's difficult to store symbol sequences quickly.
+
+In sum, our memory architectures are such that we have difficulty storing long strings of unrelated symbolic information quickly. But if we have an exographics capability, we can write a symbolic string down and in so doing store it externally for easy recall later if required.
+
+These arithmetic examples are important because they enable us to prove this statement is false:
+
+All ideas discoverable by the human mind can be discovered without the use of external artifacts (such as exographics).
+
+We term this the neurocentrism fallacy because some of the ideas we discover require us to use tools we operate with our hands. For most people, the arithmetic idea can only be discovered if they use tools like exographics, a calculator, an abacus, or a computer. This, then, is the advantage of exographics. Rather than trying to store the information in our biological memory systems, we can store it as exographics on a medium. Exographics makes 847 × 86 a simple problem. As we've explained, we term this the memory extension purpose of exographics.
+
+Exographics is valuable for idea discovery in another important way. As we suggested in the introductory chapter, it enables us to bring concepts without a real-world referent into our visual fields, and this enables us to manipulate, combine, and recombine such concepts into new ideas.
+
+The concepts we used—"size," "largest," "left," "different," and "3"—do not have corresponding referents in the real world. There is no such thing as a "3" in the real world. We could think about 3 pianos, 3 French hens, or 3 cylinders but there is nothing we can point to in the real world that is a "3." The same is true of the concepts "size," "largest," "left," and "different." We will take some philosophical liberties and label them abstract concepts and distinguish them from concrete concepts like "apples" and "banjos" which do have real-world referents.
+
+As we argued earlier, we're especially good at working with materials in our visual fields to fashion cultural objects and the evidence for this goes back millions of years. In contrast, for certain ideas, the "raw materials" of those ideas are not naturally present in our visual fields. For example, as we noted above, there is no such thing as the number "3" in the real world. But we were able to invent this abstract concept and then bring a representation of it into our visual field by inscribing "3" on a medium. Once inscribed, this representation is as concrete as a tree or a stone. We can then combine it with representations of other abstract concepts in an argument to discover ideas. Hence, exographics allows us to bring representations of abstract concepts into our visual fields where we can then manipulate them into ideas and cultural objects. We term this purpose of exographics its reification purpose.
+
+To summarize, exographics enables us to get representations of abstract concepts into our visual fields (reification purpose) and, once there, it extends our WMs to be able to make longer, more complex arguments (memory extension purpose).`;
 
 function PromptStyleToggle({
   promptStyle,
@@ -128,11 +171,11 @@ function QuizChat({
     const textParts = lastMessage.parts.filter((part) => part.type === 'text');
     const textContent = textParts.map((part) => part.text).join('');
 
-    // Look for score pattern [SCORE:X/10]
-    const scoreMatch = textContent.match(/\[SCORE:(\d+)\/10\]/);
+    // Look for score pattern [SCORE:X/10] (supports decimal scores like 9.5)
+    const scoreMatch = textContent.match(/\[SCORE:(\d+(?:\.\d+)?)\/10\]/);
     if (!scoreMatch) return;
 
-    const parsedScore = parseInt(scoreMatch[1], 10);
+    const parsedScore = parseFloat(scoreMatch[1]);
     if (!Number.isFinite(parsedScore)) return;
 
     onFinished(parsedScore);
@@ -165,7 +208,7 @@ function QuizChat({
             Quiz Interviewer
             {questionCount > 0 && (
               <span className="ml-2 text-muted-foreground">
-                • Question {questionCount} of 5
+                • Question {questionCount} of 10
               </span>
             )}
           </span>
@@ -218,7 +261,7 @@ function QuizChat({
                 Ready for Your Quiz
               </h2>
               <p className="text-muted-foreground mb-8 text-base leading-relaxed">
-                I'll ask you 5 questions about the Preface to test your
+                I'll ask you 8-10 questions about Chapter 1 to test your
                 understanding. Answer each question thoughtfully, and I'll
                 evaluate your responses.
               </p>
@@ -306,7 +349,7 @@ export function QuizInterface() {
           <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-muted/20">
             <div className="flex items-center gap-2">
               <BookTextIcon size={20} className="text-primary" />
-              <span className="text-sm font-medium text-foreground">Preface</span>
+              <span className="text-sm font-medium text-foreground">Chapter 1</span>
             </div>
             <PromptStyleToggle
               promptStyle={promptStyle}
@@ -321,7 +364,7 @@ export function QuizInterface() {
           <div className="flex-1 overflow-y-auto px-6 py-8">
             <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:font-serif prose-p:text-foreground prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold">
               <div className="whitespace-pre-wrap text-foreground leading-relaxed">
-                {PREFACE_CONTENT}
+                {CHAPTER_1_CONTENT}
               </div>
             </div>
           </div>
@@ -414,9 +457,9 @@ export function QuizInterface() {
                    'Keep Learning!'}
                 </h2>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  {score >= 8 ? 'You have demonstrated a strong understanding of the key concepts from the Preface.' :
+                  {score >= 8 ? 'You have demonstrated a strong understanding of the key concepts from Chapter 1.' :
                    score >= 6 ? 'You have a good grasp of the material. Review a few concepts to master them fully.' :
-                   'Take another look at the Preface and focus on the core concepts of exographics.'}
+                   'Take another look at Chapter 1 and focus on the core concepts of exographics, engrams, and exograms.'}
                 </p>
               </div>
               
@@ -461,14 +504,14 @@ export function QuizInterface() {
                   className="w-full"
                 >
                   <BookTextIcon size={16} className="mr-2" />
-                  Review Preface
+                  Review Chapter 1
                 </Button>
               </div>
             </div>
             
             {/* Footer note */}
             <p className="text-center text-xs text-muted-foreground mt-6">
-              Your score reflects understanding across 5 key concepts from the Preface.
+              Your score reflects understanding across 8-10 key concepts from Chapter 1.
             </p>
           </div>
         </div>
