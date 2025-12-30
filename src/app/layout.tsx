@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
 import { Cormorant_Garamond, Source_Serif_4 } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Navigation } from "@/components/navigation";
-import { Footer } from "@/components/footer";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -46,9 +44,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navigation />
           {children}
-          <Footer />
         </ThemeProvider>
       </body>
     </html>
