@@ -261,7 +261,7 @@ function QuizChat({
                 Ready for Your Quiz
               </h2>
               <p className="text-muted-foreground mb-8 text-base leading-relaxed">
-                I'll ask you 8-10 questions about Chapter 1 to test your
+                I'll ask you 8-10 questions from the Week 1 Notebook Questions to test your
                 understanding. Answer each question thoughtfully, and I'll
                 evaluate your responses.
               </p>
@@ -349,7 +349,7 @@ export function QuizInterface() {
           <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-muted/20">
             <div className="flex items-center gap-2">
               <BookTextIcon size={20} className="text-primary" />
-              <span className="text-sm font-medium text-foreground">Chapter 1</span>
+              <span className="text-sm font-medium text-foreground">Week 1</span>
             </div>
             <PromptStyleToggle
               promptStyle={promptStyle}
@@ -457,9 +457,9 @@ export function QuizInterface() {
                    'Keep Learning!'}
                 </h2>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  {score >= 8 ? 'You have demonstrated a strong understanding of the key concepts from Chapter 1.' :
+                  {score >= 8 ? 'You have demonstrated a strong understanding of the Week 1 Notebook Questions.' :
                    score >= 6 ? 'You have a good grasp of the material. Review a few concepts to master them fully.' :
-                   'Take another look at Chapter 1 and focus on the core concepts of exographics, engrams, and exograms.'}
+                   'Take another look at the Week 1 Notebook Questions and focus on the core concepts of exographics, engrams, and exograms.'}
                 </p>
               </div>
               
@@ -504,14 +504,14 @@ export function QuizInterface() {
                   className="w-full"
                 >
                   <BookTextIcon size={16} className="mr-2" />
-                  Review Chapter 1
+                  Review Week 1 Content
                 </Button>
               </div>
             </div>
             
             {/* Footer note */}
             <p className="text-center text-xs text-muted-foreground mt-6">
-              Your score reflects understanding across 8-10 key concepts from Chapter 1.
+              Your score reflects understanding across 8-10 questions from the Week 1 Notebook Questions.
             </p>
           </div>
         </div>

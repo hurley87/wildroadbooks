@@ -2,6 +2,60 @@ import { google } from '@ai-sdk/google';
 import { streamText, convertToModelMessages, type UIMessage } from 'ai';
 import { z } from 'zod';
 
+// Week 1 Notebook Questions from the course plan
+const WEEK_1_QUESTIONS = [
+  {
+    id: 1,
+    topic: 'engrams-exograms-definition',
+    question: "In footnote 2 on p. 4, we describe Merlin Donald's characterization of engrams and exograms. Define both terms and then explain his view of the advantages of exograms. Can you think of any other advantages of exograms?",
+  },
+  {
+    id: 2,
+    topic: 'memory-effort',
+    question: 'As we know, both engrams and exograms require effort to form and store. Discuss the relative efforts required for each mode of memory.',
+  },
+  {
+    id: 3,
+    topic: 'engrams-not-exograms',
+    question: 'Are there engrams that cannot be stored as exograms?',
+  },
+  {
+    id: 4,
+    topic: 'recall-speed',
+    question: 'An important characteristic of memory is speed of recall. What are the relative speeds of recall for engrams and exograms?',
+  },
+  {
+    id: 5,
+    topic: 'education-engrams',
+    question: "As a part of your education, you are forced to internalize a large list of engrams. For example, a mathematics student must understand how to differentiate an exponential function. With the technologies we now have to search and access our great quantity of exograms (i.e., Google, ChatGPT, etc.), is it still necessary to require students to form engrams?",
+  },
+  {
+    id: 6,
+    topic: 'spoken-symbols',
+    question: "We've argued that a word written on a page is symbol. Is a spoken word also a symbol? Argue why or why not.",
+  },
+  {
+    id: 7,
+    topic: 'techno-literate-characteristics',
+    question: 'On pp. 5-6, the characteristics of a techno-literate culture are defined. Briefly describe these 4 characteristics. Is the CAF a techno-literate culture?',
+  },
+  {
+    id: 8,
+    topic: 'cooperation-self-domestication',
+    question: "A short time ago in evolutionary time (10,000 years ago), we lived in small hunter-gatherer groups. Today our techno-literate groups are very large and, for the most part, urbanized. It's been argued that we're able to live in large anonymous groups because we've self-domesticated (sheep, cows, and other animals have been domesticated with selective breeding) and this fosters cooperation. Why is cooperation so important to Homo sapiens?",
+  },
+  {
+    id: 9,
+    topic: 'counter-example-exographics',
+    question: 'Use a counter-example to show that the following statement is false: All ideas discoverable by the human mind can be discovered without exographics.',
+  },
+  {
+    id: 10,
+    topic: 'abstract-objects',
+    question: 'In the book, we refer to concepts without a real-world referent as abstract objects. So, the number 23 is an abstract object whereas a baseball is a concrete object. Explain why the mathematical concept of multiplication is an abstract object.',
+  },
+];
+
 // Chapter 1 content for context
 const CHAPTER_1_CONTENT = `# Introduction
 
@@ -98,10 +152,12 @@ function countQuestionsAsked(messages: UIMessage[]): number {
  * Build system prompt for the quiz interviewer
  */
 function buildQuizSystemPromptClassic(): string {
-  return `You are a Socratic interviewer testing a student's comprehension of Chapter 1 and the Introduction from "Catching Unicorns" by David Hurley and Bill Hurley.
+  const questionsList = WEEK_1_QUESTIONS.map((q, idx) => `${idx + 1}. ${q.question}`).join('\n');
+  
+  return `You are a Socratic interviewer testing a student's comprehension of Week 1 Notebook Questions from "Catching Unicorns" by David Hurley and Bill Hurley.
 
 Your role is to:
-1. Ask exactly 8-10 questions about Chapter 1/Introduction content (aim for 10, but adapt based on conversation flow)
+1. Ask exactly 8-10 questions from the Week 1 Notebook Questions below (aim for 10, but adapt based on conversation flow)
 2. Ask ONE question at a time
 3. After each answer, provide brief, encouraging feedback (1-2 sentences)
 4. Evaluate understanding based on demonstrated knowledge
@@ -112,43 +168,37 @@ Your role is to:
 - Score each answer: 1 point (excellent understanding), 0.5 points (partial understanding), 0 points (incorrect/no understanding)
 - After the final answer, calculate the total score and end your response with: [SCORE:X/10] where X is the total score (0-10)
 
-**CHAPTER 1 CONTENT:**
+**CHAPTER 1 CONTENT (for reference):**
 ${CHAPTER_1_CONTENT}
 
-**KEY CONCEPTS TO COVER IN YOUR QUESTIONS (use these as inspiration, but phrase naturally):**
-1. Engrams vs exograms (Merlin Donald's distinction: internal biological memory vs external memory like writing)
-2. Advantages of exograms over engrams (persistence, capacity, sharing, etc.)
-3. Relative effort to form engrams vs exograms
-4. Types of memories that can't be stored as exograms (if any)
-5. Speed of recall: engrams vs exograms
-6. Education and modern search tools (Google, ChatGPT) - do students still need engrams?
-7. Spoken words as symbols (are they symbolic like written words?)
-8. Four characteristics of techno-literate culture
-9. Self-domestication and cooperation (why cooperation is essential)
-10. Counter-examples disproving "all ideas discoverable without exographics"
-11. Abstract vs concrete objects (why multiplication is abstract)
+**WEEK 1 NOTEBOOK QUESTIONS (select 8-10 from these):**
+${questionsList}
 
 **QUESTION STRATEGY:**
-- Start with a welcoming question about engrams/exograms or exographics
+- Select questions from the Week 1 Notebook Questions list above
+- You may adapt the wording slightly for conversational flow, but maintain the core intent of each question
+- Start with foundational questions (like engrams/exograms definitions) before moving to more complex ones
 - Progress through concepts naturally based on student responses
-- Mix conceptual questions with example-based questions
 - Be conversational and encouraging - flow like a natural conversation
 - Don't reveal answers - let the student demonstrate understanding
-- Adapt questions based on what the student has already covered
+- Ensure good coverage across different topics from the question bank
 
 **RESPONSE FORMAT:**
 - Keep responses concise (2-4 sentences per question/feedback)
 - After each answer, acknowledge what they got right, then ask the next question
 - After the final answer, provide a brief summary assessment and include [SCORE:X/10] at the very end
 
-Begin by asking your first question about Chapter 1.`;
+Begin by asking your first question from the Week 1 Notebook Questions.`;
 }
 
 function buildQuizSystemPromptChallenging(questionsAsked: number): string {
-  return `You are a Socratic interviewer testing a student's comprehension of Chapter 1 and the Introduction from "Catching Unicorns" by David Hurley and Bill Hurley.
+  const questionsList = WEEK_1_QUESTIONS.map((q, idx) => `${idx + 1}. ${q.question}`).join('\n');
+  
+  return `You are a Socratic interviewer testing a student's comprehension of Week 1 Notebook Questions from "Catching Unicorns" by David Hurley and Bill Hurley.
 
 Hard requirements:
 - Ask exactly 8-10 questions total (aim for 10, label them Q1–Q10).
+- Select questions from the Week 1 Notebook Questions list below.
 - Ask ONE question at a time.
 - After each user answer: briefly grade it (0/0.5/1), give 1–2 sentences of feedback, then ask the next question.
 - After the user answers the final question: provide a brief overall assessment and end your response with exactly: [SCORE:X/10]
@@ -161,12 +211,10 @@ Scoring rules:
 
 Critical behavior (adapt + challenge):
 - Your interview MUST adapt to the user's answers.
-- If the user is vague or wrong, you MUST challenge them by making the next question force precision or reconciliation (still only ONE question).
-  Examples of challenge styles (choose one when needed):
-  - "You mentioned X—can you explain how that relates to Merlin Donald's distinction between engrams and exograms?"
-  - "The book argues Y—can you provide a counter-example that challenges this?"
-  - "You said Z—how does that connect to the four characteristics of techno-literate culture?"
-- If the user is strong, raise difficulty: ask for deeper analysis, compare concepts, or connect multiple ideas together.
+- Select questions from the Week 1 Notebook Questions list that address gaps or weaknesses in the student's understanding.
+- If the user is vague or wrong, you MUST challenge them by selecting a question that forces precision or reconciliation (still only ONE question).
+- You may adapt the wording of questions slightly for conversational flow, but maintain the core intent.
+- If the user is strong, select more challenging questions or ask for deeper analysis on complex topics.
 
 Conversation state:
 - You have already asked ${questionsAsked} questions.
@@ -177,25 +225,15 @@ Conversation state:
 Chapter 1 content (the only ground truth):
 ${CHAPTER_1_CONTENT}
 
-Coverage targets (ensure key concepts are assessed, but adapt ordering based on weaknesses):
-- Engrams vs exograms (Merlin Donald's distinction: internal vs external memory)
-- Advantages of exograms (persistence, capacity, sharing, etc.)
-- Relative effort to form engrams vs exograms
-- Types of memories that can't be stored as exograms
-- Speed of recall: engrams vs exograms
-- Education and modern search tools (Google, ChatGPT) - do students still need engrams?
-- Spoken words as symbols (are they symbolic like written words?)
-- Four characteristics of techno-literate culture
-- Self-domestication and cooperation (why cooperation is essential)
-- Counter-examples disproving "all ideas discoverable without exographics"
-- Abstract vs concrete objects (why multiplication is abstract)
+**WEEK 1 NOTEBOOK QUESTIONS (select 8-10 from these):**
+${questionsList}
 
 Response format (every turn):
 - "Grade: N/1 — <very short reason>"
 - 1–2 sentences of feedback (encouraging but honest)
 - Then ask the next question (ONE question, labeled Q#)
 
-Begin now with your next question.`;
+Begin now with your next question from the Week 1 Notebook Questions.`;
 }
 
 // Zod schema for request validation
