@@ -3,56 +3,132 @@ import { streamText, convertToModelMessages, type UIMessage } from 'ai';
 import { z } from 'zod';
 
 // Week 1 Notebook Questions from the course plan
+// All questions are atomic (single prompt) and contain no page/footnote references
 const WEEK_1_QUESTIONS = [
   {
     id: 1,
-    topic: 'engrams-exograms-definition',
-    question: "In footnote 2 on p. 4, we describe Merlin Donald's characterization of engrams and exograms. Define both terms and then explain his view of the advantages of exograms. Can you think of any other advantages of exograms?",
+    topic: 'engrams-definition',
+    question: "How would you explain what an engram is?",
   },
   {
     id: 2,
-    topic: 'memory-effort',
-    question: 'As we know, both engrams and exograms require effort to form and store. Discuss the relative efforts required for each mode of memory.',
+    topic: 'exograms-definition',
+    question: "How would you explain what an exogram is?",
   },
   {
     id: 3,
-    topic: 'engrams-not-exograms',
-    question: 'Are there engrams that cannot be stored as exograms?',
+    topic: 'exograms-advantages',
+    question: "What advantages do exograms offer?",
   },
   {
     id: 4,
-    topic: 'recall-speed',
-    question: 'An important characteristic of memory is speed of recall. What are the relative speeds of recall for engrams and exograms?',
+    topic: 'exograms-additional-advantages',
+    question: "Can you think of any other advantages of exograms beyond what we've covered?",
   },
   {
     id: 5,
-    topic: 'education-engrams',
-    question: "As a part of your education, you are forced to internalize a large list of engrams. For example, a mathematics student must understand how to differentiate an exponential function. With the technologies we now have to search and access our great quantity of exograms (i.e., Google, ChatGPT, etc.), is it still necessary to require students to form engrams?",
+    topic: 'memory-effort',
+    question: 'Both engrams and exograms take effort to form and store. Which one do you think requires more effort, and why?',
   },
   {
     id: 6,
-    topic: 'spoken-symbols',
-    question: "We've argued that a word written on a page is symbol. Is a spoken word also a symbol? Argue why or why not.",
+    topic: 'engrams-not-exograms',
+    question: 'Are there some engrams that can\'t be stored as exograms?',
   },
   {
     id: 7,
-    topic: 'techno-literate-characteristics',
-    question: 'On pp. 5-6, the characteristics of a techno-literate culture are defined. Briefly describe these 4 characteristics. Is the CAF a techno-literate culture?',
+    topic: 'recall-speed',
+    question: 'When it comes to speed of recall, how do engrams and exograms compare?',
   },
   {
     id: 8,
-    topic: 'cooperation-self-domestication',
-    question: "A short time ago in evolutionary time (10,000 years ago), we lived in small hunter-gatherer groups. Today our techno-literate groups are very large and, for the most part, urbanized. It's been argued that we're able to live in large anonymous groups because we've self-domesticated (sheep, cows, and other animals have been domesticated with selective breeding) and this fosters cooperation. Why is cooperation so important to Homo sapiens?",
+    topic: 'education-engrams',
+    question: "In school, you're often required to memorize things - like how to differentiate an exponential function. But now we have Google and ChatGPT. Do you think students still need to memorize things, or can they just look everything up?",
   },
   {
     id: 9,
-    topic: 'counter-example-exographics',
-    question: 'Use a counter-example to show that the following statement is false: All ideas discoverable by the human mind can be discovered without exographics.',
+    topic: 'spoken-symbols',
+    question: "We've said that a written word is a symbol. What about a spoken word - is that a symbol too? What's your take?",
   },
   {
     id: 10,
-    topic: 'abstract-objects',
-    question: 'In the book, we refer to concepts without a real-world referent as abstract objects. So, the number 23 is an abstract object whereas a baseball is a concrete object. Explain why the mathematical concept of multiplication is an abstract object.',
+    topic: 'techno-literate-characteristics',
+    question: 'Can you walk me through the four key traits of a techno-literate culture?',
+  },
+  {
+    id: 11,
+    topic: 'techno-literate-caf',
+    question: 'Do you think the Canadian Armed Forces counts as a techno-literate culture? Why or why not?',
+  },
+  {
+    id: 12,
+    topic: 'cooperation-self-domestication',
+    question: "About 10,000 years ago, humans lived in small hunter-gatherer groups. Now we live in huge cities. Some argue we can do this because we've 'self-domesticated' - kind of like how we domesticated animals. Why do you think cooperation matters so much for humans?",
+  },
+  {
+    id: 13,
+    topic: 'counter-example-exographics',
+    question: 'Can you think of an example that shows this isn\'t true: that all ideas discoverable by the human mind can be discovered without exographics?',
+  },
+  {
+    id: 14,
+    topic: 'abstract-objects-definition',
+    question: 'What\'s an abstract object, and how is it different from a concrete object?',
+  },
+  {
+    id: 15,
+    topic: 'abstract-objects-multiplication',
+    question: 'We know 23 is abstract and a baseball is concrete. Why would you say multiplication is an abstract object?',
+  },
+  {
+    id: 16,
+    topic: 'exographics-definition',
+    question: 'How would you define exographics?',
+  },
+  {
+    id: 17,
+    topic: 'exographics-symbolic-nature',
+    question: 'What does it mean when we say exographics is symbolic?',
+  },
+  {
+    id: 18,
+    topic: 'exographics-memory-extension',
+    question: 'What\'s the memory extension purpose of exographics?',
+  },
+  {
+    id: 19,
+    topic: 'exographics-reification',
+    question: 'What\'s the reification purpose of exographics?',
+  },
+  {
+    id: 20,
+    topic: 'working-memory-capacity',
+    question: 'How does working memory capacity relate to why we need exographics?',
+  },
+  {
+    id: 21,
+    topic: 'neurocentrism-fallacy',
+    question: 'What\'s the neurocentrism fallacy?',
+  },
+  {
+    id: 22,
+    topic: 'exographic-revolution',
+    question: "What did Merlin Donald mean when he called the discovery of non-biological memory the 'Exographic Revolution'?",
+  },
+  {
+    id: 23,
+    topic: 'visual-field-advantage',
+    question: 'Why is it helpful to work with materials in our visual field when discovering ideas?',
+  },
+  {
+    id: 24,
+    topic: 'arithmetic-example',
+    question: 'How does the arithmetic problem 8,497 × 8,672 show us that we need exographics to discover certain ideas?',
+  },
+  {
+    id: 25,
+    topic: 'einstein-exographics',
+    question: 'How did Einstein need exographics to discover special relativity?',
   },
 ];
 
@@ -157,26 +233,33 @@ function buildQuizSystemPromptClassic(): string {
   return `You are a Socratic interviewer testing a student's comprehension of Week 1 Notebook Questions from "Catching Unicorns" by David Hurley and Bill Hurley.
 
 Your role is to:
-1. Ask exactly 8-10 questions from the Week 1 Notebook Questions below (aim for 10, but adapt based on conversation flow)
-2. Ask ONE question at a time
+1. Ask exactly 10-15 questions from the Week 1 Notebook Questions below (aim for 12-15, but adapt based on conversation flow)
+2. Ask ONE question at a time - each question must be atomic (single, focused prompt)
 3. After each answer, provide brief, encouraging feedback (1-2 sentences)
 4. Evaluate understanding based on demonstrated knowledge
 5. After the final question is answered, provide a final assessment and score
 
+**CRITICAL CONSTRAINTS:**
+- NEVER reference page numbers, footnotes, or specific locations in the book (e.g., "on p. 4", "in footnote 2", "pp. 5-6")
+- NEVER ask multi-part questions - each question must address only one concept or idea
+- All questions in the bank are already atomic - use them as written or adapt slightly while maintaining atomicity
+
 **IMPORTANT SCORING RULES:**
-- Each question is worth 1 point (total: 10 points for 10 questions, or normalize to 10 if fewer questions)
+- Each question is worth 1 point
 - Score each answer: 1 point (excellent understanding), 0.5 points (partial understanding), 0 points (incorrect/no understanding)
-- After the final answer, calculate the total score and end your response with: [SCORE:X/10] where X is the total score (0-10)
+- After the final answer, calculate the total score
+- Normalize the score to /10: score = 10 × (total points / questions asked)
+- End your response with: [SCORE:X/10] where X is the normalized score (0-10, can include decimals like 8.5)
 
 **CHAPTER 1 CONTENT (for reference):**
 ${CHAPTER_1_CONTENT}
 
-**WEEK 1 NOTEBOOK QUESTIONS (select 8-10 from these):**
+**WEEK 1 NOTEBOOK QUESTIONS (select 10-15 from these):**
 ${questionsList}
 
 **QUESTION STRATEGY:**
 - Select questions from the Week 1 Notebook Questions list above
-- You may adapt the wording slightly for conversational flow, but maintain the core intent of each question
+- You may adapt the wording slightly for conversational flow, but maintain the core intent and atomicity of each question
 - Start with foundational questions (like engrams/exograms definitions) before moving to more complex ones
 - Progress through concepts naturally based on student responses
 - Be conversational and encouraging - flow like a natural conversation
@@ -197,35 +280,42 @@ function buildQuizSystemPromptChallenging(questionsAsked: number): string {
   return `You are a Socratic interviewer testing a student's comprehension of Week 1 Notebook Questions from "Catching Unicorns" by David Hurley and Bill Hurley.
 
 Hard requirements:
-- Ask exactly 8-10 questions total (aim for 10, label them Q1–Q10).
+- Ask exactly 10-15 questions total (aim for 12-15, label them Q1–Q15).
 - Select questions from the Week 1 Notebook Questions list below.
-- Ask ONE question at a time.
+- Ask ONE question at a time - each question must be atomic (single, focused prompt).
 - After each user answer: briefly grade it (0/0.5/1), give 1–2 sentences of feedback, then ask the next question.
 - After the user answers the final question: provide a brief overall assessment and end your response with exactly: [SCORE:X/10]
 
+**CRITICAL CONSTRAINTS:**
+- NEVER reference page numbers, footnotes, or specific locations in the book (e.g., "on p. 4", "in footnote 2", "pp. 5-6")
+- NEVER ask multi-part questions - each question must address only one concept or idea
+- All questions in the bank are already atomic - use them as written or adapt slightly while maintaining atomicity
+
 Scoring rules:
-- Each question is worth 1 point (total 10 for 10 questions, normalize if fewer).
+- Each question is worth 1 point.
 - 1 = accurate + specific + grounded in Chapter 1/Introduction (uses terms/examples correctly)
 - 0.5 = partially correct OR correct but vague/ungrounded
 - 0 = incorrect, unrelated, or "I don't know"
+- After all questions, normalize the score to /10: score = 10 × (total points / questions asked)
+- Final score can include decimals (e.g., 8.5/10)
 
 Critical behavior (adapt + challenge):
 - Your interview MUST adapt to the user's answers.
 - Select questions from the Week 1 Notebook Questions list that address gaps or weaknesses in the student's understanding.
 - If the user is vague or wrong, you MUST challenge them by selecting a question that forces precision or reconciliation (still only ONE question).
-- You may adapt the wording of questions slightly for conversational flow, but maintain the core intent.
+- You may adapt the wording of questions slightly for conversational flow, but maintain the core intent and atomicity.
 - If the user is strong, select more challenging questions or ask for deeper analysis on complex topics.
 
 Conversation state:
 - You have already asked ${questionsAsked} questions.
 - If ${questionsAsked} = 0, ask Q1. If 1, ask Q2, etc.
-- If ${questionsAsked} >= 10, DO NOT ask more questions; provide the final assessment and [SCORE:X/10].
-- If ${questionsAsked} >= 8 and the conversation feels complete, you may conclude early (still normalize score to /10).
+- If ${questionsAsked} >= 15, DO NOT ask more questions; provide the final assessment and [SCORE:X/10].
+- If ${questionsAsked} >= 10 and the conversation feels complete, you may conclude early (still normalize score to /10).
 
 Chapter 1 content (the only ground truth):
 ${CHAPTER_1_CONTENT}
 
-**WEEK 1 NOTEBOOK QUESTIONS (select 8-10 from these):**
+**WEEK 1 NOTEBOOK QUESTIONS (select 10-15 from these):**
 ${questionsList}
 
 Response format (every turn):
@@ -280,11 +370,15 @@ export async function POST(req: Request) {
     // Build system prompt (toggleable via query param)
     // - style=classic uses the original, gentler interviewer
     // - any other value defaults to the challenging/adaptive interviewer
-    const style = new URL(req.url).searchParams.get('style');
-    const systemPrompt =
-      style === 'classic'
-        ? buildQuizSystemPromptClassic()
-        : buildQuizSystemPromptChallenging(questionsAsked);
+    // - mode=game ensures challenge style is used for game mode
+    const url = new URL(req.url);
+    const style = url.searchParams.get('style');
+    const mode = url.searchParams.get('mode');
+    // Game mode always uses challenge style for consistent grading
+    const useChallengeStyle = mode === 'game' || style !== 'classic';
+    const systemPrompt = useChallengeStyle
+      ? buildQuizSystemPromptChallenging(questionsAsked)
+      : buildQuizSystemPromptClassic();
     
     // Convert UI messages to model messages
     const modelMessages = await convertToModelMessages(

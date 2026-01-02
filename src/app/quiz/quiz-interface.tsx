@@ -189,15 +189,6 @@ function QuizChat({
     setInput('');
   };
 
-  // Count questions asked (assistant messages that aren't the final score)
-  const questionCount = messages.filter(
-    (msg) =>
-      msg.role === 'assistant' &&
-      !msg.parts.some(
-        (part) => part.type === 'text' && part.text.includes('[SCORE:')
-      )
-  ).length;
-
   return (
     <>
       {/* Header with progress + style toggle + reset */}
@@ -206,11 +197,6 @@ function QuizChat({
           <SparklesIcon size={16} className="text-primary" />
           <span className="text-sm font-medium text-foreground">
             Quiz Interviewer
-            {questionCount > 0 && (
-              <span className="ml-2 text-muted-foreground">
-                • Question {questionCount} of 10
-              </span>
-            )}
           </span>
         </div>
 
@@ -261,7 +247,7 @@ function QuizChat({
                 Ready for Your Quiz
               </h2>
               <p className="text-muted-foreground mb-8 text-base leading-relaxed">
-                I'll ask you 8-10 questions from the Week 1 Notebook Questions to test your
+                I'll ask you 10-15 questions from the Week 1 Notebook Questions to test your
                 understanding. Answer each question thoughtfully, and I'll
                 evaluate your responses.
               </p>
@@ -514,7 +500,7 @@ export function QuizInterface() {
             
             {/* Footer note */}
             <p className="text-center text-xs text-muted-foreground mt-6">
-              Your score reflects understanding across 8-10 questions from the Week 1 Notebook Questions.
+              Your score reflects understanding across 10-15 questions from the Week 1 Notebook Questions.
             </p>
           </div>
         </div>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
 import { Cormorant_Garamond, Source_Serif_4 } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { PrivyProvider } from "@/components/privy-provider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -38,14 +39,16 @@ export default function RootLayout({
           GeistMono.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <PrivyProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </PrivyProvider>
       </body>
     </html>
   );
