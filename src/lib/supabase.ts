@@ -45,6 +45,81 @@ export interface HybridSearchResult {
   rrf_score: number;
 }
 
+/**
+ * Type definitions for student responses
+ */
+export interface StudentResponse {
+  id: string;
+  user_id: string;
+  session_id: string;
+  question_number: number;
+  question_topic: string;
+  question_text: string;
+  response_text: string;
+  grade: number | null;
+  feedback: string | null;
+  response_time_ms: number | null;
+  xp_earned: number;
+  streak_at_time: number;
+  embedding?: number[];
+  created_at?: string;
+}
 
+/**
+ * Type definitions for game sessions
+ */
+export interface GameSession {
+  id: string;
+  user_id: string;
+  final_score: number | null;
+  total_questions: number | null;
+  total_xp: number | null;
+  max_streak: number | null;
+  completed_at?: string;
+}
 
+/**
+ * Type definitions for user profiles
+ */
+export interface UserProfile {
+  user_id: string;
+  display_name: string | null;
+  email: string | null;
+  avatar_seed: string | null;
+  show_on_leaderboard: boolean | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+/**
+ * Type definitions for leaderboard entries
+ */
+export interface LeaderboardEntry {
+  rank: number;
+  user_id: string;
+  display_name: string;
+  avatar_seed: string | null;
+  total_xp: number;
+  total_games: number;
+  best_score: number | null;
+  avg_score: number | null;
+  longest_streak: number | null;
+  weekly_xp?: number;
+  games_played?: number;
+}
+
+/**
+ * Type definitions for teacher search results
+ */
+export interface TeacherSearchResult {
+  id: string;
+  user_id: string;
+  question_topic: string;
+  question_text: string;
+  response_text: string;
+  grade: number | null;
+  feedback: string | null;
+  response_time_ms: number | null;
+  similarity: number;
+}
 

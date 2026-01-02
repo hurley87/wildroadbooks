@@ -3,6 +3,7 @@
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { usePrivy } from '@privy-io/react-auth';
 import { MicroInput } from '@/components/ui/micro-input';
 import { QuestionCard } from '@/components/ui/question-card';
 import { FeedbackBurst } from '@/components/ui/feedback-burst';
@@ -25,6 +26,7 @@ interface GameState {
   score: number | null;
   lastGrade: 0 | 0.5 | 1 | null;
   lastFeedback: string;
+  questionStartTime: number | null;
 }
 
 function extractTextFromMessage(message: any): string {
@@ -78,6 +80,7 @@ function parseGradeFromText(text: string): { grade: 0 | 0.5 | 1 | null; feedback
 }
 
 export function GameInterface() {
+  const { user } = usePrivy();
   const [gameState, setGameState] = useState<GameState>({
     phase: 'intro',
     questionNumber: 0,
@@ -89,14 +92,34 @@ export function GameInterface() {
     score: null,
     lastGrade: null,
     lastFeedback: '',
+    questionStartTime: null,
   });
 
   const [input, setInput] = useState('');
+  const sessionIdRef = useRef<string | null>(null);
   const hasStartedRef = useRef(false);
 
-  const api = '/api/quiz?style=challenge';
+  // Generate session ID when starting a new game
+  if (!sessionIdRef.current) {
+    sessionIdRef.current = crypto.randomUUID();
+  }
+
+  const api = '/api/game';
   const { messages, sendMessage, status, error, setMessages } = useChat({
-    transport: new DefaultChatTransport({ api }),
+    transport: new DefaultChatTransport({ 
+      api,
+      headers: async () => {
+        const headers: Record<string, string> = {};
+        if (user?.id) {
+          // Use Privy user ID as Bearer token (in production, use actual access token)
+          headers['Authorization'] = `Bearer ${user.id}`;
+        }
+        if (sessionIdRef.current) {
+          headers['x-session-id'] = sessionIdRef.current;
+        }
+        return headers;
+      },
+    }),
   });
 
   const isLoading = status === 'submitted' || status === 'streaming';
@@ -169,6 +192,7 @@ export function GameInterface() {
         phase: 'question',
         questionNumber: questionCount,
         currentQuestion: question,
+        questionStartTime: Date.now(), // Start timer when question is displayed
       }));
     }
   }, [messages, gameState.phase, gameState.streak, gameState.xp]);
@@ -183,8 +207,18 @@ export function GameInterface() {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
+    // Calculate response time
+    const responseTimeMs = gameState.questionStartTime 
+      ? Date.now() - gameState.questionStartTime 
+      : undefined;
+
     setGameState((prev) => ({ ...prev, phase: 'evaluating' }));
-    sendMessage({ text: input });
+    
+    // Send message with response time in metadata
+    sendMessage({ 
+      text: input,
+      metadata: responseTimeMs ? { responseTimeMs } : undefined,
+    });
     setInput('');
   };
 
@@ -209,9 +243,11 @@ export function GameInterface() {
       score: null,
       lastGrade: null,
       lastFeedback: '',
+      questionStartTime: null,
     });
     setMessages([]);
     setInput('');
+    sessionIdRef.current = crypto.randomUUID(); // Generate new session ID
     hasStartedRef.current = false;
   };
 
