@@ -318,6 +318,9 @@ function QuizChat({
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         placeholder="Type your answer here..."
+        onSpeechResult={(transcript) => {
+          setInput((prev) => (prev ? `${prev} ${transcript}` : transcript));
+        }}
       />
     </>
   );
