@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '@/lib/utils';
 import { CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
+import confetti from 'canvas-confetti';
+import { playSound } from '@/lib/sound-manager';
+import { triggerHaptic } from '@/lib/haptic-utils';
 
 interface FeedbackBurstProps {
   grade: 0 | 0.5 | 1;
@@ -14,10 +17,29 @@ interface FeedbackBurstProps {
 export function FeedbackBurst({ grade, feedback, onComplete }: FeedbackBurstProps) {
   const [show, setShow] = useState(true);
   const [shouldShake, setShouldShake] = useState(false);
+  const [victoryShake, setVictoryShake] = useState(false);
 
   useEffect(() => {
-    // Shake on incorrect answer
-    if (grade === 0) {
+    // Play sound and trigger haptic feedback
+    if (grade === 1) {
+      playSound('correct');
+      triggerHaptic('medium');
+      // Confetti explosion
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#10b981', '#34d399', '#6ee7b7'],
+      });
+      // Victory shake animation
+      setVictoryShake(true);
+      setTimeout(() => setVictoryShake(false), 600);
+    } else if (grade === 0.5) {
+      playSound('partial');
+      triggerHaptic('light');
+    } else {
+      playSound('wrong');
+      triggerHaptic('medium');
       setShouldShake(true);
       setTimeout(() => setShouldShake(false), 600);
     }
@@ -125,14 +147,20 @@ export function FeedbackBurst({ grade, feedback, onComplete }: FeedbackBurstProp
               opacity: 1,
               scale: 1,
               y: 0,
-              x: shouldShake ? [0, -10, 10, -10, 10, 0] : 0,
+              x: shouldShake 
+                ? [0, -10, 10, -10, 10, 0] 
+                : victoryShake 
+                ? [0, -4, 4, -2, 2, 0] 
+                : 0,
+              rotate: victoryShake ? [0, -2, 2, -1, 1, 0] : 0,
             }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{
               type: 'spring',
               damping: 15,
               stiffness: 200,
-              x: shouldShake ? { duration: 0.6 } : undefined,
+              x: shouldShake || victoryShake ? { duration: 0.6 } : undefined,
+              rotate: victoryShake ? { duration: 0.6 } : undefined,
             }}
             className={cn(
               'relative z-50',

@@ -1,7 +1,7 @@
 'use client';
 
 import { Mic, Square } from 'lucide-react';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { useSpeechRecognition } from '@/lib/use-speech-recognition';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,40 @@ interface MicroInputProps {
   showHelper?: boolean;
   voiceOnly?: boolean;
   onVoiceSubmit?: (transcript: string) => void;
+}
+
+// Sound wave bars component with memoized random heights
+function SoundWaveBars() {
+  // Pre-calculate random heights for each bar to avoid re-evaluation on every render
+  const barHeights = useMemo(() => {
+    return Array.from({ length: 5 }, () => ({
+      heights: [
+        `${Math.random() * 20 + 10}px`,
+        `${Math.random() * 30 + 20}px`,
+        `${Math.random() * 20 + 10}px`,
+      ],
+    }));
+  }, []);
+
+  return (
+    <div className="absolute -top-16 left-1/2 -translate-x-1/2 flex items-end gap-1 h-12">
+      {barHeights.map((bar, i) => (
+        <motion.div
+          key={i}
+          className="w-1 bg-cyan-500 rounded-full"
+          animate={{
+            height: bar.heights,
+          }}
+          transition={{
+            duration: 0.5,
+            repeat: Infinity,
+            delay: i * 0.1,
+            ease: 'easeInOut',
+          }}
+        />
+      ))}
+    </div>
+  );
 }
 
 export function MicroInput({
@@ -79,40 +113,73 @@ export function MicroInput({
     return (
       <div className="fixed bottom-0 left-0 right-0 z-50 pb-safe">
         <div className="w-full flex items-center justify-center px-4 pb-8 sm:pb-12">
-          <motion.div
-            animate={{
-              scale: isListening ? [1, 1.1, 1] : 1,
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: isListening ? Infinity : 0,
-              ease: 'easeInOut',
-            }}
-          >
-            <Button
-              type="button"
-              onClick={handleStopClick}
-              disabled={isLoading}
-              size="icon"
-              variant={isListening ? 'destructive' : 'default'}
-              className={cn(
-                "h-20 w-20 rounded-full transition-all duration-300",
-                "bg-white shadow-xl border-2",
-                "hover:scale-110 active:scale-95",
-                isListening 
-                  ? "border-red-400 bg-red-50 animate-pulse" 
-                  : "border-emerald-500 hover:border-emerald-600",
-                isLoading && "opacity-50 cursor-not-allowed"
-              )}
-              aria-label={isListening ? 'Stop recording and submit' : 'Start voice input'}
+          <div className="relative">
+            {/* Ripple effect rings */}
+            {isListening && (
+              <>
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute inset-0 rounded-full border-2"
+                    style={{
+                      borderColor: isListening ? 'rgb(34, 211, 238)' : 'rgb(16, 185, 129)',
+                    }}
+                    initial={{ scale: 1, opacity: 0.6 }}
+                    animate={{
+                      scale: [1, 1.5, 2],
+                      opacity: [0.6, 0.3, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.4,
+                      ease: 'easeOut',
+                    }}
+                  />
+                ))}
+              </>
+            )}
+            
+            {/* Sound wave bars */}
+            {isListening && (
+              <SoundWaveBars />
+            )}
+            
+            <motion.div
+              animate={{
+                scale: isListening ? [1, 1.05, 1] : 1,
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: isListening ? Infinity : 0,
+                ease: 'easeInOut',
+              }}
             >
-              {isListening ? (
-                <Square className="h-10 w-10 text-red-600 transition-colors" />
-              ) : (
-                <Mic className="h-10 w-10 text-emerald-600 transition-colors" />
-              )}
-            </Button>
-          </motion.div>
+              <Button
+                type="button"
+                onClick={handleStopClick}
+                disabled={isLoading}
+                size="icon"
+                variant={isListening ? 'destructive' : 'default'}
+                className={cn(
+                  "h-20 w-20 rounded-full transition-all duration-300 relative z-10",
+                  "bg-white shadow-xl border-2",
+                  "hover:scale-110 active:scale-95",
+                  isListening 
+                    ? "border-cyan-500 bg-cyan-50" 
+                    : "border-emerald-500 hover:border-emerald-600",
+                  isLoading && "opacity-50 cursor-not-allowed"
+                )}
+                aria-label={isListening ? 'Stop recording and submit' : 'Start voice input'}
+              >
+                {isListening ? (
+                  <Square className="h-10 w-10 text-cyan-600 transition-colors" />
+                ) : (
+                  <Mic className="h-10 w-10 text-emerald-600 transition-colors" />
+                )}
+              </Button>
+            </motion.div>
+          </div>
         </div>
       </div>
     );

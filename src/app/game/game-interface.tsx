@@ -8,10 +8,14 @@ import { MicroInput } from '@/components/ui/micro-input';
 import { QuestionCard } from '@/components/ui/question-card';
 import { FeedbackBurst } from '@/components/ui/feedback-burst';
 import { StreakFlame } from '@/components/ui/streak-flame';
+import { SpeedBonus } from '@/components/ui/speed-bonus';
+import { MilestoneToast } from '@/components/ui/milestone-toast';
+import { RankPreview } from '@/components/ui/rank-preview';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, Sparkles as SparklesIcon } from 'lucide-react';
 import { SparklesIcon as SparklesComponent } from '@/components/ui/sparkles';
 import { motion, AnimatePresence } from 'motion/react';
+import { playSound } from '@/lib/sound-manager';
 
 type GamePhase = 'intro' | 'question' | 'evaluating' | 'feedback' | 'complete';
 
@@ -27,6 +31,7 @@ interface GameState {
   lastGrade: 0 | 0.5 | 1 | null;
   lastFeedback: string;
   questionStartTime: number | null;
+  lastResponseTime: number | null;
 }
 
 function extractTextFromMessage(message: any): string {
@@ -109,6 +114,7 @@ export function GameInterface() {
     lastGrade: null,
     lastFeedback: '',
     questionStartTime: null,
+    lastResponseTime: null,
   });
 
   const sessionIdRef = useRef<string | null>(null);
@@ -161,6 +167,7 @@ export function GameInterface() {
     if (scoreMatch) {
       const finalScore = parseFloat(scoreMatch[1]);
       if (Number.isFinite(finalScore)) {
+        playSound('complete');
         setGameState((prev) => ({
           ...prev,
           phase: 'complete',
@@ -226,7 +233,11 @@ export function GameInterface() {
       ? Date.now() - gameState.questionStartTime 
       : undefined;
 
-    setGameState((prev) => ({ ...prev, phase: 'evaluating' }));
+    setGameState((prev) => ({ 
+      ...prev, 
+      phase: 'evaluating',
+      lastResponseTime: responseTimeMs || null,
+    }));
     
     // Send message with response time in metadata
     sendMessage({ 
@@ -257,11 +268,15 @@ export function GameInterface() {
       lastGrade: null,
       lastFeedback: '',
       questionStartTime: null,
+      lastResponseTime: null,
     });
     setMessages([]);
     sessionIdRef.current = crypto.randomUUID(); // Generate new session ID
     hasStartedRef.current = false;
   };
+
+  // Calculate progress for milestones
+  const progress = gameState.questionNumber / gameState.totalQuestions;
 
   // Memoize particle positions for stability
   const particlePositions = useMemo(() => {
@@ -329,6 +344,11 @@ export function GameInterface() {
         )}
       </AnimatePresence>
 
+      {/* Milestone Toast */}
+      {gameState.phase !== 'intro' && gameState.phase !== 'complete' && (
+        <MilestoneToast progress={progress} />
+      )}
+
       {/* Game Phase */}
       {gameState.phase !== 'intro' && gameState.phase !== 'complete' && (
         <div className="flex flex-col min-h-[calc(100vh-200px)] pb-32">
@@ -373,6 +393,7 @@ export function GameInterface() {
             >
               <QuestionCard
                 question={gameState.currentQuestion}
+                streak={gameState.streak}
                 className="w-full max-w-3xl"
               />
             </motion.div>
@@ -400,12 +421,15 @@ export function GameInterface() {
 
           {/* Feedback */}
           {gameState.phase === 'feedback' && gameState.lastGrade !== null && (
-            <div className="flex-1 flex items-center justify-center">
+            <div className="flex-1 flex flex-col items-center justify-center gap-4">
               <FeedbackBurst
                 grade={gameState.lastGrade}
                 feedback={gameState.lastFeedback}
                 onComplete={handleFeedbackComplete}
               />
+              {gameState.lastResponseTime !== null && (
+                <SpeedBonus responseTimeMs={gameState.lastResponseTime} />
+              )}
             </div>
           )}
 
@@ -473,11 +497,14 @@ export function GameInterface() {
                  gameState.score >= 6 ? 'Well Played!' :
                  'Keep Learning!'}
               </h2>
-              <p className="text-slate-600 mb-8">
+              <p className="text-slate-600 mb-4">
                 {gameState.score >= 8 ? 'You have demonstrated a strong understanding of the Week 1 Notebook Questions.' :
                  gameState.score >= 6 ? 'You have a good grasp of the material. Review a few concepts to master them fully.' :
                  'Take another look at the Week 1 Notebook Questions and focus on the core concepts.'}
               </p>
+
+              {/* Rank Preview */}
+              <RankPreview xp={gameState.xp} className="mb-8" />
 
               <div className="flex flex-col gap-3">
                 <Button onClick={handleRetry} size="lg" className="w-full">
