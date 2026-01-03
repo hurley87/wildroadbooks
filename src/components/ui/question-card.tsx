@@ -5,15 +5,11 @@ import { motion } from 'motion/react';
 
 interface QuestionCardProps {
   question: string;
-  questionNumber: number;
-  totalQuestions: number;
   className?: string;
 }
 
 export function QuestionCard({
   question,
-  questionNumber,
-  totalQuestions,
   className,
 }: QuestionCardProps) {
   return (
@@ -36,14 +32,6 @@ export function QuestionCard({
       }}
     >
       <div className="relative z-10">
-        {/* Question header - high contrast */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2 text-xs md:text-sm font-semibold text-slate-600 uppercase tracking-wide">
-            <span className="text-emerald-600">✦</span>
-            <span>QUESTION {questionNumber} of {totalQuestions}</span>
-            <span className="text-emerald-600">✦</span>
-          </div>
-        </div>
         {/* Question text - high contrast, better line-height */}
         <p className="text-lg md:text-xl lg:text-2xl font-serif leading-relaxed text-slate-900 max-w-none">
           {question}

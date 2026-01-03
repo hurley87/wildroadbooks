@@ -55,24 +55,40 @@ function parseGradeFromText(text: string): { grade: 0 | 0.5 | 1 | null; feedback
   }
   
   // Extract question from the text (usually after feedback)
-  // Look for Q#: or Question #: pattern
-  const qMatch = text.match(/(?:Q\d+:|Question\s+\d+:)\s*(.+?)(?:\n|$)/i);
+  // Questions come after the grade and feedback section
   let question = '';
-  if (qMatch) {
-    question = qMatch[1].trim();
+  let feedback = text;
+  
+  if (grade !== null) {
+    // If there's a grade, the question is typically after the feedback
+    // Look for a line containing a question mark (questions must have '?')
+    // Split by common separators and find the question
+    const parts = text.split(/\n+/);
+    
+    // Find where feedback ends (after grade line and feedback sentences)
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i].trim();
+      // Stop at first part that looks like a question (must contain question mark)
+      if (part.includes('?') && !part.match(/^(Grade:|Great|Good|Almost|Correct|Incorrect)/i)) {
+        question = parts.slice(i).join(' ').trim();
+        feedback = parts.slice(0, i).join('\n').trim();
+        break;
+      }
+    }
+    
+    // Fallback: if no clear question found, check if last part is a question (must contain question mark)
+    if (!question && parts.length > 1) {
+      const lastPart = parts[parts.length - 1].trim();
+      if (lastPart.length > 10 && lastPart.includes('?') && !lastPart.match(/^(Grade:|Great|Good|Almost|Correct|Incorrect)/i)) {
+        question = lastPart;
+        feedback = parts.slice(0, -1).join('\n').trim();
+      }
+    }
   } else {
     // If no grade found and doesn't start with feedback keywords, might be a question
-    if (!grade && !text.match(/^(Grade:|Great|Good|Almost|Correct|Incorrect)/i)) {
+    if (!text.match(/^(Grade:|Great|Good|Almost|Correct|Incorrect)/i)) {
       question = text.trim();
-    }
-  }
-  
-  // Extract feedback (everything before the question, or whole text if no question)
-  let feedback = text;
-  if (question && qMatch) {
-    const questionIndex = text.indexOf(qMatch[0]);
-    if (questionIndex > 0) {
-      feedback = text.substring(0, questionIndex).trim();
+      feedback = '';
     }
   }
   
@@ -95,7 +111,6 @@ export function GameInterface() {
     questionStartTime: null,
   });
 
-  const [input, setInput] = useState('');
   const sessionIdRef = useRef<string | null>(null);
   const hasStartedRef = useRef(false);
 
@@ -203,9 +218,8 @@ export function GameInterface() {
     hasStartedRef.current = false;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
+  const handleVoiceSubmit = (transcript: string) => {
+    if (!transcript.trim() || isLoading) return;
 
     // Calculate response time
     const responseTimeMs = gameState.questionStartTime 
@@ -216,10 +230,9 @@ export function GameInterface() {
     
     // Send message with response time in metadata
     sendMessage({ 
-      text: input,
+      text: transcript.trim(),
       metadata: responseTimeMs ? { responseTimeMs } : undefined,
     });
-    setInput('');
   };
 
   const handleFeedbackComplete = () => {
@@ -246,7 +259,6 @@ export function GameInterface() {
       questionStartTime: null,
     });
     setMessages([]);
-    setInput('');
     sessionIdRef.current = crypto.randomUUID(); // Generate new session ID
     hasStartedRef.current = false;
   };
@@ -361,8 +373,6 @@ export function GameInterface() {
             >
               <QuestionCard
                 question={gameState.currentQuestion}
-                questionNumber={gameState.questionNumber}
-                totalQuestions={gameState.totalQuestions}
                 className="w-full max-w-3xl"
               />
             </motion.div>
@@ -480,18 +490,15 @@ export function GameInterface() {
         )}
       </AnimatePresence>
 
-      {/* Micro Input - always visible except in intro */}
+      {/* Micro Input - voice-only mode, always visible except in intro */}
       {gameState.phase !== 'intro' && gameState.phase !== 'complete' && (
         <MicroInput
-          input={input}
-          handleInputChange={(e) => setInput(e.target.value)}
-          handleSubmit={handleSubmit}
+          input=""
+          handleInputChange={() => {}}
+          handleSubmit={() => {}}
           isLoading={isLoading}
-          placeholder="Type your answer..."
-          showHelper={gameState.phase === 'question'}
-          onSpeechResult={(transcript) => {
-            setInput((prev) => (prev ? `${prev} ${transcript}` : transcript));
-          }}
+          voiceOnly={true}
+          onVoiceSubmit={handleVoiceSubmit}
         />
       )}
     </div>

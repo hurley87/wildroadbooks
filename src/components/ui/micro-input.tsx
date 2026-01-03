@@ -1,6 +1,6 @@
 'use client';
 
-import { Mic } from 'lucide-react';
+import { Mic, Square } from 'lucide-react';
 import { useRef, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useSpeechRecognition } from '@/lib/use-speech-recognition';
@@ -15,6 +15,8 @@ interface MicroInputProps {
   placeholder?: string;
   onSpeechResult?: (transcript: string) => void;
   showHelper?: boolean;
+  voiceOnly?: boolean;
+  onVoiceSubmit?: (transcript: string) => void;
 }
 
 export function MicroInput({
@@ -25,16 +27,36 @@ export function MicroInput({
   placeholder = 'Type your answer...',
   onSpeechResult,
   showHelper = true,
+  voiceOnly = false,
+  onVoiceSubmit,
 }: MicroInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   
-  const { isListening, isSupported, toggleListening } = useSpeechRecognition({
+  const { isListening, isSupported, transcript, toggleListening, stopListening } = useSpeechRecognition({
     onResult: (transcript) => {
       onSpeechResult?.(transcript);
     },
+    onStopComplete: (finalTranscript) => {
+      // Submit the final transcript when speech recognition fully completes
+      if (voiceOnly && onVoiceSubmit && finalTranscript) {
+        onVoiceSubmit(finalTranscript);
+      }
+    },
   });
+
+  // Handle stop button click - stop listening and trigger submit via onStopComplete callback
+  const handleStopClick = () => {
+    if (isListening) {
+      // Stop listening and request submission when complete
+      // The onStopComplete callback will fire after the final transcript is ready
+      const shouldSubmit = voiceOnly && !!onVoiceSubmit;
+      stopListening(shouldSubmit);
+    } else {
+      toggleListening();
+    }
+  };
 
   const isEmpty = !input.trim();
   const showMicButton = isEmpty && isSupported;
@@ -52,6 +74,51 @@ export function MicroInput({
     }
   }, [hasInteracted, isLoading, isEmpty]);
 
+  // Voice-only mode: centered large microphone button
+  if (voiceOnly) {
+    return (
+      <div className="fixed bottom-0 left-0 right-0 z-50 pb-safe">
+        <div className="w-full flex items-center justify-center px-4 pb-8 sm:pb-12">
+          <motion.div
+            animate={{
+              scale: isListening ? [1, 1.1, 1] : 1,
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: isListening ? Infinity : 0,
+              ease: 'easeInOut',
+            }}
+          >
+            <Button
+              type="button"
+              onClick={handleStopClick}
+              disabled={isLoading}
+              size="icon"
+              variant={isListening ? 'destructive' : 'default'}
+              className={cn(
+                "h-20 w-20 rounded-full transition-all duration-300",
+                "bg-white shadow-xl border-2",
+                "hover:scale-110 active:scale-95",
+                isListening 
+                  ? "border-red-400 bg-red-50 animate-pulse" 
+                  : "border-emerald-500 hover:border-emerald-600",
+                isLoading && "opacity-50 cursor-not-allowed"
+              )}
+              aria-label={isListening ? 'Stop recording and submit' : 'Start voice input'}
+            >
+              {isListening ? (
+                <Square className="h-10 w-10 text-red-600 transition-colors" />
+              ) : (
+                <Mic className="h-10 w-10 text-emerald-600 transition-colors" />
+              )}
+            </Button>
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
+
+  // Regular mode: text input with optional mic button
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 pb-safe">
       <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto px-4 pb-4 sm:pb-6">
@@ -70,7 +137,7 @@ export function MicroInput({
           {showMicButton && (
             <Button
               type="button"
-              onClick={toggleListening}
+              onClick={handleStopClick}
               disabled={isLoading}
               size="icon"
               variant={isListening ? 'destructive' : 'ghost'}
@@ -80,9 +147,13 @@ export function MicroInput({
                 "border border-slate-200",
                 isListening && "animate-pulse bg-red-50 border-red-300"
               )}
-              aria-label={isListening ? 'Stop listening' : 'Start voice input'}
+              aria-label={isListening ? 'Stop recording' : 'Start voice input'}
             >
-              <Mic className="h-4 w-4" />
+              {isListening ? (
+                <Square className="h-4 w-4" />
+              ) : (
+                <Mic className="h-4 w-4" />
+              )}
             </Button>
           )}
           <motion.input
