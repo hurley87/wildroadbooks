@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '@/lib/utils';
-import { CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
+import { CheckCircle2, XCircle, AlertCircle, ArrowRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { playSound } from '@/lib/sound-manager';
 import { triggerHaptic } from '@/lib/haptic-utils';
+import { Button } from './button';
 
 interface FeedbackBurstProps {
   grade: 0 | 0.5 | 1;
@@ -43,14 +44,12 @@ export function FeedbackBurst({ grade, feedback, onComplete }: FeedbackBurstProp
       setShouldShake(true);
       setTimeout(() => setShouldShake(false), 600);
     }
-    
-    const timer = setTimeout(() => {
-      setShow(false);
-      setTimeout(() => onComplete?.(), 500);
-    }, 2000);
+  }, [grade]);
 
-    return () => clearTimeout(timer);
-  }, [onComplete, grade]);
+  const handleContinue = () => {
+    setShow(false);
+    setTimeout(() => onComplete?.(), 300);
+  };
 
   const config = {
     1: {
@@ -147,10 +146,10 @@ export function FeedbackBurst({ grade, feedback, onComplete }: FeedbackBurstProp
               opacity: 1,
               scale: 1,
               y: 0,
-              x: shouldShake 
-                ? [0, -10, 10, -10, 10, 0] 
-                : victoryShake 
-                ? [0, -4, 4, -2, 2, 0] 
+              x: shouldShake
+                ? [0, -10, 10, -10, 10, 0]
+                : victoryShake
+                ? [0, -4, 4, -2, 2, 0]
                 : 0,
               rotate: victoryShake ? [0, -2, 2, -1, 1, 0] : 0,
             }}
@@ -163,13 +162,13 @@ export function FeedbackBurst({ grade, feedback, onComplete }: FeedbackBurstProp
               rotate: victoryShake ? { duration: 0.6 } : undefined,
             }}
             className={cn(
-              'relative z-50',
+              'relative z-50 w-full max-w-2xl mx-4',
               'bg-white border-2 rounded-2xl p-8 shadow-xl',
               configData.borderColor,
               configData.glowColor
             )}
           >
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-6">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -181,16 +180,39 @@ export function FeedbackBurst({ grade, feedback, onComplete }: FeedbackBurstProp
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-center"
+                className="text-center w-full"
               >
-                <h3 className={cn('text-2xl font-bold mb-2', configData.color)}>
+                <h3 className={cn('text-2xl font-bold mb-4', configData.color)}>
                   {configData.text}
                 </h3>
                 {feedback && (
-                  <p className="text-sm text-slate-600 max-w-md">
-                    {feedback}
-                  </p>
+                  <div 
+                    className="max-h-[50vh] overflow-y-auto px-2"
+                    style={{
+                      scrollbarWidth: 'thin',
+                      scrollbarColor: '#cbd5e1 #f1f5f9'
+                    }}
+                  >
+                    <p className="text-base text-slate-700 leading-relaxed whitespace-pre-wrap">
+                      {feedback}
+                    </p>
+                  </div>
                 )}
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="w-full"
+              >
+                <Button
+                  onClick={handleContinue}
+                  size="lg"
+                  className="w-full text-base"
+                >
+                  Continue
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
               </motion.div>
             </div>
           </motion.div>

@@ -156,6 +156,9 @@ export function GameInterface() {
   // Parse messages to extract questions, grades, and scores
   useEffect(() => {
     if (messages.length === 0) return;
+    
+    // Wait for streaming to complete before processing graded responses
+    if (status !== 'ready') return;
 
     const lastMessage = messages[messages.length - 1];
     if (lastMessage.role !== 'assistant') return;
@@ -217,7 +220,7 @@ export function GameInterface() {
         questionStartTime: Date.now(), // Start timer when question is displayed
       }));
     }
-  }, [messages, gameState.phase, gameState.streak, gameState.xp]);
+  }, [messages, status, gameState.phase, gameState.streak, gameState.xp]);
 
   const handleStart = () => {
     setGameState((prev) => ({ ...prev, phase: 'question' }));
