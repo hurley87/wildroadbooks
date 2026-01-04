@@ -1,4 +1,4 @@
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 
 const sounds = {
   correct: new Howl({ src: ['/sounds/correct.mp3'], volume: 0.5 }),

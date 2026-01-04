@@ -2782,6 +2782,11 @@
   dependencies:
     "@types/unist" "*"
 
+"@types/howler@^2.2.12":
+  version "2.2.12"
+  resolved "https://registry.npmjs.org/@types/howler/-/howler-2.2.12.tgz#078d20787911f6e3e871a0e93a23832e13abaa59"
+  integrity sha512-hy769UICzOSdK0Kn1FBk4gN+lswcj1EKRkmiDtMkUGvFfYJzgaDXmVXkSShS2m89ERAatGIPnTUlp2HhfkVo5g==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"

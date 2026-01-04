@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@types/canvas-confetti": "^1.9.0",
+    "@types/howler": "^2.2.12",
     "@types/node": "^20.11.19",
     "@types/pdf-parse": "^1.1.4",
     "@types/react": "^18.2.57",
