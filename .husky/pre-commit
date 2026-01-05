@@ -1,0 +1,5 @@
+# Check for secrets first
+.husky/check-secrets.sh
+
+# If secrets check passes, run build
+yarn build
