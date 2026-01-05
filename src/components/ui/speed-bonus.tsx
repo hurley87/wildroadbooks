@@ -55,3 +55,4 @@ export function SpeedBonus({ responseTimeMs, className }: SpeedBonusProps) {
   );
 }
 
+

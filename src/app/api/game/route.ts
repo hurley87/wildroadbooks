@@ -127,17 +127,26 @@ export async function POST(req: Request) {
     
     // Get user ID from Authorization header (Privy token)
     const authHeader = req.headers.get('authorization');
-    if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: 'Missing authorization header' }),
-        { status: 401, headers: { 'Content-Type': 'application/json' } }
-      );
+
+    // Test mode: Allow test user without auth
+    const isTestMode = process.env.NEXT_PUBLIC_TEST_MODE === 'true';
+    let userId: string;
+
+    if (isTestMode) {
+      userId = process.env.TEST_USER_EMAIL || 'test-user@example.com';
+    } else {
+      if (!authHeader) {
+        return new Response(
+          JSON.stringify({ error: 'Missing authorization header' }),
+          { status: 401, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Extract user ID from Bearer token (format: "Bearer privy_user_id")
+      // For now, we'll use the token directly as user_id
+      // In production, you'd verify the Privy token and extract the user ID
+      userId = authHeader.replace('Bearer ', '').trim();
     }
-    
-    // Extract user ID from Bearer token (format: "Bearer privy_user_id")
-    // For now, we'll use the token directly as user_id
-    // In production, you'd verify the Privy token and extract the user ID
-    const userId = authHeader.replace('Bearer ', '').trim();
     
     // Get or create session ID from header
     const sessionIdHeader = req.headers.get('x-session-id');

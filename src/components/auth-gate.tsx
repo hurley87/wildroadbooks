@@ -17,6 +17,12 @@ interface AuthGateProps {
 export function AuthGate({ children }: AuthGateProps) {
   const { ready, authenticated, login } = usePrivy();
 
+  // Bypass auth in test mode (E2E testing)
+  const isTestMode = process.env.NEXT_PUBLIC_TEST_MODE === 'true';
+  if (isTestMode) {
+    return <>{children}</>;
+  }
+
   // Show loading state while Privy initializes
   if (!ready) {
     return (

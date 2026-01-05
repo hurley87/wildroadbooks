@@ -5,3 +5,4 @@ export const triggerHaptic = (type: 'light' | 'medium' | 'heavy' = 'medium') => 
   }
 };
 
+

@@ -199,3 +199,4 @@ To summarize, exographics enables us to get representations of abstract concepts
 
 **Note on Memory Terminology:** Merlin Donald distinguishes between engrams (internal/biological memory stored in our brains) and exograms (external memory stored outside our brains, such as writing, notes, books, etc.). The book discusses how exographics creates exograms that extend our memory capabilities.`;
 
+
