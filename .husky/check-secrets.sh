@@ -18,18 +18,18 @@ FOUND_SECRETS=0
 
 # Patterns to check for
 declare -A PATTERNS=(
-  ["RSA Private Key"]="-----BEGIN (RSA |OPENSSH |DSA |EC |PGP )?PRIVATE KEY"
-  ["AWS Access Key"]="(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}"
-  ["AWS Secret Key"]="aws_secret_access_key.*['\"][0-9a-zA-Z/+]{40}['\"]"
-  ["Generic API Key"]="(api[_-]?key|apikey|api[_-]?secret)['\"]?\s*[:=]\s*['\"][0-9a-zA-Z\-_]{20,}['\"]"
-  ["Generic Secret"]="(secret|password|passwd|pwd)['\"]?\s*[:=]\s*['\"][^'\"]{8,}['\"]"
-  ["JWT Token"]="eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}"
-  ["Database URL"]="(postgres|mysql|mongodb|redis)://[^'\"\s]+"
-  ["Ethereum Private Key"]="(0x)?[0-9a-fA-F]{64}"
-  ["Google API Key"]="AIza[0-9A-Za-z\\-_]{35}"
-  ["GitHub Token"]="gh[pousr]_[0-9a-zA-Z]{36}"
-  ["Slack Token"]="xox[baprs]-[0-9]{10,13}-[0-9]{10,13}-[0-9a-zA-Z]{24,32}"
-  ["Stripe Key"]="(sk|pk)_(test|live)_[0-9a-zA-Z]{24,}"
+  ["RSA_Private_Key"]="-----BEGIN (RSA |OPENSSH |DSA |EC |PGP )?PRIVATE KEY"
+  ["AWS_Access_Key"]="(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}"
+  ["AWS_Secret_Key"]="aws_secret_access_key.*['\"][0-9a-zA-Z/+]{40}['\"]"
+  ["Generic_API_Key"]="(api[_-]?key|apikey|api[_-]?secret)['\"]?\s*[:=]\s*['\"][0-9a-zA-Z\-_]{20,}['\"]"
+  ["Generic_Secret"]="(secret|password|passwd|pwd)['\"]?\s*[:=]\s*['\"][^'\"]{8,}['\"]"
+  ["JWT_Token"]="eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}"
+  ["Database_URL"]="(postgres|mysql|mongodb|redis)://[^'\"\s]+"
+  ["Ethereum_Private_Key"]="(0x)?[0-9a-fA-F]{64}"
+  ["Google_API_Key"]="AIza[0-9A-Za-z\\-_]{35}"
+  ["GitHub_Token"]="gh[pousr]_[0-9a-zA-Z]{36}"
+  ["Slack_Token"]="xox[baprs]-[0-9]{10,13}-[0-9]{10,13}-[0-9a-zA-Z]{24,32}"
+  ["Stripe_Key"]="(sk|pk)_(test|live)_[0-9a-zA-Z]{24,}"
 )
 
 # Files to always check (even if not in allowlist)
@@ -74,7 +74,9 @@ for FILE in $STAGED_FILES; do
       fi
 
       FOUND_SECRETS=1
-      echo -e "${YELLOW}$PATTERN_NAME found in $FILE:${NC}"
+      # Convert underscores to spaces for display
+      DISPLAY_NAME=$(echo "$PATTERN_NAME" | tr '_' ' ')
+      echo -e "${YELLOW}$DISPLAY_NAME found in $FILE:${NC}"
       echo "$MATCHES" | while read -r line; do
         LINE_NUM=$(echo "$line" | cut -d: -f2)
         echo "  Line $LINE_NUM"
