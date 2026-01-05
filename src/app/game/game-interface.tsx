@@ -16,6 +16,7 @@ import { RotateCcw, Sparkles as SparklesIcon } from 'lucide-react';
 import { SparklesIcon as SparklesComponent } from '@/components/ui/sparkles';
 import { motion, AnimatePresence } from 'motion/react';
 import { playSound } from '@/lib/sound-manager';
+import { useAudioUnlock } from '@/hooks/use-audio-unlock';
 
 type GamePhase = 'intro' | 'question' | 'evaluating' | 'feedback' | 'complete';
 
@@ -102,6 +103,10 @@ function parseGradeFromText(text: string): { grade: 0 | 0.5 | 1 | null; feedback
 
 export function GameInterface() {
   const { user } = usePrivy();
+
+  // Unlock audio on first user interaction (required by browser autoplay policies)
+  useAudioUnlock();
+
   const [gameState, setGameState] = useState<GameState>({
     phase: 'intro',
     questionNumber: 0,
