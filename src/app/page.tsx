@@ -55,14 +55,14 @@ export default function Home() {
             </p>
             
             <p className="text-base sm:text-lg">
-              <span className="text-muted-foreground">Buy our book: </span>
+              <span className="text-muted-foreground">Buy our book on Amazon: </span>
               <a
                 href="https://www.amazon.ca/Catching-Unicorns-Exographic-Revolution-Techno-Literate/dp/1069059315"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground hover:text-primary transition-colors underline underline-offset-4"
               >
-                Catching Unicorns on Amazon
+                Catching Unicorns
               </a>
             </p>
           </div>
