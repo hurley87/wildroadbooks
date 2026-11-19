@@ -80,21 +80,29 @@ export default function Books() {
               written to be read and cited.
             </p>
           </div>
-          <div className="mx-auto mt-16 max-w-2xl grid grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+          <div className="mx-auto mt-16 max-w-2xl lg:mx-0 lg:max-w-none">
+            <div className="flex flex-col divide-y divide-border">
             {books.map((book) => (
-              <article key={book.title} className="group flex min-w-0 flex-col">
-                <div className="relative w-40 sm:w-48 overflow-hidden rounded-2xl shadow-lg ring-1 ring-primary/10 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500">
-                  <div className="absolute inset-0 z-10 bg-gradient-to-tr from-primary/5 via-transparent to-background/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <Image
-                    src={book.cover.src}
-                    alt={`${book.shortTitle} cover`}
-                    width={book.cover.width}
-                    height={book.cover.height}
-                    sizes="(min-width: 640px) 192px, 160px"
-                    className="h-auto w-full transition-transform duration-500 group-hover:scale-105"
-                  />
+              <article
+                key={book.title}
+                className="group flex min-w-0 flex-col py-12 first:pt-0 md:flex-row md:items-start md:gap-10"
+              >
+                <div className="flex w-full shrink-0 justify-center md:w-[220px] md:justify-start">
+                  <div className="flex h-[240px] w-[160px] shrink-0 items-center justify-center md:h-[330px] md:w-[220px]">
+                    <div className="relative inline-flex max-h-full max-w-full items-center justify-center">
+                      <div className="pointer-events-none absolute inset-0 z-10 rounded-2xl bg-gradient-to-tr from-primary/5 via-transparent to-background/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                      <Image
+                        src={book.cover.src}
+                        alt={`${book.shortTitle} cover`}
+                        width={book.cover.width}
+                        height={book.cover.height}
+                        sizes="(min-width: 768px) 220px, 160px"
+                        className="relative h-auto max-h-[240px] w-auto max-w-[160px] object-contain rounded-2xl shadow-lg ring-1 ring-primary/10 transition-all duration-500 group-hover:scale-105 hover:shadow-2xl hover:shadow-primary/10 md:max-h-[330px] md:max-w-[220px]"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-6">
+                <div className="mt-6 w-full min-w-0 md:mt-0 md:max-w-[65ch] md:flex-1">
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                     <time dateTime={String(book.year)}>{book.year}</time>
                     {book.isbn && <span>ISBN {book.isbn}</span>}
@@ -134,6 +142,7 @@ export default function Books() {
                 </div>
               </article>
             ))}
+            </div>
           </div>
           <div className="mt-16 text-center">
             <p className="text-lg text-muted-foreground">
