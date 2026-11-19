@@ -144,18 +144,6 @@ export default function Books() {
             ))}
             </div>
           </div>
-          <div className="mt-16 text-center">
-            <p className="text-lg text-muted-foreground">
-              Interested in submitting your work? Visit our{" "}
-              <Link
-                href="/submissions"
-                className="text-primary hover:text-primary/80 font-medium transition-all duration-300 hover:underline underline-offset-4"
-              >
-                submissions page
-              </Link>{" "}
-              to learn more.
-            </p>
-          </div>
         </div>
       </div>
     </main>
