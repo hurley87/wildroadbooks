@@ -45,22 +45,17 @@ export default function Home() {
 
           <div className="pt-4 space-y-3">
             <p className="text-base sm:text-lg">
-              <span className="text-muted-foreground">See the books we&apos;ve published. </span>
+              <span className="text-muted-foreground">View our </span>
               <Link
                 href="/books"
                 className="text-foreground hover:text-primary transition-colors underline underline-offset-4"
               >
-                View our books
+                Catalogue
               </Link>
             </p>
             <p className="text-base sm:text-lg">
               <span className="text-muted-foreground">Contact: </span>
-              <a 
-                href="mailto:admin@wildroadbooks.com"
-                className="text-foreground hover:text-primary transition-colors underline underline-offset-4"
-              >
-                admin@wildroadbooks.com
-              </a>
+              <span className="text-foreground">admin@wildroadbooks.com</span>
             </p>
           </div>
         </div>
