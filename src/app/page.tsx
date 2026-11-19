@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -43,6 +44,15 @@ export default function Home() {
           </div>
 
           <div className="pt-4 space-y-3">
+            <p className="text-base sm:text-lg">
+              <span className="text-muted-foreground">See the books we&apos;ve published. </span>
+              <Link
+                href="/books"
+                className="text-foreground hover:text-primary transition-colors underline underline-offset-4"
+              >
+                View our books
+              </Link>
+            </p>
             <p className="text-base sm:text-lg">
               <span className="text-muted-foreground">Contact: </span>
               <a 
