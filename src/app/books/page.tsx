@@ -22,7 +22,7 @@ const books: Book[] = [
     year: 2025,
     isbn: "978-1-0690593-1-4",
     amazonUrl: "https://www.amazon.ca/dp/1069059315",
-    cover: { src: "/covers/catching-unicorns.jpg", width: 600, height: 779 },
+    cover: { src: "/covers/catching-unicorns.jpg", width: 600, height: 764 },
     blurb: [
       "Catching Unicorns is a field guide for how we use writing to think beyond the limits of our naked minds. From tally marks to technical diagrams, we’ve built exographic systems that don’t just record ideas—they help generate them. Writing lets us externalize thought, manipulate abstraction, and in so doing discover ideas we otherwise couldn’t.",
       "But this isn’t just a book about cognition—it’s a sweeping history of the ideas we’ve conjured through writing and how they’ve reshaped our existence. From the oral rhythms of hunter-gatherers to the algorithmic logic of urban techno-literate cultures, Catching Unicorns traces the evolution of human knowledge. The narrative reveals how symbolic systems—from ancient notations on clay tablets to modern analytics on computer screens—have transformed not only what we know, but how we live.",
