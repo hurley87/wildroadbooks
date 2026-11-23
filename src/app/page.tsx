@@ -7,11 +7,11 @@ export default function Home() {
       {/* Mobile image - shown only on mobile, at top */}
       <div className="relative md:hidden w-full h-80 flex-shrink-0">
         <Image
-          src="/cover.png"
-          alt="Wild Road Books"
+          src="/hero-a.jpg"
+          alt="Wild Road Books storefront"
           fill
           priority
-          className="object-cover"
+          className="object-cover object-[40%_50%]"
           sizes="100vw"
         />
       </div>
@@ -19,11 +19,11 @@ export default function Home() {
       {/* Left side - Full height image (desktop) */}
       <div className="relative hidden md:block md:w-1/2 h-screen flex-shrink-0">
         <Image
-          src="/cover.png"
-          alt="Wild Road Books"
+          src="/hero-a.jpg"
+          alt="Wild Road Books storefront"
           fill
           priority
-          className="object-cover"
+          className="object-cover object-[40%_50%]"
           sizes="50vw"
         />
       </div>
