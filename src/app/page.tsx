@@ -4,14 +4,14 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex flex-col min-h-screen">
-      {/* object-contain keeps the whole sign in view when the 70vh cap is narrower than 16:9 */}
+      {/* The sign sits ~20-43% from the top; 50% 35% keeps it in view when the 70vh cap crops vertically */}
       <div className="relative w-full aspect-video md:aspect-auto md:h-[min(56.25vw,70vh)] flex-shrink-0">
         <Image
           src="/hero-b.jpg"
           alt="Wild Road Books storefront"
           fill
           priority
-          className="object-contain object-center"
+          className="object-cover object-[50%_35%]"
           sizes="100vw"
         />
       </div>
