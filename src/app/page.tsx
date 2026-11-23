@@ -3,33 +3,20 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex flex-col md:flex-row min-h-screen">
-      {/* Mobile image - shown only on mobile, at top */}
-      <div className="relative md:hidden w-full h-80 flex-shrink-0">
+    <main className="flex flex-col min-h-screen">
+      {/* object-contain keeps the whole sign in view when the 70vh cap is narrower than 16:9 */}
+      <div className="relative w-full aspect-video md:aspect-auto md:h-[min(56.25vw,70vh)] flex-shrink-0">
         <Image
-          src="/cover.png"
-          alt="Wild Road Books"
+          src="/hero-b.jpg"
+          alt="Wild Road Books storefront"
           fill
           priority
-          className="object-cover"
+          className="object-contain object-center"
           sizes="100vw"
         />
       </div>
 
-      {/* Left side - Full height image (desktop) */}
-      <div className="relative hidden md:block md:w-1/2 h-screen flex-shrink-0">
-        <Image
-          src="/cover.png"
-          alt="Wild Road Books"
-          fill
-          priority
-          className="object-cover"
-          sizes="50vw"
-        />
-      </div>
-
-      {/* Right side - Content */}
-      <div className="w-full md:w-1/2 flex flex-col justify-center px-6 sm:px-8 lg:px-12 py-12 sm:py-16">
+      <div className="w-full flex flex-col items-center text-center px-6 sm:px-8 lg:px-12 py-12 sm:py-16">
         <div className="max-w-lg mx-auto space-y-6">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif tracking-tight">
             Wild Road Books
